@@ -85,20 +85,24 @@
 <h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>通过搜索得到的解决方案最常见的是安装插件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
 
-<p>这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如 <figure class="highlight plain"><figcaption><span>还要自己手动去 node_modules 中修改脚本才能用，我们知道，node_modules 实际上都是npm install的时候自动生成的，这样的改动以后还要反复手动操作，太难受了，此方法不可取。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 方法2</span><br><span class="line"></span><br><span class="line">hexo官方给了两种解决方式 &lt;https://hexo.io/zh-cn/docs/asset-folders&gt; </span><br><span class="line"></span><br><span class="line">一个是使用hexo的标签，</span><br><span class="line"></span><br><span class="line">&gt;正确的引用图片方式是使用下列的标签插件而不是 markdown ：</span><br><span class="line">```&#123;% asset_img example.jpg This is an example image %&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这个方式看起来完美解决了问题，但是在我本地通过typora编辑文档时，是看不到图片的，不方便使用。</p>
-<h3 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h3><p>使用最简单的方式在 source 目录下创建images目录，然后图片都保存在这里。</p>
-<p>关键是要在typora上做以下设置：</p>
-<p>在md文件头部的配置项中，添加 <code>typora-root-url: ../</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:  hexo+typora 插入图片</span><br><span class="line">date: 2019-06-08 10:37:22</span><br><span class="line">tags:</span><br><span class="line">typora-root-url: ../</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xxx.png ，搜索下解决方法 ，还要自己手动去 node_modules 中修改脚本才能用，我们知道，node_modules 实际上都是npm install的时候自动生成的，这样的改动以后还要反复手动操作，太难受了，此方法不可取。</p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>hexo官方给了两种解决方式 <a href="https://hexo.io/zh-cn/docs/asset-folders" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders</a> </p>
+<p>一个是使用hexo的标签，</p>
+<blockquote>
+<p>正确的引用图片方式是使用下列的标签插件而不是 markdown ：</p>
+</blockquote>
+<figure class="highlight plain"><figcaption><span>asset_img example.jpg This is an example image %&#125;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这个方式看起来完美解决了问题，但是在我本地通过typora编辑文档时，是看不到图片的，不方便使用。</span><br><span class="line"></span><br><span class="line">### 方法3</span><br><span class="line"></span><br><span class="line">使用最简单的方式在 source 目录下创建images目录，然后图片都保存在这里。</span><br><span class="line"></span><br><span class="line">关键是要在typora上做以下设置：</span><br><span class="line"></span><br><span class="line">在md文件头部的配置项中，添加 `typora-root-url: ../`</span><br></pre></td></tr></table></figure>
 
+<hr>
+<p>title:  hexo+typora 插入图片<br>date: 2019-06-08 10:37:22<br>tags:</p>
+<h2 id="typora-root-url"><a href="#typora-root-url" class="headerlink" title="typora-root-url: ../"></a>typora-root-url: ../</h2><p>```</p>
 <p>这样引用的图片都以上一级目录即 sourse作为根目录了，此时插入的图片时，只要点击“复制图片到…”并选择一次文件夹，以后每次都会自动保存在 sourse/image目录下，并且本地的显示和服务器上的根目录完全一致。</p>
 <p><img src="/images/1559989480817.png" alt="本地路径和服务器路径一致"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwmm3hx40002agl31x9o1oa7" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwne05ke0001vol31b82zbal" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -145,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwmm3hwy0000agl37dk8ykz9" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwne05ka0000vol3crbyaet1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
