@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>最长递增子序列问题 | lz的个人空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最长递增子序列问题 LIS(longest increasing subsequence) 例如  给定一个数列，长度为N，求这个数列的最长上升（递增）子数列（LIS）的长度.以 1, 7, 2, 8, 3, 4为例。这个数列的最长递增子数列是 1 2 3 4，长度为4；次长的长度为3， 包括 1 7 8; 1 2 3 等.  设数组为：arr设  foo(k) 为：以数列中第k项 (为了与jav">
+<meta name="keywords" content="算法,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最长递增子序列问题">
+<meta property="og:url" content="http://lzlz000.github.io/2018/03/10/最长递增子序列问题-Java/index.html">
+<meta property="og:site_name" content="lz的个人空间">
+<meta property="og:description" content="最长递增子序列问题 LIS(longest increasing subsequence) 例如  给定一个数列，长度为N，求这个数列的最长上升（递增）子数列（LIS）的长度.以 1, 7, 2, 8, 3, 4为例。这个数列的最长递增子数列是 1 2 3 4，长度为4；次长的长度为3， 包括 1 7 8; 1 2 3 等.  设数组为：arr设  foo(k) 为：以数列中第k项 (为了与jav">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://lzlz000.github.io/images/1240123.png">
+<meta property="og:updated_time" content="2019-06-08T20:32:04.414Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最长递增子序列问题">
+<meta name="twitter:description" content="最长递增子序列问题 LIS(longest increasing subsequence) 例如  给定一个数列，长度为N，求这个数列的最长上升（递增）子数列（LIS）的长度.以 1, 7, 2, 8, 3, 4为例。这个数列的最长递增子数列是 1 2 3 4，长度为4；次长的长度为3， 包括 1 7 8; 1 2 3 等.  设数组为：arr设  foo(k) 为：以数列中第k项 (为了与jav">
+<meta name="twitter:image" content="http://lzlz000.github.io/images/1240123.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <!-- <h1 id="logo-wrap">
+        <a href="/" id="logo">lz的个人空间</a>
+      </h1> -->
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lzlz000.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-最长递增子序列问题-Java" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/最长递增子序列问题-Java/" class="article-date">
+  <time datetime="2018-03-09T16:00:00.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      最长递增子序列问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最长递增子序列问题 LIS(longest increasing subsequence) 例如</p>
+<blockquote>
+<p>给定一个数列，长度为N，<br>求这个数列的最长上升（递增）子数列（LIS）的长度.<br>以
+1, 7, 2, 8, 3, 4<br>为例。<br>这个数列的最长递增子数列是 1 2 3 4，长度为4；<br>次长的长度为3， 包括 1 7 8; 1 2 3 等.</p>
+</blockquote>
+<p>设数组为：arr<br>设  foo(k) 为：以数列中第k项 (为了与java数组逻辑一致，这里的k从0开始计算) 结尾的最长递增子序列的长度<br>则：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo(<span class="number">0</span>) == <span class="number">1</span> </span><br><span class="line">foo(k) == max(arr[k]&gt;arr[<span class="number">0</span>]?foo(<span class="number">0</span>)+<span class="number">1</span>:foo(<span class="number">0</span>),</span><br><span class="line">              arr[k]&gt;arr[<span class="number">1</span>]?foo(<span class="number">1</span>)+<span class="number">1</span>:foo(<span class="number">1</span>) , </span><br><span class="line">              ... ,</span><br><span class="line">              arr[k]&gt;arr[k-<span class="number">1</span>]?foo(k-<span class="number">1</span>)+<span class="number">1</span>:foo(k-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>java代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class LISDemo &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        int[] arr = new int[10];</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        for (int i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] = random.nextInt(100);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;数组&quot;+Arrays.toString(arr));</span><br><span class="line">        long time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;结果: &quot;+foo(arr, arr.length-1));</span><br><span class="line">        System.out.println(&quot;耗时: &quot;+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    private static int foo(int[] arr,int end)&#123;</span><br><span class="line">        if (end==0) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        int len = 0;</span><br><span class="line">        for (int i = 0; i &lt; end; i++) &#123;</span><br><span class="line">            int temp = foo(arr,i);</span><br><span class="line">            len = Math.max(len,arr[end]&gt;arr[i]?temp+1:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        return len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码能计算出正确的结果，但是存在问题：<br>要计算 foo(n)必须先得到 foo(0)<del>foo(n-1)的值<br>要计算 foo(n-1)必须先得到 foo(0)</del>foo(n-2)的值<br>…<br>以此类推，可以把他画成一颗多叉树，时间复杂度达到O(2^n) </p>
+<p>运行这段代码就会发现 每当数组长度+1 运行耗时大致翻倍，数组长度为几十的时候，运行时间已经无法容忍的长了。</p>
+<p>以foo(3)为例，可以画成下面这棵树<br><img src="/images/1240123.png" alt><br>可以发现，相同参数的方法被重复计算了多遍，我们可以建立一个hashmap把参数和对应的值存入其中，当结果已经计算过，就直接从hashmap中取出结果不再计算，修改代码为如下,保留了原来的方法做个对比，执行效率天差地别:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LISDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">31</span>];</span><br><span class="line">        Random random = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] = random.nextInt(<span class="number">100</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"数组"</span>+Arrays.toString(arr));</span><br><span class="line">        LIS lis = <span class="keyword">new</span> LIS(arr);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"结果1: "</span>+lis.foo());</span><br><span class="line">        System.out.println(<span class="string">"耗时1: "</span>+(System.currentTimeMillis()-time));</span><br><span class="line"></span><br><span class="line">        time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"结果2: "</span>+foo(arr, arr.length-<span class="number">1</span>));</span><br><span class="line">        System.out.println(<span class="string">"耗时2: "</span>+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 最长递增子序列 longest increasing subsequence</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LIS</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr;</span><br><span class="line">        HashMap&lt;Integer,Integer&gt; values = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        LIS(<span class="keyword">int</span>[]arr)&#123;</span><br><span class="line">            <span class="keyword">this</span>.arr = arr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> foo(arr,arr.length-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">            Integer value = values.get(end);</span><br><span class="line">            <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> value;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">                values.put(<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">                len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">            &#125;</span><br><span class="line">            values.put(end,len);</span><br><span class="line">            <span class="keyword">return</span> len;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">            len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/03/10/最长递增子序列问题-Java/" data-id="cjwnz3l8v001mt4l3xd2veh3y" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          SpringBoot+ajax长轮询实现简单即时通讯
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/12/mybatis批量插入方式的比较/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mybatis批量插入方式的比较</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16.67px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 13.33px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/09/nginx配置反向代理/">nginx配置反向代理</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/07/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/20/量子密钥分发原理-python实现/">量子密钥分发原理(python实现)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/15/RSA算法/">RSA算法原理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 lzlz000<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

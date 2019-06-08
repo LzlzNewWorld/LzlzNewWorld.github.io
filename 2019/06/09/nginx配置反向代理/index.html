@@ -5,23 +5,22 @@
   
 
   
-  <title>hexo+typora 插入图片 | lz的个人空间</title>
+  <title>nginx配置反向代理 | lz的个人空间</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。 方法1通过搜索得到的解决方案最常见的是安装插件： 1npm install hexo-asset-image --save  这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xx">
-<meta name="keywords" content="hexo">
+  <meta name="description" content="安装nginx1yum install -y nginx  启动Nginx并设置开机自动运行 ： 12systemctl start nginx.servicesystemctl enable nginx.service  默认端口80浏览器输入 服务器地址 即可看到 nginx的首页yum 安装的 nginx 配置路径在 /etc/nginx/nginx.conf ,可以修改端口号再重启 域名转">
+<meta name="keywords" content="nginx">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo+typora 插入图片">
-<meta property="og:url" content="http://lzlz000.github.io/2019/06/08/hexo-插入图片/index.html">
+<meta property="og:title" content="nginx配置反向代理">
+<meta property="og:url" content="http://lzlz000.github.io/2019/06/09/nginx配置反向代理/index.html">
 <meta property="og:site_name" content="lz的个人空间">
-<meta property="og:description" content="hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。 方法1通过搜索得到的解决方案最常见的是安装插件： 1npm install hexo-asset-image --save  这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xx">
+<meta property="og:description" content="安装nginx1yum install -y nginx  启动Nginx并设置开机自动运行 ： 12systemctl start nginx.servicesystemctl enable nginx.service  默认端口80浏览器输入 服务器地址 即可看到 nginx的首页yum 安装的 nginx 配置路径在 /etc/nginx/nginx.conf ,可以修改端口号再重启 域名转">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://lzlz000.github.io/images/1559990605779.png">
-<meta property="og:image" content="http://lzlz000.github.io/images/1559989480817.png">
-<meta property="og:updated_time" content="2019-06-08T10:43:40.094Z">
+<meta property="og:image" content="http://lzlz000.github.io/images/12404.png">
+<meta property="og:updated_time" content="2019-06-08T21:09:37.763Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo+typora 插入图片">
-<meta name="twitter:description" content="hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。 方法1通过搜索得到的解决方案最常见的是安装插件： 1npm install hexo-asset-image --save  这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xx">
-<meta name="twitter:image" content="http://lzlz000.github.io/images/1559990605779.png">
+<meta name="twitter:title" content="nginx配置反向代理">
+<meta name="twitter:description" content="安装nginx1yum install -y nginx  启动Nginx并设置开机自动运行 ： 12systemctl start nginx.servicesystemctl enable nginx.service  默认端口80浏览器输入 服务器地址 即可看到 nginx的首页yum 安装的 nginx 配置路径在 /etc/nginx/nginx.conf ,可以修改端口号再重启 域名转">
+<meta name="twitter:image" content="http://lzlz000.github.io/images/12404.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -63,10 +62,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hexo-插入图片" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-nginx配置反向代理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/08/hexo-插入图片/" class="article-date">
-  <time datetime="2019-06-08T02:37:22.000Z" itemprop="datePublished">2019-06-08</time>
+    <a href="/2019/06/09/nginx配置反向代理/" class="article-date">
+  <time datetime="2019-06-08T20:23:49.000Z" itemprop="datePublished">2019-06-09</time>
 </a>
     
   </div>
@@ -77,7 +76,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hexo+typora 插入图片
+      nginx配置反向代理
     </h1>
   
 
@@ -85,30 +84,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。</p>
-<h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>通过搜索得到的解决方案最常见的是安装插件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+        <h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
 
-<p>这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xxx.png ，搜索下解决方法 ，还要自己手动去 node_modules 中修改脚本才能用，我们知道，node_modules 实际上都是npm install的时候自动生成的，这样的改动以后还要反复手动操作，太难受了，此方法不可取。</p>
-<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>hexo官方给了两种解决方式 <a href="https://hexo.io/zh-cn/docs/asset-folders" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders</a> </p>
-<p>一个是使用hexo的标签：</p>
-<p><img src="/images/1559990605779.png" alt></p>
-<p>这个方式看起来完美解决了问题，但是在我本地通过typora编辑文档时，是看不到图片的，不方便使用。</p>
-<h3 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h3><p>使用最简单的方式在 source 目录下创建images目录，然后图片都保存在这里。</p>
-<p>关键是要在typora上做以下设置：</p>
-<p>在md文件头部的配置项中，添加 <code>typora-root-url: ../</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:  hexo+typora 插入图片</span><br><span class="line">date: 2019-06-08 10:37:22</span><br><span class="line">tags:</span><br><span class="line">typora-root-url: ../</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>启动Nginx并设置开机自动运行 ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
 
-<p>这样引用的图片都以上一级目录即 sourse作为根目录了，此时插入的图片时，只要点击“复制图片到…”并选择一次文件夹，以后每次都会自动保存在 sourse/image目录下，并且本地的显示和服务器上的根目录完全一致。</p>
-<p><img src="/images/1559989480817.png" alt="本地路径和服务器路径一致"></p>
+<p>默认端口80<br>浏览器输入 服务器地址 即可看到 nginx的首页<br>yum 安装的 nginx 配置路径在 <strong>/etc/nginx/nginx.conf</strong> ,可以修改端口号再重启</p>
+<h3 id="域名转发"><a href="#域名转发" class="headerlink" title="域名转发"></a>域名转发</h3><p>在本机上，我事先装了一个 nexus 私服，端口是8081，以此为例子, 我们通过域名转发把 nexus.xx.xx 转发到 xx.xx:8081.</p>
+<p>首先，要有一个域名。</p>
+<h6 id="配置dns-解析"><a href="#配置dns-解析" class="headerlink" title="配置dns 解析"></a>配置dns 解析</h6><p>然后新建一个DNS解析配置，把子域名 nexus.xx.xx  解析到服务器IP地址，稍等片刻，等待DNS服务器更新解析，我自己的域名使用了 <a href="https://www.dns.com/" target="_blank" rel="noopener">https://www.dns.com/</a> 提供的 DNS服务器<br><img src="/images/12404.png" alt="image.png"></p>
+<p>浏览器键入 nexus.xx.xx，进入了nginx的首页。此步骤完成</p>
+<h6 id="配置nginx域名转发"><a href="#配置nginx域名转发" class="headerlink" title="配置nginx域名转发"></a>配置nginx域名转发</h6><p>在 nginx.conf的 http 模块中 加入一个 server </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">   &#123;</span><br><span class="line">       listen 80;</span><br><span class="line">       server_name nexus.xx.xx;</span><br><span class="line">       location / &#123;</span><br><span class="line">           proxy_redirect off;</span><br><span class="line">           proxy_set_header Host $host;</span><br><span class="line">           proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">           proxy_pass http://127.0.0.1:8081; # 转发地址 可以是 baidu.com 或者任何地址</span><br><span class="line">       &#125;</span><br><span class="line">       access_log logs/nexus.log;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存并重启服务器 （我尝试使用nginx -s reload 重新加载配置文件无效，只能重启）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
+
+<p>浏览器键入 nexus.xx.xx 咦 404? 没错啦，这是nexus的404 nexus的web 首页在 nexus.xx.xx/nexus </p>
+<p>END</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwnyxm340004t4l3r1c0ip2x" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/09/nginx配置反向代理/" data-id="cjwnyxm3b000at4l3ll6hdvk6" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
 
     </footer>
   </div>
@@ -116,19 +117,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/06/09/nginx配置反向代理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          nginx配置反向代理
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/06/07/hello-hexo/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/06/08/hexo-插入图片/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">hello hexo</div>
+      <div class="article-nav-title">hexo+typora 插入图片</div>
     </a>
   
 </nav>

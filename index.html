@@ -57,6 +57,62 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-nginx配置反向代理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/09/nginx配置反向代理/" class="article-date">
+  <time datetime="2019-06-08T20:23:49.000Z" itemprop="datePublished">2019-06-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/09/nginx配置反向代理/">nginx配置反向代理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
+
+<p>启动Nginx并设置开机自动运行 ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
+
+<p>默认端口80<br>浏览器输入 服务器地址 即可看到 nginx的首页<br>yum 安装的 nginx 配置路径在 <strong>/etc/nginx/nginx.conf</strong> ,可以修改端口号再重启</p>
+<h3 id="域名转发"><a href="#域名转发" class="headerlink" title="域名转发"></a>域名转发</h3><p>在本机上，我事先装了一个 nexus 私服，端口是8081，以此为例子, 我们通过域名转发把 nexus.xx.xx 转发到 xx.xx:8081.</p>
+<p>首先，要有一个域名。</p>
+<h6 id="配置dns-解析"><a href="#配置dns-解析" class="headerlink" title="配置dns 解析"></a>配置dns 解析</h6><p>然后新建一个DNS解析配置，把子域名 nexus.xx.xx  解析到服务器IP地址，稍等片刻，等待DNS服务器更新解析，我自己的域名使用了 <a href="https://www.dns.com/" target="_blank" rel="noopener">https://www.dns.com/</a> 提供的 DNS服务器<br><img src="/images/12404.png" alt="image.png"></p>
+<p>浏览器键入 nexus.xx.xx，进入了nginx的首页。此步骤完成</p>
+<h6 id="配置nginx域名转发"><a href="#配置nginx域名转发" class="headerlink" title="配置nginx域名转发"></a>配置nginx域名转发</h6><p>在 nginx.conf的 http 模块中 加入一个 server </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">   &#123;</span><br><span class="line">       listen 80;</span><br><span class="line">       server_name nexus.xx.xx;</span><br><span class="line">       location / &#123;</span><br><span class="line">           proxy_redirect off;</span><br><span class="line">           proxy_set_header Host $host;</span><br><span class="line">           proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">           proxy_pass http://127.0.0.1:8081; # 转发地址 可以是 baidu.com 或者任何地址</span><br><span class="line">       &#125;</span><br><span class="line">       access_log logs/nexus.log;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存并重启服务器 （我尝试使用nginx -s reload 重新加载配置文件无效，只能重启）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
+
+<p>浏览器键入 nexus.xx.xx 咦 404? 没错啦，这是nexus的404 nexus的web 首页在 nexus.xx.xx/nexus </p>
+<p>END</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/06/09/nginx配置反向代理/" data-id="cjwnyxm3b000at4l3ll6hdvk6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hexo-插入图片" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/06/08/hexo-插入图片/" class="article-date">
@@ -99,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwnekicf00041kl31lg25x70" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwnyxm340004t4l3r1c0ip2x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -151,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwnekic900021kl3xlummpuz" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwnyxm320003t4l37zd87rld" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -226,7 +282,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="cjwnxwv650002zkl3dv3c2ejd" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="cjwnyxm4e001gt4l3onl0qdtk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li></ul>
@@ -297,7 +353,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/15/RSA算法/" data-id="cjwnxjeu2000004l38bb3k2hr" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/03/15/RSA算法/" data-id="cjwnyxm2t0000t4l3fmlwm1c7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -357,7 +413,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/" data-id="cjwnwxg250002f8l31cfj19l8" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/" data-id="cjwnyxm360005t4l3akhhmmg3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -406,7 +462,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/07/20/junit单元测试中使用mock/" data-id="cjwnwsj1d0002z8l3tq3g75b6" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2018/07/20/junit单元测试中使用mock/" data-id="cjwnyxm390008t4l3led9tndq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
@@ -466,7 +522,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/07/10/element-ui-的响应式栅格布局/" data-id="cjwnekic400001kl37ajq4xiv" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2018/07/10/element-ui-的响应式栅格布局/" data-id="cjwnyxm2y0001t4l3iqobg1by" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
@@ -519,7 +575,7 @@ String productMsg1();</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/05/23/使用Feign进行应用间通信/" data-id="cjwnenbud000c1kl3cj06cvot" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2018/05/23/使用Feign进行应用间通信/" data-id="cjwnyxm3c000ct4l3q6v9nbe8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
@@ -584,64 +640,7 @@ String productMsg1();</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/05/22/使用RestTemplate进行应用间通信/" data-id="cjwnenbtf000b1kl3j0mgevpg" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-使用多个-Eureka-Server" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/21/使用多个-Eureka-Server/" class="article-date">
-  <time datetime="2018-05-20T16:00:00.000Z" itemprop="datePublished">2018-05-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/21/使用多个-Eureka-Server/">使用多个 Eureka</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用多个-Eureka"><a href="#使用多个-Eureka" class="headerlink" title="使用多个 Eureka"></a>使用多个 Eureka</h2><p>通过不同的配置文件 application.yml 启动多个实例来实现</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
-
-<p>这样 在 idea 或者 Eclipse 中我们需要启动一个实例，然后修改配置再启动一个实例，有点乱。<br>可以把 application.yml 定义为下面的形式：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无参数启动</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> <span class="comment">#防止由于eureka的机制导致 client 被错误显示在线 在开发环境使用</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server1</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server2</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="string">​</span>      <span class="attr">defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
-
-<p>运行方式</p>
-<ol>
-<li>在idea中运行<br>新建2个运行配置 server1 server2，按图片所示分别添加参数<br>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```--spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p><img src="https://upload-images.jianshu.io/upload_images/3867641-311c2582738563e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
-<ol>
-<li>打包运行<br>启动两个cmd窗口，切换到项目目录下，分别运行<br>​<figure class="highlight java"><figcaption><span>-jar target/eureka-0.0.1-SNAPSHOT.jar --spring.profiles.active</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```java -jar target/eureka-<span class="number">0.0</span>.1-SNAPSHOT.jar --spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>我们同时运行刚才创建的 Client，注意我们只把 Client 注册到了<figure class="highlight plain"><figcaption><span>也就是server1中</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">此时，localhost:8761,localhost:8762的Eureka Server 均显示如下，即只在server1中注册的Client也被注册到了server2![](https://upload-images.jianshu.io/upload_images/3867641-b9e6e0ebca02eea4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">虽然，Client被自动注册到了server2，但是如果server1不启动，server2无法得到Client的注册（Client在server2注册后，server1变成不可用并不影响）。所以我们在Client中做修改,配置2个defaultZone</span><br><span class="line">​```yml</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">​    service-url:</span><br><span class="line">​      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/</span><br></pre></td></tr></table></figure></p>
-<p>当有3个Eureka Server时，以此类推，三个Server相互配置另外2个地址，Client 配置 3个地址</p>
-<p>```</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/05/21/使用多个-Eureka-Server/" data-id="cjwnetjni000g1kl3zo5yrgxy" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2018/05/22/使用RestTemplate进行应用间通信/" data-id="cjwnyxm3e000ft4l3899qso8k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
@@ -671,7 +670,7 @@ String productMsg1();</code></pre><p>}</p>
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
   </div>
 
@@ -681,7 +680,7 @@ String productMsg1();</code></pre><p>}</p>
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16.67px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 13.33px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+      <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16.67px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 13.33px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
     </div>
   </div>
 
@@ -703,6 +702,10 @@ String productMsg1();</code></pre><p>}</p>
       <ul>
         
           <li>
+            <a href="/2019/06/09/nginx配置反向代理/">nginx配置反向代理</a>
+          </li>
+        
+          <li>
             <a href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
           </li>
         
@@ -716,10 +719,6 @@ String productMsg1();</code></pre><p>}</p>
         
           <li>
             <a href="/2019/03/15/RSA算法/">RSA算法原理</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/01/java正则表达式-环视与贪婪/">java正则表达式-环视、反向引用、贪婪</a>
           </li>
         
       </ul>
