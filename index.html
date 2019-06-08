@@ -44,8 +44,6 @@
         
           <a class="main-nav-link" href="/archives">归档</a>
         
-          <a class="main-nav-link" href="/explore">探索</a>
-        
       </nav>
       <nav id="sub-nav">
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
@@ -101,7 +99,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwne05ke0001vol31b82zbal" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwnekicf00041kl31lg25x70" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -141,14 +139,19 @@
 <p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
 <p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
 <p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
-<p><strong>目前的问题</strong></p>
-<p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
+<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
 <p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
+<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
+<ol>
+<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
+<li>需要手动添加 yaml front matter</li>
+</ol>
+<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwne05ka0000vol3crbyaet1" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwnekic900021kl3xlummpuz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -160,7 +163,502 @@
 
 
   
+    <article id="post-量子密钥分发原理-python实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/20/量子密钥分发原理-python实现/" class="article-date">
+  <time datetime="2019-03-20T05:57:15.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/20/量子密钥分发原理-python实现/">量子密钥分发原理(python实现)</a>
+    </h1>
+  
 
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我只是一个程序员，对自然科学比较感兴趣。首先说明，我对量子力学仅停留在科普级别的了解。我仅仅利用其性质，来用代码尝试说明量子加密是如何实现的，仅供拓展思维。打个比方，本文对量子加密的讨论就如同通过“窜天猴”鞭炮作为demo来了解运载火箭的原理。</p>
+<p><img src="/images/12402.png" alt="本文内容"> <img src="/images/124.png" alt="量子通讯"></p>
+<h4 id="观测对测量结果的影响"><a href="#观测对测量结果的影响" class="headerlink" title="观测对测量结果的影响"></a>观测对测量结果的影响</h4><p>观测对测量结果产生影响的这种思想，真的对我的世界观产生了极大的挑战，世间万物居然遵循着这样的规律运行，让人感觉十分奇妙。</p>
+<p>一个宏观对象，假设他有a,b,c 3个属性，该属性在对象生成时就确定，值可以为0或者1。就如同你生来就是男生/女生 不可修改，当然现在可以变性，但是实际上你的基因并不会改变，仅仅是“形似”罢了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.__a = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        self.__b = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        self.__c = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_a</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__a</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_b</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__b</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_c</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__b</span><br><span class="line"></span><br><span class="line">o = Object()</span><br><span class="line">print(<span class="string">"a:"</span>+str(o.get_a())+<span class="string">" b:"</span>+str(o.get_b())+<span class="string">" c:"</span>+str(o.get_c()))</span><br><span class="line">print(<span class="string">"b:"</span>+str(o.get_b())+<span class="string">" a:"</span>+str(o.get_a()))</span><br><span class="line">print(<span class="string">"c:"</span>+str(o.get_a())+<span class="string">" b:"</span>+str(o.get_b()))</span><br><span class="line">print(<span class="string">"a:"</span>+str(o.get_a())+<span class="string">" c:"</span>+str(o.get_b()))</span><br></pre></td></tr></table></figure>
+
+<p>显而易见，对象生成后它的属性便是一个确定的值，该结果不会因为你的测量顺序而改变。比如你是一个汉族男性，不会因为先检查你的性别还是先检查你的民族而有所差别，在人类没有发现量子世界的性质之前，世间万物皆为如此。可能的运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a:1 b:0 c:0</span><br><span class="line">b:0 a:1</span><br><span class="line">c:0 b:0</span><br><span class="line">a:1 c:0</span><br></pre></td></tr></table></figure>
+
+<p><strong>量子的观测不对异性</strong><br>对量子的不同特征进行测量，观测的顺序会影响测量的结果，这种性质被称为 “量子的观测不对异性” 。嗯，一个充满哲♂学气息的性质，可见量子是个gay，观测只对同性。<br>注意，该结果不是随机的，而是“叠加的”，因为当你的测量顺序一定时得到的结果是确定的。在两个属性（a,b）的情况下，一个量子的观测方式有[a,b],[b,a]两种，因此其a,b属性应该是两种状态的叠加。以此类推我们用代码来描述一个拥有a,b,c 3个属性的“量子对象”。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">            self.__children = &#123;&#125;</span><br><span class="line">            self.__val = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">set_child</span><span class="params">(self, name, child)</span>:</span></span><br><span class="line">            self.__children[name]=child</span><br><span class="line">            <span class="keyword">return</span> child <span class="comment"># 方便连续调用简化代码</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get_child</span><span class="params">(self, name)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> self.__children[name]</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get_val</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> self.__val</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Quantum</span>:</span></span><br><span class="line">    <span class="comment">#关于叠加态 我们可以用树结构来维护</span></span><br><span class="line">    <span class="comment">#一个3个属性的量子，可表示为,</span></span><br><span class="line">    <span class="comment">#     root</span></span><br><span class="line">    <span class="comment">#   /   |   \</span></span><br><span class="line">    <span class="comment">#  a    b    c</span></span><br><span class="line">    <span class="comment">#  /\   /\   /\</span></span><br><span class="line">    <span class="comment"># b  c a  c a  b </span></span><br><span class="line">    <span class="comment"># |  | |  | |  |</span></span><br><span class="line">    <span class="comment"># c  b c  a b  a</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测量方式，队列，如果新的测量属性和队列中最后一个值不一致则加入队列，</span></span><br><span class="line">    <span class="comment"># 如果队列长度大于（属性数-1）则头部数据出列，，为了便于理解，假设有abc三个属性</span></span><br><span class="line">    <span class="comment"># 测量属性 队列值</span></span><br><span class="line">    <span class="comment"># a       [a]</span></span><br><span class="line">    <span class="comment"># b       [a,b]  </span></span><br><span class="line">    <span class="comment"># c       [b,c]  </span></span><br><span class="line">    <span class="comment"># c       [b,c]   和最后一次测量一样 不发生改变</span></span><br><span class="line">    <span class="comment"># a       [c,a]  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.route = []</span><br><span class="line">        root = TreeNode()</span><br><span class="line">        self.root = root</span><br><span class="line">        root.set_child(<span class="string">'a'</span>,TreeNode()).set_child(<span class="string">'b'</span>,TreeNode()).set_child(<span class="string">'c'</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">'a'</span>).set_child(<span class="string">'c'</span>,TreeNode()).set_child(<span class="string">'b'</span>,TreeNode())</span><br><span class="line">        root.set_child(<span class="string">'b'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode()).set_child(<span class="string">'c'</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">'b'</span>).set_child(<span class="string">'c'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode())</span><br><span class="line">        root.set_child(<span class="string">'c'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode()).set_child(<span class="string">'b'</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">'c'</span>).set_child(<span class="string">'b'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode())</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        length = len(self.route)</span><br><span class="line">        <span class="keyword">if</span> (length == <span class="number">0</span> <span class="keyword">or</span> self.route[<span class="number">-1</span>]!=name):</span><br><span class="line">            self.route.append(name)</span><br><span class="line">            <span class="keyword">if</span> (len(self.route) &gt;<span class="number">2</span>):</span><br><span class="line">                self.route.pop(<span class="number">0</span>)</span><br><span class="line">        node = self.root</span><br><span class="line">        <span class="keyword">for</span> name <span class="keyword">in</span> self.route:</span><br><span class="line">            node = node.get_child(name)</span><br><span class="line">        <span class="keyword">return</span> node.get_val()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_a</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">'a'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_b</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">'b'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_c</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">'c'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>好了，我们已经通过代码实现了“观测对测量结果产生影响”的效果。每一次get属性值，就是对对象的一次观测，不同观测顺序下，变量会返回不同的值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创造一个量子并对他的属性反复观测</span></span><br><span class="line">q = Quantum()</span><br><span class="line">print(<span class="string">'a'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'b'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'a'</span>,q.get_b())</span><br><span class="line">print(<span class="string">'c'</span>,q.get_c())</span><br><span class="line">print(<span class="string">'a'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'b'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'a'</span>,q.get_a())</span><br></pre></td></tr></table></figure>
+
+<p>可能的运行结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a 0</span><br><span class="line">b 0</span><br><span class="line">a 1</span><br><span class="line">c 1</span><br><span class="line">a 0</span><br><span class="line">b 0</span><br><span class="line">a 0</span><br></pre></td></tr></table></figure>
+
+<h4 id="量子秘钥分发"><a href="#量子秘钥分发" class="headerlink" title="量子秘钥分发"></a>量子秘钥分发</h4><p>通过量子的物理性质，保证了秘钥分发时的绝对安全<br>用代码来模拟该过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">from quantum import Quantum</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Observer:</span><br><span class="line">    length = 20</span><br><span class="line"></span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.q_list = []  # 量子集合</span><br><span class="line"></span><br><span class="line">    # 初始化量子集合</span><br><span class="line">    def init_quantum(self):</span><br><span class="line">        for i in range(Observer.length):</span><br><span class="line">            self.q_list.append(Quantum())</span><br><span class="line"></span><br><span class="line">    # 观测</span><br><span class="line">    def observe(self):</span><br><span class="line">        def __observe(quantum):</span><br><span class="line">            ran = random.randint(0, 2)</span><br><span class="line">            #最常见的光量子就有“线偏振”和“圆偏振”两种属性</span><br><span class="line">            # 只使用a,b两个属性 来模拟这种情况</span><br><span class="line">            if (ran == 0):</span><br><span class="line">                return (&apos;a&apos;, q.get_a())</span><br><span class="line">            else:</span><br><span class="line">                return (&apos;b&apos;, q.get_b())</span><br><span class="line">        self.path = []</span><br><span class="line">        self.result = []</span><br><span class="line">        for q in self.q_list:</span><br><span class="line">            result = __observe(q)</span><br><span class="line">            self.path.append(result[0])</span><br><span class="line">            self.result.append(result[1])</span><br><span class="line">        print(self.name,&apos;观测方式：&apos;, self.path)</span><br><span class="line">        print(self.name,&apos;观测结果：&apos;, self.result)</span><br><span class="line">    </span><br><span class="line">    # 从另一个观测者获取量子序列</span><br><span class="line">    def get_quantum(self, another):</span><br><span class="line">        self.q_list=another.q_list</span><br><span class="line">    </span><br><span class="line">    # 从另一个观测者获取观测方式</span><br><span class="line">    def get_path(self, another):</span><br><span class="line">        self.key = []</span><br><span class="line">        for i in range(Observer.length):</span><br><span class="line">            if (another.path[i] == self.path[i]):</span><br><span class="line">                self.key.append(self.result[i])</span><br><span class="line">        print(self.name,&apos;秘钥：&apos;, self.key)</span><br></pre></td></tr></table></figure>
+
+<p>观测和秘钥传输</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sender = Observer(&apos;发送者&apos;)</span><br><span class="line">sender.init_quantum() # 初始化量子序列</span><br><span class="line">sender.observe() # 对量子序列进行观测</span><br><span class="line"></span><br><span class="line">reciver = Observer(&apos;接收者&apos;)</span><br><span class="line">reciver.get_quantum(sender) # 发送者把量子传输给接收者</span><br><span class="line">reciver.observe() # 接收者对其观测</span><br><span class="line"></span><br><span class="line"># 双方交换观察方式</span><br><span class="line">sender.get_path(reciver)</span><br><span class="line">reciver.get_path(sender)</span><br></pre></td></tr></table></figure>
+
+<p>可以得到这样的运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">发送者 观测方式： ['b', 'b', 'a', 'a', 'a', 'b', 'b', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'a', 'b', 'a', 'b', 'b', 'b']</span><br><span class="line">发送者 观测结果： [0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1]</span><br><span class="line">接收者 观测方式： ['a', 'b', 'a', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'b', 'b', 'a', 'b', 'b', 'b', 'b', 'b', 'b', 'a']</span><br><span class="line">接收者 观测结果： [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0]</span><br><span class="line">发送者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]</span><br><span class="line">接收者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]</span><br></pre></td></tr></table></figure>
+
+<h4 id="如何保证安全"><a href="#如何保证安全" class="headerlink" title="如何保证安全"></a>如何保证安全</h4><p>在模拟的代码中，“量子的观测不对异性” 通过存储观测方式 path 在Quantum对象中实现。这是我们在宏观世界来模拟这种现象的一种实现手段，实际上这是一种基本物理性质，观测者不可能从量子上得到之前对它观测的方式。</p>
+<p><strong>量子不可克隆</strong><br>要保证安全还需要量子的另一个特性“量子不可克隆”。就是说，世间没有两个相同的量子，你不可能通过一个已得到的量子获得完全相同的另一个量子。没有这个原理，窃听者完全可以复制一个量子对它进行观测并把原来的量子传送给接收者。</p>
+<p><strong>窃听过程</strong><br>知道上述两个物理性质后，如果有人试图监听，便是只能中截获了发送者传输的量子，并观测其值，然后再把它发送给接收者。然而此时所有人都不知道发送者的观测方式。窃听者也只能按自己的想法随意观测其属性。但没有关系，你对量子的观测便改变了量子的状态，当接收者获取到量子时，即便和发送者用同样的方式观测，也有可能得到不同的结果，当这个序列数量非常大的时候,这是必然发生的，结果就是得到了和发送者不一样的秘钥，这样窃听便被发现了。</p>
+<p>模拟上述过程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sender = Observer(<span class="string">'发送者'</span>)</span><br><span class="line">sender.init_quantum() <span class="comment"># 初始化量子序列</span></span><br><span class="line">sender.observe() <span class="comment"># 对量子序列进行观测</span></span><br><span class="line"></span><br><span class="line">interceptor = Observer(<span class="string">'窃听者'</span>)</span><br><span class="line">interceptor.get_quantum(sender) <span class="comment"># 截取信息</span></span><br><span class="line">interceptor.observe() <span class="comment"># 观测</span></span><br><span class="line"></span><br><span class="line">reciver = Observer(<span class="string">'接收者'</span>)</span><br><span class="line">reciver.get_quantum(interceptor) <span class="comment"># 发送者把量子传输给接收者</span></span><br><span class="line">reciver.observe() <span class="comment"># 接收者对其观测</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 双方交换观察方式</span></span><br><span class="line">sender.get_path(reciver)</span><br><span class="line">reciver.get_path(sender)</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">发送者 观测方式： ['b', 'a', 'b', 'a', 'b', 'b', 'b', 'a', 'b', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'b', 'a', 'b', 'a']</span><br><span class="line">发送者 观测结果： [1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1]</span><br><span class="line">窃听者 观测方式： ['a', 'b', 'a', 'b', 'b', 'b', 'b', 'a', 'b', 'a', 'a', 'b', 'b', 'b', 'a', 'b', 'b', 'b', 'b', 'b']</span><br><span class="line">窃听者 观测结果： [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]</span><br><span class="line">接收者 观测方式： ['a', 'a', 'b', 'b', 'a', 'a', 'a', 'b', 'a', 'b', 'b', 'b', 'b', 'a', 'b', 'b', 'b', 'a', 'b', 'a']</span><br><span class="line">接收者 观测结果： [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0]</span><br><span class="line">发送者 秘钥： [1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1]</span><br><span class="line">接收者 秘钥： [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0]</span><br></pre></td></tr></table></figure>
+
+<p>代码请参考<br><a href="https://github.com/lzlz000/simple-clear-knowledge/tree/master/%5Bpython%5D%E9%87%8F%E5%AD%90%E9%80%9A%E8%AE%AF" target="_blank" rel="noopener">https://github.com/lzlz000/simple-clear-knowledge/tree/master/%5Bpython%5D%E9%87%8F%E5%AD%90%E9%80%9A%E8%AE%AF</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="cjwnxwv650002zkl3dv3c2ejd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-RSA算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/15/RSA算法/" class="article-date">
+  <time datetime="2019-03-14T16:00:00.000Z" itemprop="datePublished">2019-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/15/RSA算法/">RSA算法原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h4><ol>
+<li><p>随意选择两个大的素数  p q</p>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. ```φ(n) = (p-1)(q-1)```  (欧拉函数)</span><br><span class="line">1. 公钥e: 满足 ```1&lt;e&lt;φ(n)```的整数 且和 φ(n)互质</span><br><span class="line">1. 私钥d: 满足 ```e*d mod φ(n)==1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>销毁p, q</p>
+</li>
+<li><p>公开发布 n和公钥 e</p>
+</li>
+</ol>
+<p>加密解密：</p>
+<ol>
+<li>加密，明文m (m应为小于n的整数)，m的e次幂取n的余数，得到值c即为密文<br>$c = m^e mod(n)$</li>
+<li>解密， 计算密文c的d次幂取n的余数，即得到明文m</li>
+</ol>
+<p>整体流程的简易代码 (python3)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 欧几里得算法 （辗转相除法） 求最大公约数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span><span class="params">(m, n)</span>:</span></span><br><span class="line">    mod = <span class="number">1</span></span><br><span class="line">    <span class="comment"># 将小数放到d1中</span></span><br><span class="line">    <span class="keyword">if</span>(m &lt;= n):</span><br><span class="line">        d1 = m</span><br><span class="line">        d2 = n</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        d1 = n</span><br><span class="line">        d2 = m</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> mod != <span class="number">0</span>:</span><br><span class="line">        mod = d2 % d1</span><br><span class="line">        d2 = d1</span><br><span class="line">        d1 = mod</span><br><span class="line">    <span class="keyword">return</span> d2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 真实情况下应该是很大的素数 通常为512、1024、2048位二进制数,如1024位二进制整数大约为十进制10^308数量级</span></span><br><span class="line"><span class="comment"># 计算得到秘钥然后以一定规则编码成字符串形式，形成常见的秘钥</span></span><br><span class="line">p = <span class="number">41</span></span><br><span class="line">q = <span class="number">43</span></span><br><span class="line">n = p * q</span><br><span class="line"><span class="comment"># 欧拉函数</span></span><br><span class="line">phi = (p<span class="number">-1</span>)*(q<span class="number">-1</span>)</span><br><span class="line"><span class="comment"># 1&lt;e&lt;φ(n)的整数 且和 φ(n)互质</span></span><br><span class="line">publicKey = <span class="number">2</span></span><br><span class="line"><span class="comment"># 检查是否互质 否则+1</span></span><br><span class="line"><span class="keyword">while</span> gcd(phi, publicKey) != <span class="number">1</span>:</span><br><span class="line">    publicKey = publicKey+<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 私钥d: e*d%φ(n)==1</span></span><br><span class="line">privateKey = (phi + <span class="number">1</span>) * publicKey</span><br><span class="line">print(<span class="string">"公钥:"</span>, publicKey,<span class="string">"私钥:"</span>, privateKey,<span class="string">"n:"</span>, n)</span><br><span class="line"><span class="comment"># 存储在计算机里的一切信息都可以认为是一串按一定规则序列化成的数字</span></span><br><span class="line">content = <span class="number">412</span>  <span class="comment"># 密文的值要小于 p * q,否则需要分段加密</span></span><br><span class="line">cipher = pow(content, publicKey, n)</span><br><span class="line">print(<span class="string">"密文"</span>, cipher)</span><br><span class="line">content1 = pow(cipher, privateKey, n)</span><br><span class="line">print(<span class="string">"明文"</span>, content1)</span><br></pre></td></tr></table></figure>
+
+<h5 id="幂模运算"><a href="#幂模运算" class="headerlink" title="幂模运算"></a>幂模运算</h5><p>上述代码中 通过 <strong>pow(a, b, c)</strong>获取 a的b次幂取c的模，该函数在python中是一个自带的函数，然而在其他常见语言的自带库（如java、js等）中，pow() 函数/方法 通常没有取模的功能，<strong>千万不可用 pow(a,b)%c代替该运算</strong>。上文的简单例子中，私钥的值已经高达 18491，任何一个大于1整数的18491次幂都已经是个天文数字，在大多数语言中运行时得到的已经不是一个精确的结果，取模的值是错误的。更不要说实际上使用的大素数，经过这样的运算，得到的值大到计算机内存肯定是存不下的。</p>
+<p>如果你不想深入了解该问题，在任何常用语言中，可以轻易找到科学计算库，都带有该算法，如果你还有兴趣，请搜索“蒙哥马利幂模运算”，也很容易理解。</p>
+<h5 id="获取大素数"><a href="#获取大素数" class="headerlink" title="获取大素数"></a>获取大素数</h5><p>我们知道判断一个数是否为素数的方法是这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math    </span><br><span class="line">     </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isPrime</span><span class="params">(n)</span>:</span>    </span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:    </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>   </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, int(math.sqrt(n)) + <span class="number">1</span>):    </span><br><span class="line">    <span class="keyword">if</span> n % i == <span class="number">0</span>:    </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>   </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>然而我们如果要获取一个大素数，如果把大数一个一个遍历直到找到一个素数其实是很低效的。因此我们通过一些素数的性质或者其规律，通过更有效率的办法筛选出可能符合要求的整数，然后对其进行精确的判断是实际常用的方法。参考下面的链接：<br><a href="https://www.zhihu.com/question/293656940/answer/512820832" target="_blank" rel="noopener">https://www.zhihu.com/question/293656940/answer/512820832</a></p>
+<h4 id="为什么RSA算法能保证安全？"><a href="#为什么RSA算法能保证安全？" class="headerlink" title="为什么RSA算法能保证安全？"></a>为什么RSA算法能保证安全？</h4><p>公开场合只能获取到公钥对 (n,publicKey)<br>publicKey 和 privateKey 的对应关系为  <em>publicKey = privateKey((p-1)(q-1)+1)</em>,
+而p,q在算法中已经被销毁了，我们只知道p,q的乘积n，通过n分解质因数找到质数p,q的是一个指数级别复杂度的算法，在实际使用中，p,q都是10的几百次方数量级的大数，计算出p,q对于现代计算机来说可以认为是一个在有限时间内不可解的问题。</p>
+<h4 id="随便写点"><a href="#随便写点" class="headerlink" title="随便写点"></a>随便写点</h4><p>相比技术问题，我更喜欢谈谈技术和技术以外事物的关系，从今天起开始写简明知识系列文章，其内容一般以代码作为载体，以简明的方式，短小的篇幅写下和编程相关的技术问题，也谈谈相关的非技术问题。</p>
+<p>RSA算法被认为是世界上最重要的算法之一。二战时期，科技强如德国，密码都可以被盟军破译。然而现在个人就可以对信息做到理论级别不可破解的方式加密，2016年“苹果fbi事件”就是如此。因此双向加密算法被用在了了生活中的方方面面，从https到你的银行账户，无处不在。</p>
+<blockquote>
+<p>联邦调查局将CNET引向联邦调查局长詹姆斯·科米（James Comey）的言论，科米谈到美国如何始终平衡隐私与公共安全，以及加密技术如何破坏了这种平衡。“强加密的逻辑意味着所有人的生命，包括执法，都将很快受到强加密的影响。”他说。“在我看来，根据我们的历史和我们的价值观，绝对的隐私以及那些认为政府应该把手从人民手机上拿开的想法没有任何意义。”</p>
+</blockquote>
+<p>拿不到私钥，即使强如国家暴力也无法获取你加密的任何信息，打破了强弱力量之间的平衡，让个人通过技术获取了可以对抗强权的小小手段。</p>
+<p>量子计算机的发展让在有限时间内破解私钥在未来变得有可能实现，因此情报部门如今会截获并保存他们认为有可能有价值的密文信息和公钥对，在破解私钥实现后便可得到其信息。然而每天世界上通讯中的加密数据海量，数据价值的时效性也有限，因此RSA算法保证信息的安全性在目前还是没有问题滴 : ）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/03/15/RSA算法/" data-id="cjwnxjeu2000004l38bb3k2hr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java正则表达式-环视与贪婪" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/01/java正则表达式-环视与贪婪/" class="article-date">
+  <time datetime="2019-03-01T05:29:42.000Z" itemprop="datePublished">2019-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/01/java正则表达式-环视与贪婪/">java正则表达式-环视、反向引用、贪婪</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="环视"><a href="#环视" class="headerlink" title="环视"></a>环视</h3><h4 id="什么是环视"><a href="#什么是环视" class="headerlink" title="什么是环视"></a>什么是环视</h4><p> 环视顾名思义就是从四周看。正则表达式一向都是从左向右工作的，但是环视也能从右向左工作。最典型的列子就是给你一个数字如12345678，需要你改成12，345，678这种格式。如果按照我们的思维来，应该是会从右边开始划分吧，每三个数字加一个逗号。环视就能按照我们的思维去解决这样的问题。这里要注意的是环视不匹配任何字符，只是匹配位置而已。作用和^,&amp;相似。环视又分为顺序环视和逆序环视。也就是从左到右工作和从右到左的区别.顺序环视在正则中用(?=)表示，包含括号。逆序用(?&lt;=)</p>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p><strong>(?=Expression)</strong>  顺序肯定环视，表示所在位置右侧能够匹配Expression<br><strong>(?!Expression)</strong>   顺序否定环视，表示所在位置右侧不能匹配Expression<br><strong>(?&lt;=Expression)</strong> 逆序肯定环视，表示所在位置左侧能够匹配Expression<br><strong>(?&lt;!Expression)</strong>  逆序否定环视，表示所在位置左侧不能匹配Expression</p>
+<p><strong>java中的使用方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配 前缀为 test的字母</span></span><br><span class="line">String s = <span class="string">"123testabc abc 123testLttt"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"(?&lt;=test)\\w+"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">	System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h3><p>按照()子表达式划分成若干组；每出现一对()就是一个捕获组；引擎会对捕获组进行编号，编号规则是左括号(从左到右出现的顺序，从1开始编号。</p>
+<p><strong>例：</strong></p>
+<p><strong>\1</strong> 代表对第一次匹配 <strong>(\w+)</strong> 的引用</p>
+<p>在使用了括号来包裹表达式后，matcher.groupCount()的值&gt;0，可以通过其获取捕获的值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"123testabc abc 123testLttt"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"(\\w+) \\1"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line">System.out.println(matcher.groupCount());</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group(<span class="number">0</span>));</span><br><span class="line">    System.out.println(matcher.group(<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="贪婪"><a href="#贪婪" class="headerlink" title="贪婪"></a>贪婪</h3><p>java中正则默认为贪婪模式，即尽可能多的匹配多的字符， “趋向于最大长度匹配”</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"&lt;div&gt;.*&lt;/div&gt;"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>非贪婪</strong></p>
+<p>使用方法 在需要匹配的串后面加上 <strong>?</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"&lt;div&gt;.*?&lt;/div&gt;"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;hello&lt;/div&gt;</span><br><span class="line">&lt;div&gt;world&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/" data-id="cjwnwxg250002f8l31cfj19l8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-junit单元测试中使用mock" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/20/junit单元测试中使用mock/" class="article-date">
+  <time datetime="2018-07-19T16:00:00.000Z" itemprop="datePublished">2018-07-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/20/junit单元测试中使用mock/">springboot单元测试中使用 mock</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用场景：</p>
+<p>做单元测试时，需要依赖一个RPC接口，而该接口并不是测试所关心的地方，可以一个使用mock来返回一个虚假的值而避免复杂化测试过程。</p>
+<p>以此类推，要依赖任何和测试无关并且比较复杂/执行慢/接口在变化or不确定的代码，都可以使用mock</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ApplicationTest是springboot单元测试的启动类，本例通过继承方式加载</span></span><br><span class="line"><span class="comment">// 设置单元测试的配置文件，通常放在test目录下</span></span><br><span class="line"><span class="meta">@ActiveProfiles</span>(<span class="string">"mock-test"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RestrictCheckServiceImplTest</span> <span class="keyword">extends</span> <span class="title">ApplicationTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger LOG =</span><br><span class="line">            LoggerFactory.getLogger(RestrictCheckServiceImplTest.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// mock对象</span></span><br><span class="line">    <span class="meta">@Mock</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ArrangeAssistMaintain arrangeAssistMaintain;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// mock注入对象(测试类)</span></span><br><span class="line">    <span class="meta">@InjectMocks</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestrictCheckServiceImpl restrictCheckService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mockClassroom</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MockitoAnnotations.initMocks(<span class="keyword">this</span>);</span><br><span class="line">        <span class="comment">// 当调用 getClassroomById(Long id) 方法时，执行mock方法</span></span><br><span class="line">        Mockito.when(arrangeAssistMaintain.getClassroomById(Mockito.anyLong()))</span><br><span class="line">                .thenAnswer((Answer&lt;Classroom&gt;) invocationOnMock -&gt; &#123;</span><br><span class="line">            Long classroomId = invocationOnMock.getArgumentAt(<span class="number">0</span>, Long.class);</span><br><span class="line">            LOG.info(<span class="string">"============ mock 教室 ============"</span>);</span><br><span class="line">            Classroom classroom = <span class="keyword">new</span> Classroom();</span><br><span class="line">            classroom.setId(classroomId);</span><br><span class="line">            classroom.setType(<span class="string">"1"</span>);</span><br><span class="line">            classroom.setName(<span class="string">"mock教室"</span>);</span><br><span class="line">            <span class="keyword">return</span> classroom;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getClassroom</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Classroom classroom = restrictCheckService.getClassroom(<span class="number">1</span>);</span><br><span class="line">        System.out.println(ToStringBuilder.reflectionToString(classroom));</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中要注意的地方:</p>
+<ol>
+<li>记得在配置mock的代码<strong>之前</strong> 执行 <em>MockitoAnnotations.initMocks(this);</em></li>
+<li>被 <strong>@InjectMocks</strong>  标记注入的类 (在本例中为 <strong>RestrictCheckServiceImpl</strong>)，一定要有被注入类的set方法，否则注入失败，并且不会报出任何异常</li>
+<li>mock对象的变量名尽量与被注入类中的变量名相同，经验证变量名不同也可以注入，但当存在多个同类型变量时，可能会产生困扰</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/07/20/junit单元测试中使用mock/" data-id="cjwnwsj1d0002z8l3tq3g75b6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-element-ui-的响应式栅格布局" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/10/element-ui-的响应式栅格布局/" class="article-date">
+  <time datetime="2018-07-10T12:05:10.000Z" itemprop="datePublished">2018-07-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/10/element-ui-的响应式栅格布局/">element-ui的响应式栅格布局</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>要注意的问题</p>
+<ul>
+<li>xs、sm、md、lg、xl 五个尺寸的默认值均为24，意味着，任何一个尺寸属性不设置，则该尺寸下响应式宽度为24，这与bootstrap不同</li>
+<li>尺寸属性可以设为0，则该el-col不显示</li>
+<li>不论尺寸属性设置为多少，若el-col中没有任何内容则该el-col不显示（内部元素为空也不行，如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col&gt;</span><br><span class="line">    &lt;div&gt;&lt;/div&gt;</span><br><span class="line">    &lt;span&gt;&lt;/span&gt;</span><br><span class="line">&lt;/el-col&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-row&gt;</span><br><span class="line">    &lt;el-col :xs=&quot;12&quot; :sm=&quot;9&quot; :md=&quot;6&quot; :lg=&quot;0&quot; :xl=&quot;0&quot;&gt;123&lt;/el-col&gt;</span><br><span class="line">    &lt;el-col :xs=&quot;12&quot; :sm=&quot;15&quot; :md=&quot;18&quot; :lg=&quot;21&quot; :xl=&quot;24&quot;&gt;456&lt;/el-col&gt;</span><br><span class="line">&lt;/el-row&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>offset 属性是没有响应式的，可以通过加入一个带一个空格的el-col解决： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;3&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>可以把固定的响应式布局作为组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;my-container&apos;,&#123;</span><br><span class="line">    template:`</span><br><span class="line">    &lt;el-row&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;4&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;24&quot; :sm=&quot;22&quot; :md=&quot;20&quot; :lg=&quot;18&quot; :xl=&quot;18&quot;&gt;</span><br><span class="line">            &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;/el-col&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;4&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br><span class="line">    &lt;/el-row&gt;</span><br><span class="line">    `</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>就可以愉快的使用了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-container&gt;</span><br><span class="line">    &lt;div style=&quot;background: red&quot;&gt;内容&lt;/div&gt;</span><br><span class="line">&lt;/my-container&gt;`</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/07/10/element-ui-的响应式栅格布局/" data-id="cjwnekic400001kl37ajq4xiv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用Feign进行应用间通信" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/23/使用Feign进行应用间通信/" class="article-date">
+  <time datetime="2018-05-22T16:00:00.000Z" itemprop="datePublished">2018-05-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/23/使用Feign进行应用间通信/">使用Feign进行应用间通信</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用Feign进行应用间通信"><a href="#使用Feign进行应用间通信" class="headerlink" title="使用Feign进行应用间通信"></a>使用Feign进行应用间通信</h2><h5 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-feign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0.M2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>坑</strong><br>我是用了 <strong>Spring Boot 2.0.2.RELEASE</strong>  以及其对应的spring-cloud版本 <strong>Spring-Cloud Finchley.RC2</strong> 即2.0.0.RC2<br>按理说，spring-cloud-starter-feign 应该不再需要指定版本，然而maven的中央仓库中甚至都没有2.0版本的 Feign。spring官方仓库也没有对应版本，因此不指定版本就无法导入依赖了，但是好歹有可兼容的2.0.x版本，所以指定版本 <strong>2.0.0.M2</strong> </p>
+<p>大概是因为Spring Boot 2.0刚发布没几个月，对应的版本还没有发布吧？作为一个菜鸟，就不该作死用2.0版本学习spring cloud，一堆麻烦:(</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-30328eaf1c0a8a05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven中央仓库"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-d9745dbf1964ad6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring官方仓库"></p>
+<h5 id="使用Feign"><a href="#使用Feign" class="headerlink" title="使用Feign"></a>使用Feign</h5><p>Feign 的使用非常简单<br>新建类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lzlz.demo.springcloud.consumer.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其实不需要加@Component注解，只是idea无法识别，在注入的地方提示错误</span></span><br><span class="line"><span class="comment">// 虽然不影响编译运行，但是看着不舒服，不在意的可以忽略</span></span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="meta">@FeignClient</span>(name = <span class="string">"product"</span>) <span class="comment">//对应的应用名</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProductClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/echo"</span>)</span><br><span class="line">    <span class="function">String <span class="title">productMsg</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在需要使用的地方注入此对象，调用对应方法即可：</p>
+<figure class="highlight plain"><figcaption><span>resp </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在FeignClient中 可以完全像Controller那样使用各种 ```@RequestMapping``` 注解，用于类和方法上。</span><br></pre></td></tr></table></figure>
+
+<p>@Component<br>@FeignClient(name = “product”)<br>@RequestMapping(“test”)<br>public interface ProductClient {<br>    @GetMapping(“/echo”)<br>    String productMsg();</p>
+<pre><code>@PostMapping(&quot;/echo&quot;)
+String productMsg1();</code></pre><p>}</p>
+<pre><code>使用Feign，我们就如同调用本地方法一样使用rest远程调用，体验还是不错滴。</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/23/使用Feign进行应用间通信/" data-id="cjwnenbud000c1kl3cj06cvot" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用RestTemplate进行应用间通信" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/22/使用RestTemplate进行应用间通信/" class="article-date">
+  <time datetime="2018-05-21T16:00:00.000Z" itemprop="datePublished">2018-05-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/22/使用RestTemplate进行应用间通信/">使用RestTemplate进行应用间通信</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用RestTemplate进行应用间通信"><a href="#使用RestTemplate进行应用间通信" class="headerlink" title="使用RestTemplate进行应用间通信"></a>使用RestTemplate进行应用间通信</h2><p>上文中我们已经准备好了 Eureka Server，在测试环境中，就不需要多个Eureka了，启动一个应用即可，为了方便我们打包运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar .\target\eureka-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-ae7dbf9d401a1954.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>我们再创建两个 Spring Boot 项目，分别为product，consumer 并修改配置文件注册到 Eureka 中</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
+
+<p>记得在启动类添加注解 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">###### product项目中</span><br><span class="line">添加controller</span><br><span class="line">```java</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">public class ServerController &#123;</span><br><span class="line">    @GetMapping(&quot;echo&quot;)</span><br><span class="line">    public String echoeMessage(HttpServletRequest request)&#123;</span><br><span class="line">        return &quot;this is server &quot;+ request.getServerName()+&quot;:&quot;+request.getServerPort();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h6 id="consumer-项目中"><a href="#consumer-项目中" class="headerlink" title="consumer 项目中"></a>consumer 项目中</h6><p>添加config类，其中<figure class="highlight plain"><figcaption><span>Bean</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">```java</span><br><span class="line">import org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class RestTemplateConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    @LoadBalanced</span><br><span class="line">    public RestTemplate restTemplate()&#123;</span><br><span class="line">        return new RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>添加 controller，其中 restTemplate直接在url中用在Eureka中注册的应用名代替地址和端口,在product项目中，我们配置的应用名</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">product</span></span><br></pre></td></tr></table></figure>
+
+<p>代码调用（应用名不区分大小写）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class ClientController &#123;</span><br><span class="line"></span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public ClientController(RestTemplate restTemplate) &#123;</span><br><span class="line">        this.restTemplate = restTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/product-msg&quot;)</span><br><span class="line">    public String getProductMsg()&#123;</span><br><span class="line">        String resp = restTemplate.getForObject(&quot;http://product/echo&quot;,String.class);</span><br><span class="line">        log.info(&quot;response=&#123;&#125;&quot;,resp);</span><br><span class="line">        return resp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过-Dserver.port=xxxx设置不同的端口，启动多个product实例，idea中：<img src="https://upload-images.jianshu.io/upload_images/3867641-05f910499d165abd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>或者打包执行 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar xxxxx.jar --server.port=xxxx</span><br></pre></td></tr></table></figure>
+
+<p>我们启动两个实例，使用8080和8081端口</p>
+<p>启动consumer，反复请求地址 <a href="http://localhost:8180/product-msg" target="_blank" rel="noopener">http://localhost:8180/product-msg</a><br>将会得到不同的返回：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this is server 192.168.1.107:8081</span><br><span class="line">this is server 192.168.1.107:8080</span><br><span class="line">this is server 192.168.1.107:8081</span><br><span class="line">this is server 192.168.1.107:8080</span><br></pre></td></tr></table></figure>
+
+<p>可以发现，请求在两个服务器间轮换执行<br>我们可以在client的配置文件中配置负载均衡的规则，我们把负载均衡规则改为 随机</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#应用名</span></span><br><span class="line"><span class="attr">PRODUCT:</span></span><br><span class="line"><span class="attr">  ribbon:</span></span><br><span class="line"><span class="attr">    NFLoadBalancerRuleClassName:</span> <span class="string">com.netflix.loadbalancer.RandomRule</span></span><br></pre></td></tr></table></figure>
+
+<p>所有规则均在 com.netflix.loadbalancer包下并实现 com.netflix.loadbalancer.IRule接口，默认使用 com.netflix.loadbalancer.RoundRobinRule</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/22/使用RestTemplate进行应用间通信/" data-id="cjwnenbtf000b1kl3j0mgevpg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用多个-Eureka-Server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/21/使用多个-Eureka-Server/" class="article-date">
+  <time datetime="2018-05-20T16:00:00.000Z" itemprop="datePublished">2018-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/21/使用多个-Eureka-Server/">使用多个 Eureka</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用多个-Eureka"><a href="#使用多个-Eureka" class="headerlink" title="使用多个 Eureka"></a>使用多个 Eureka</h2><p>通过不同的配置文件 application.yml 启动多个实例来实现</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+
+<p>这样 在 idea 或者 Eclipse 中我们需要启动一个实例，然后修改配置再启动一个实例，有点乱。<br>可以把 application.yml 定义为下面的形式：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无参数启动</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> <span class="comment">#防止由于eureka的机制导致 client 被错误显示在线 在开发环境使用</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server1</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server2</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="string">​</span>      <span class="attr">defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
+
+<p>运行方式</p>
+<ol>
+<li>在idea中运行<br>新建2个运行配置 server1 server2，按图片所示分别添加参数<br>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```--spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-311c2582738563e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<ol>
+<li>打包运行<br>启动两个cmd窗口，切换到项目目录下，分别运行<br>​<figure class="highlight java"><figcaption><span>-jar target/eureka-0.0.1-SNAPSHOT.jar --spring.profiles.active</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```java -jar target/eureka-<span class="number">0.0</span>.1-SNAPSHOT.jar --spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>我们同时运行刚才创建的 Client，注意我们只把 Client 注册到了<figure class="highlight plain"><figcaption><span>也就是server1中</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">此时，localhost:8761,localhost:8762的Eureka Server 均显示如下，即只在server1中注册的Client也被注册到了server2![](https://upload-images.jianshu.io/upload_images/3867641-b9e6e0ebca02eea4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">虽然，Client被自动注册到了server2，但是如果server1不启动，server2无法得到Client的注册（Client在server2注册后，server1变成不可用并不影响）。所以我们在Client中做修改,配置2个defaultZone</span><br><span class="line">​```yml</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">​    service-url:</span><br><span class="line">​      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/</span><br></pre></td></tr></table></figure></p>
+<p>当有3个Eureka Server时，以此类推，三个Server相互配置另外2个地址，Client 配置 3个地址</p>
+<p>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/21/使用多个-Eureka-Server/" data-id="cjwnetjni000g1kl3zo5yrgxy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
 
 </section>
         
@@ -173,7 +671,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
   </div>
 
@@ -183,7 +681,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+      <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16.67px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 13.33px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
     </div>
   </div>
 
@@ -192,7 +690,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -210,6 +708,18 @@
         
           <li>
             <a href="/2019/06/07/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/20/量子密钥分发原理-python实现/">量子密钥分发原理(python实现)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/15/RSA算法/">RSA算法原理</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/01/java正则表达式-环视与贪婪/">java正则表达式-环视、反向引用、贪婪</a>
           </li>
         
       </ul>
@@ -235,8 +745,6 @@
     <a href="/" class="mobile-nav-link">主页</a>
   
     <a href="/archives" class="mobile-nav-link">归档</a>
-  
-    <a href="/explore" class="mobile-nav-link">探索</a>
   
 </nav>
     

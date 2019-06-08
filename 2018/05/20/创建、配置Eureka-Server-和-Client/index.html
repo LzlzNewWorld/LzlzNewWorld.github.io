@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>创建配置Eureka | lz的个人空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="开发环境 Windows10、 IDEA 2018.1.3 ，Spring Boot 版本 2.0.2.RELEASE 通过 idea 创建Eureka server项目New Project-&amp;gt; Spring Initalizrnext 修改group 和 artifactnext 我使用的是2.0.2版本的SpringBoot 注意在选择依赖时 勾选 Web 和 Eureka Serve">
+<meta name="keywords" content="spring-cloud,java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建配置Eureka">
+<meta property="og:url" content="http://lzlz000.github.io/2018/05/20/创建、配置Eureka-Server-和-Client/index.html">
+<meta property="og:site_name" content="lz的个人空间">
+<meta property="og:description" content="开发环境 Windows10、 IDEA 2018.1.3 ，Spring Boot 版本 2.0.2.RELEASE 通过 idea 创建Eureka server项目New Project-&amp;gt; Spring Initalizrnext 修改group 和 artifactnext 我使用的是2.0.2版本的SpringBoot 注意在选择依赖时 勾选 Web 和 Eureka Serve">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3867641-9a7c8bf374c7217f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3867641-485fb1c48cf134f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-08T11:17:35.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="创建配置Eureka">
+<meta name="twitter:description" content="开发环境 Windows10、 IDEA 2018.1.3 ，Spring Boot 版本 2.0.2.RELEASE 通过 idea 创建Eureka server项目New Project-&amp;gt; Spring Initalizrnext 修改group 和 artifactnext 我使用的是2.0.2版本的SpringBoot 注意在选择依赖时 勾选 Web 和 Eureka Serve">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3867641-9a7c8bf374c7217f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <!-- <h1 id="logo-wrap">
+        <a href="/" id="logo">lz的个人空间</a>
+      </h1> -->
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lzlz000.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-创建、配置Eureka-Server-和-Client" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/20/创建、配置Eureka-Server-和-Client/" class="article-date">
+  <time datetime="2018-05-19T16:00:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      创建配置Eureka
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开发环境 Windows10、 IDEA 2018.1.3 ，Spring Boot 版本 2.0.2.RELEASE</p>
+<h5 id="通过-idea-创建Eureka-server项目"><a href="#通过-idea-创建Eureka-server项目" class="headerlink" title="通过 idea 创建Eureka server项目"></a>通过 idea 创建Eureka server项目</h5><p>New Project-&gt; Spring Initalizr<br>next 修改group 和 artifact<br>next 我使用的是2.0.2版本的SpringBoot 注意在选择依赖时 勾选 Web 和 Eureka Server<br><img src="https://upload-images.jianshu.io/upload_images/3867641-9a7c8bf374c7217f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>一路确定 完成创建。</p>
+<h5 id="配置启动项目"><a href="#配置启动项目" class="headerlink" title="配置启动项目"></a>配置启动项目</h5><p>首先就有一个坑，在墙内我们喜欢用阿里云的maven仓库，<br>与 <em>SpringBoot</em>  <figure class="highlight plain"><figcaption><span>_Spring Cloud_ 版本是```Finchley.RC2```，通过_Spring Initalizr_创建的项目会自动选择合适的版本。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">但是阿里云仓库里似乎没有这个版本的 _Spring Cloud_ ，导致 _Eureka_ 相关的包都找不到。</span><br><span class="line"></span><br><span class="line">哎，我也是搞了好久才发现是这个问题，以前都以为阿里云maven仓库应该是完整的。后来我发现这个锅也不能让阿里仓库背，maven中央仓库的版本甚至比阿里仓库还低，在pom中手动添加spring官方仓库，里面有所需版本 ```Finchley.RC2```。菜鸟学习技术需谨慎啊，盲目使用最新版本，给自己带来不必要的麻烦。</span><br></pre></td></tr></table></figure></p>
+<repositories>
+    <repository>
+        <id>spring-milestones</id>
+        <name>Spring Milestones</name>
+        <url>https://repo.spring.io/milestone</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">使用 application.yml 的配置</span><br><span class="line">```yml</span><br><span class="line">server:</span><br><span class="line">  port: 8761 # 8761是eureka server的默认端口</span><br><span class="line">eureka:</span><br><span class="line">  server:</span><br><span class="line">    enable-self-preservation: false #防止由于Eureka的机制导致Client被错误显示在线 仅在开发环境使用</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8761/eureka/ #这便是此eureka server的应用注册地址</span><br><span class="line">    register-with-eureka: false #不显示对server应用的注册</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-demo</span><br></pre></td></tr></table></figure>
+
+<p>记得在springboot 启动类上加上注解<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">package lzlz.demo.springcloud.eureka;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaServer</span><br><span class="line">public class EurekaApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(EurekaApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在就可以启动啦，红色的警告部分就是配置<figure class="highlight plain"><figcaption><span>false ```造成的</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">![image.png](https://upload-images.jianshu.io/upload_images/3867641-247ff9a28424023f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">也可以通过 ```mvn clean package``` 把此项目编译成jar包方便使用，jar包在 target目录下。</span><br><span class="line"></span><br><span class="line">##### 创建 配置Eureka Client项目</span><br><span class="line"></span><br><span class="line">New Project-&gt; Spring Initalizr</span><br><span class="line">next 修改group 和 artifact</span><br><span class="line">next 我使用的是2.0.2版本的SpringBoot 选择 Web 和 Eureka Discovery 依赖</span><br><span class="line">![](https://upload-images.jianshu.io/upload_images/3867641-6ea44056d7fa4fee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">一路确定 完成创建。</span><br><span class="line"></span><br><span class="line">使用 application.yml 的配置</span><br><span class="line">```yml</span><br><span class="line">server:</span><br><span class="line">  port: 8081</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8761/eureka/ #注册到刚才那台Eureka Server地址</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: client-0</span><br></pre></td></tr></table></figure></p>
+<p>记得在 <em>SpringBoot</em> 启动类上加上注解<code>@EnableDiscoveryClient</code></p>
+<h6 id="运行Server-和-Client"><a href="#运行Server-和-Client" class="headerlink" title="运行Server 和 Client"></a>运行Server 和 Client</h6><p>可以看到名为 <em>client-0</em> 的应用已经注册到 <em>Eureka</em> 中<br><img src="https://upload-images.jianshu.io/upload_images/3867641-485fb1c48cf134f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>注意 Eureka 服务端和客户端的连接有心跳检测的机制，因此客户端连接或者断开连接都可能不是即时反应的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/20/创建、配置Eureka-Server-和-Client/" data-id="cjwnenbsv000a1kl35j6y0619" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/21/使用多个-Eureka-Server/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用多个 Eureka
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SpringBoot+ajax长轮询实现简单即时通讯</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hexo/" style="font-size: 13.33px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/python/" style="font-size: 13.33px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16.67px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 13.33px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/07/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/20/量子密钥分发原理-python实现/">量子密钥分发原理(python实现)</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/15/RSA算法/">RSA算法原理</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/01/java正则表达式-环视与贪婪/">java正则表达式-环视、反向引用、贪婪</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 lzlz000<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
