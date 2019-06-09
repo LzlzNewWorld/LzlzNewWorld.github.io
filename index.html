@@ -40,9 +40,9 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">主页</a>
+          <a class="main-nav-link" href="/">Home</a>
         
-          <a class="main-nav-link" href="/archives">归档</a>
+          <a class="main-nav-link" href="/archives">Archives</a>
         
       </nav>
       <nav id="sub-nav">
@@ -56,62 +56,6 @@
 </header>
       <div class="outer">
         <section id="main">
-  
-    <article id="post-nginx配置反向代理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/09/nginx配置反向代理/" class="article-date">
-  <time datetime="2019-06-08T20:23:49.000Z" itemprop="datePublished">2019-06-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/09/nginx配置反向代理/">nginx配置反向代理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
-
-<p>启动Nginx并设置开机自动运行 ：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
-
-<p>默认端口80<br>浏览器输入 服务器地址 即可看到 nginx的首页<br>yum 安装的 nginx 配置路径在 <strong>/etc/nginx/nginx.conf</strong> ,可以修改端口号再重启</p>
-<h3 id="域名转发"><a href="#域名转发" class="headerlink" title="域名转发"></a>域名转发</h3><p>在本机上，我事先装了一个 nexus 私服，端口是8081，以此为例子, 我们通过域名转发把 nexus.xx.xx 转发到 xx.xx:8081.</p>
-<p>首先，要有一个域名。</p>
-<h6 id="配置dns-解析"><a href="#配置dns-解析" class="headerlink" title="配置dns 解析"></a>配置dns 解析</h6><p>然后新建一个DNS解析配置，把子域名 nexus.xx.xx  解析到服务器IP地址，稍等片刻，等待DNS服务器更新解析，我自己的域名使用了 <a href="https://www.dns.com/" target="_blank" rel="noopener">https://www.dns.com/</a> 提供的 DNS服务器<br><img src="/images/12404.png" alt="image.png"></p>
-<p>浏览器键入 nexus.xx.xx，进入了nginx的首页。此步骤完成</p>
-<h6 id="配置nginx域名转发"><a href="#配置nginx域名转发" class="headerlink" title="配置nginx域名转发"></a>配置nginx域名转发</h6><p>在 nginx.conf的 http 模块中 加入一个 server </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">   &#123;</span><br><span class="line">       listen 80;</span><br><span class="line">       server_name nexus.xx.xx;</span><br><span class="line">       location / &#123;</span><br><span class="line">           proxy_redirect off;</span><br><span class="line">           proxy_set_header Host $host;</span><br><span class="line">           proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">           proxy_pass http://127.0.0.1:8081; # 转发地址 可以是 baidu.com 或者任何地址</span><br><span class="line">       &#125;</span><br><span class="line">       access_log logs/nexus.log;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存并重启服务器 （我尝试使用nginx -s reload 重新加载配置文件无效，只能重启）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
-
-<p>浏览器键入 nexus.xx.xx 咦 404? 没错啦，这是nexus的404 nexus的web 首页在 nexus.xx.xx/nexus </p>
-<p>END</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/09/nginx配置反向代理/" data-id="cjwp14vg0000h6wl3xkmyzbkk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
   
     <article id="post-hexo-插入图片" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -155,7 +99,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwp14vfq00066wl34t3pb03c" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwp5bozn0006jkl3pab6nluz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -202,15 +146,71 @@
 <li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
 <li>需要手动添加 yaml front matter</li>
 </ol>
-<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
+<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwp14vfe00036wl30hkw766g" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwp5bozh0003jkl3nh74wktk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-nginx配置反向代理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/09/nginx配置反向代理/" class="article-date">
+  <time datetime="2019-04-08T20:23:49.000Z" itemprop="datePublished">2019-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/09/nginx配置反向代理/">nginx配置反向代理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
+
+<p>启动Nginx并设置开机自动运行 ：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
+
+<p>默认端口80<br>浏览器输入 服务器地址 即可看到 nginx的首页<br>yum 安装的 nginx 配置路径在 <strong>/etc/nginx/nginx.conf</strong> ,可以修改端口号再重启</p>
+<h3 id="域名转发"><a href="#域名转发" class="headerlink" title="域名转发"></a>域名转发</h3><p>在本机上，我事先装了一个 nexus 私服，端口是8081，以此为例子, 我们通过域名转发把 nexus.xx.xx 转发到 xx.xx:8081.</p>
+<p>首先，要有一个域名。</p>
+<h6 id="配置dns-解析"><a href="#配置dns-解析" class="headerlink" title="配置dns 解析"></a>配置dns 解析</h6><p>然后新建一个DNS解析配置，把子域名 nexus.xx.xx  解析到服务器IP地址，稍等片刻，等待DNS服务器更新解析，我自己的域名使用了 <a href="https://www.dns.com/" target="_blank" rel="noopener">https://www.dns.com/</a> 提供的 DNS服务器<br><img src="/images/12404.png" alt="image.png"></p>
+<p>浏览器键入 nexus.xx.xx，进入了nginx的首页。此步骤完成</p>
+<h6 id="配置nginx域名转发"><a href="#配置nginx域名转发" class="headerlink" title="配置nginx域名转发"></a>配置nginx域名转发</h6><p>在 nginx.conf的 http 模块中 加入一个 server </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">   &#123;</span><br><span class="line">       listen 80;</span><br><span class="line">       server_name nexus.xx.xx;</span><br><span class="line">       location / &#123;</span><br><span class="line">           proxy_redirect off;</span><br><span class="line">           proxy_set_header Host $host;</span><br><span class="line">           proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">           proxy_pass http://127.0.0.1:8081; # 转发地址 可以是 baidu.com 或者任何地址</span><br><span class="line">       &#125;</span><br><span class="line">       access_log logs/nexus.log;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存并重启服务器 （我尝试使用nginx -s reload 重新加载配置文件无效，只能重启）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
+
+<p>浏览器键入 nexus.xx.xx 咦 404? 没错啦，这是nexus的404 nexus的web 首页在 nexus.xx.xx/nexus </p>
+<p>END</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/04/09/nginx配置反向代理/" data-id="cjwp5bozw000cjkl3k8kv1ahy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
 
     </footer>
   </div>
@@ -282,7 +282,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="cjwp14vgt001d6wl30g1z7gr5" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="cjwp5bp0t001ljkl3dl3mwhj2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li></ul>
@@ -353,7 +353,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/15/RSA算法/" data-id="cjwp14vf800026wl31q2fscbe" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/03/15/RSA算法/" data-id="cjwp5bozd0001jkl3q0dcq1vq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -402,7 +402,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -415,15 +415,15 @@
       <ul>
         
           <li>
-            <a href="/2019/06/09/nginx配置反向代理/">nginx配置反向代理</a>
-          </li>
-        
-          <li>
             <a href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
           </li>
         
           <li>
             <a href="/2019/06/07/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/09/nginx配置反向代理/">nginx配置反向代理</a>
           </li>
         
           <li>
@@ -454,9 +454,9 @@
     </div>
     <nav id="mobile-nav">
   
-    <a href="/" class="mobile-nav-link">主页</a>
+    <a href="/" class="mobile-nav-link">Home</a>
   
-    <a href="/archives" class="mobile-nav-link">归档</a>
+    <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
     
@@ -465,10 +465,10 @@
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+  
 
 
-<script src="/js/script.js"></script>
+<script src="/js/script.js"></script><script type="text/javascript" src="/comment.js"></script>
 
 
 
