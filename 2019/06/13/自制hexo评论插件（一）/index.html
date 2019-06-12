@@ -5,15 +5,22 @@
   
 
   
-  <title>lz的个人空间</title>
+  <title>自制hexo评论插件（一） | lz的个人空间</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="lz的个人空间">
-<meta property="og:url" content="http://lzlz000.github.io/index.html">
+  <meta name="description" content="hexo等静态博客，现在有很多可使用的评论插件，基本都需要繁琐的注册，国内的还需要实名制审核（我本人特别特别讨厌实名制审核，有一种我在网上干什么都有别人偷窥的感觉，虽然我是守法公民，但是即使我在床上只睡觉不干其他不可描述的事情，我也不希望有摄像头对着我拍不是吗？）我就在想，能不能自己做一个？ 我仔细思考了一下，确实可以做，不过是一个前端界面和一个后端服务器。但是作为一个“插件”和一个前端页面还是有">
+<meta name="keywords" content="hexo,自制hexo评论插件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自制hexo评论插件（一）">
+<meta property="og:url" content="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/index.html">
 <meta property="og:site_name" content="lz的个人空间">
+<meta property="og:description" content="hexo等静态博客，现在有很多可使用的评论插件，基本都需要繁琐的注册，国内的还需要实名制审核（我本人特别特别讨厌实名制审核，有一种我在网上干什么都有别人偷窥的感觉，虽然我是守法公民，但是即使我在床上只睡觉不干其他不可描述的事情，我也不希望有摄像头对着我拍不是吗？）我就在想，能不能自己做一个？ 我仔细思考了一下，确实可以做，不过是一个前端界面和一个后端服务器。但是作为一个“插件”和一个前端页面还是有">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://lzlz000.github.io/images/1560364377217.png">
+<meta property="og:updated_time" content="2019-06-12T18:41:35.468Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lz的个人空间">
+<meta name="twitter:title" content="自制hexo评论插件（一）">
+<meta name="twitter:description" content="hexo等静态博客，现在有很多可使用的评论插件，基本都需要繁琐的注册，国内的还需要实名制审核（我本人特别特别讨厌实名制审核，有一种我在网上干什么都有别人偷窥的感觉，虽然我是守法公民，但是即使我在床上只睡觉不干其他不可描述的事情，我也不希望有摄像头对着我拍不是吗？）我就在想，能不能自己做一个？ 我仔细思考了一下，确实可以做，不过是一个前端界面和一个后端服务器。但是作为一个“插件”和一个前端页面还是有">
+<meta name="twitter:image" content="http://lzlz000.github.io/images/1560364377217.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -55,9 +62,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-自制hexo评论插件（一）" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-自制hexo评论插件（一）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/06/13/自制hexo评论插件（一）/" class="article-date">
   <time datetime="2019-06-12T17:13:00.000Z" itemprop="datePublished">2019-06-13</time>
@@ -70,8 +75,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
+    <h1 class="article-title" itemprop="name">
+      自制hexo评论插件（一）
     </h1>
   
 
@@ -103,122 +108,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-hexo-插入图片" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/08/hexo-插入图片/" class="article-date">
-  <time datetime="2019-06-08T02:37:22.000Z" itemprop="datePublished">2019-06-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
-    </h1>
+    <a href="/2019/06/08/hexo-插入图片/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">hexo+typora 插入图片</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。</p>
-<h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>通过搜索得到的解决方案最常见的是安装插件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-
-<p>这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xxx.png ，搜索下解决方法 ，还要自己手动去 node_modules 中修改脚本才能用，我们知道，node_modules 实际上都是npm install的时候自动生成的，这样的改动以后还要反复手动操作，太难受了，此方法不可取。</p>
-<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>hexo官方给了两种解决方式 <a href="https://hexo.io/zh-cn/docs/asset-folders" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders</a> </p>
-<p>一个是使用hexo的标签：</p>
-<p><img src="/images/1559990605779.png" alt></p>
-<p>这个方式看起来完美解决了问题，但是在我本地通过typora编辑文档时，是看不到图片的，不方便使用。</p>
-<h3 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h3><p>使用最简单的方式在 source 目录下创建images目录，然后图片都保存在这里。</p>
-<p>关键是要在typora上做以下设置：</p>
-<p>在md文件头部的配置项中，添加 <code>typora-root-url: ../</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:  hexo+typora 插入图片</span><br><span class="line">date: 2019-06-08 10:37:22</span><br><span class="line">tags:</span><br><span class="line">typora-root-url: ../</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<p>这样引用的图片都以上一级目录即 sourse作为根目录了，此时插入的图片时，只要点击“复制图片到…”并选择一次文件夹，以后每次都会自动保存在 sourse/image目录下，并且本地的显示和服务器上的根目录完全一致。</p>
-<p><img src="/images/1559989480817.png" alt="本地路径和服务器路径一致"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwp5bozn0006jkl3pab6nluz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/07/hello-hexo/" class="article-date">
-  <time datetime="2019-06-07T14:11:24.000Z" itemprop="datePublished">2019-06-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/07/hello-hexo/">hello hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前市面上常见的静态博客框架就是 <code>hexo</code> 和 <code>jekyll</code>，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。</p>
-<hr>
-<p><strong>之所以想搭建一个静态页面，有以下几个原因</strong></p>
-<p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
-<p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
-<p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
-<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
-<p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
-<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
-<ol>
-<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
-<li>需要手动添加 yaml front matter</li>
-</ol>
-<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwp5bozh0003jkl3nh74wktk" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-  </nav>
 
 </section>
         

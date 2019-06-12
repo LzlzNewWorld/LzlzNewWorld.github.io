@@ -5,24 +5,15 @@
   
 
   
-  <title>SpringBoot+ajax长轮询实现简单即时通讯 | lz的个人空间</title>
+  <title>lz的个人空间</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="先来看看需要实现的效果 123456789101112131415161718192021// 客户端A&amp;gt; IM.subscribe(&amp;apos;频道1&amp;apos;)&amp;gt; IM.subscribe(&amp;apos;频道2&amp;apos;)&amp;lt; undefined订阅 [频道1] 成功// 客户端B 发送了消息&amp;gt; IM.send(&amp;apos;频道1&amp;apos;,&amp;apos;hello w">
-<meta name="keywords" content="前端,java">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot+ajax长轮询实现简单即时通讯">
-<meta property="og:url" content="http://lzlz000.github.io/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="lz的个人空间">
+<meta property="og:url" content="http://lzlz000.github.io/page/5/index.html">
 <meta property="og:site_name" content="lz的个人空间">
-<meta property="og:description" content="先来看看需要实现的效果 123456789101112131415161718192021// 客户端A&amp;gt; IM.subscribe(&amp;apos;频道1&amp;apos;)&amp;gt; IM.subscribe(&amp;apos;频道2&amp;apos;)&amp;lt; undefined订阅 [频道1] 成功// 客户端B 发送了消息&amp;gt; IM.send(&amp;apos;频道1&amp;apos;,&amp;apos;hello w">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://lzlz000.github.io/images/1240">
-<meta property="og:image" content="http://lzlz000.github.io/images/12401">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3867641-ee9130c763f5f948.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-06-08T19:44:42.138Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot+ajax长轮询实现简单即时通讯">
-<meta name="twitter:description" content="先来看看需要实现的效果 123456789101112131415161718192021// 客户端A&amp;gt; IM.subscribe(&amp;apos;频道1&amp;apos;)&amp;gt; IM.subscribe(&amp;apos;频道2&amp;apos;)&amp;lt; undefined订阅 [频道1] 成功// 客户端B 发送了消息&amp;gt; IM.send(&amp;apos;频道1&amp;apos;,&amp;apos;hello w">
-<meta name="twitter:image" content="http://lzlz000.github.io/images/1240">
+<meta name="twitter:title" content="lz的个人空间">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -64,7 +55,121 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-SpringBoot-AJAX-长轮询实现简单即时通讯" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main">
+  
+    <article id="post-创建、配置Eureka-Server-和-Client" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/20/创建、配置Eureka-Server-和-Client/" class="article-date">
+  <time datetime="2018-05-19T16:00:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/创建、配置Eureka-Server-和-Client/">创建配置Eureka</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开发环境 Windows10、 IDEA 2018.1.3 ，Spring Boot 版本 2.0.2.RELEASE</p>
+<h5 id="通过-idea-创建Eureka-server项目"><a href="#通过-idea-创建Eureka-server项目" class="headerlink" title="通过 idea 创建Eureka server项目"></a>通过 idea 创建Eureka server项目</h5><p>New Project-&gt; Spring Initalizr<br>next 修改group 和 artifact<br>next 我使用的是2.0.2版本的SpringBoot 注意在选择依赖时 勾选 Web 和 Eureka Server<br><img src="https://upload-images.jianshu.io/upload_images/3867641-9a7c8bf374c7217f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>一路确定 完成创建。</p>
+<h5 id="配置启动项目"><a href="#配置启动项目" class="headerlink" title="配置启动项目"></a>配置启动项目</h5><p>首先就有一个坑，在墙内我们喜欢用阿里云的maven仓库，<br>与 <em>SpringBoot</em>  <figure class="highlight plain"><figcaption><span>_Spring Cloud_ 版本是```Finchley.RC2```，通过_Spring Initalizr_创建的项目会自动选择合适的版本。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">但是阿里云仓库里似乎没有这个版本的 _Spring Cloud_ ，导致 _Eureka_ 相关的包都找不到。</span><br><span class="line"></span><br><span class="line">哎，我也是搞了好久才发现是这个问题，以前都以为阿里云maven仓库应该是完整的。后来我发现这个锅也不能让阿里仓库背，maven中央仓库的版本甚至比阿里仓库还低，在pom中手动添加spring官方仓库，里面有所需版本 ```Finchley.RC2```。菜鸟学习技术需谨慎啊，盲目使用最新版本，给自己带来不必要的麻烦。</span><br></pre></td></tr></table></figure></p>
+<repositories>
+    <repository>
+        <id>spring-milestones</id>
+        <name>Spring Milestones</name>
+        <url>https://repo.spring.io/milestone</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">使用 application.yml 的配置</span><br><span class="line">```yml</span><br><span class="line">server:</span><br><span class="line">  port: 8761 # 8761是eureka server的默认端口</span><br><span class="line">eureka:</span><br><span class="line">  server:</span><br><span class="line">    enable-self-preservation: false #防止由于Eureka的机制导致Client被错误显示在线 仅在开发环境使用</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8761/eureka/ #这便是此eureka server的应用注册地址</span><br><span class="line">    register-with-eureka: false #不显示对server应用的注册</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-demo</span><br></pre></td></tr></table></figure>
+
+<p>记得在springboot 启动类上加上注解<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">package lzlz.demo.springcloud.eureka;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaServer</span><br><span class="line">public class EurekaApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(EurekaApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在就可以启动啦，红色的警告部分就是配置<figure class="highlight plain"><figcaption><span>false ```造成的</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">![image.png](https://upload-images.jianshu.io/upload_images/3867641-247ff9a28424023f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">也可以通过 ```mvn clean package``` 把此项目编译成jar包方便使用，jar包在 target目录下。</span><br><span class="line"></span><br><span class="line">##### 创建 配置Eureka Client项目</span><br><span class="line"></span><br><span class="line">New Project-&gt; Spring Initalizr</span><br><span class="line">next 修改group 和 artifact</span><br><span class="line">next 我使用的是2.0.2版本的SpringBoot 选择 Web 和 Eureka Discovery 依赖</span><br><span class="line">![](https://upload-images.jianshu.io/upload_images/3867641-6ea44056d7fa4fee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">一路确定 完成创建。</span><br><span class="line"></span><br><span class="line">使用 application.yml 的配置</span><br><span class="line">```yml</span><br><span class="line">server:</span><br><span class="line">  port: 8081</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8761/eureka/ #注册到刚才那台Eureka Server地址</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: client-0</span><br></pre></td></tr></table></figure></p>
+<p>记得在 <em>SpringBoot</em> 启动类上加上注解<code>@EnableDiscoveryClient</code></p>
+<h6 id="运行Server-和-Client"><a href="#运行Server-和-Client" class="headerlink" title="运行Server 和 Client"></a>运行Server 和 Client</h6><p>可以看到名为 <em>client-0</em> 的应用已经注册到 <em>Eureka</em> 中<br><img src="https://upload-images.jianshu.io/upload_images/3867641-485fb1c48cf134f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>注意 Eureka 服务端和客户端的连接有心跳检测的机制，因此客户端连接或者断开连接都可能不是即时反应的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/20/创建、配置Eureka-Server-和-Client/" data-id="cjwp5bp03000ljkl3ve3yprer" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-最长递增子序列问题-Java" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/最长递增子序列问题-Java/" class="article-date">
+  <time datetime="2018-03-09T16:00:00.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/最长递增子序列问题-Java/">最长递增子序列问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最长递增子序列问题 LIS(longest increasing subsequence) 例如</p>
+<blockquote>
+<p>给定一个数列，长度为N，<br>求这个数列的最长上升（递增）子数列（LIS）的长度.<br>以
+1, 7, 2, 8, 3, 4<br>为例。<br>这个数列的最长递增子数列是 1 2 3 4，长度为4；<br>次长的长度为3， 包括 1 7 8; 1 2 3 等.</p>
+</blockquote>
+<p>设数组为：arr<br>设  foo(k) 为：以数列中第k项 (为了与java数组逻辑一致，这里的k从0开始计算) 结尾的最长递增子序列的长度<br>则：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo(<span class="number">0</span>) == <span class="number">1</span> </span><br><span class="line">foo(k) == max(arr[k]&gt;arr[<span class="number">0</span>]?foo(<span class="number">0</span>)+<span class="number">1</span>:foo(<span class="number">0</span>),</span><br><span class="line">              arr[k]&gt;arr[<span class="number">1</span>]?foo(<span class="number">1</span>)+<span class="number">1</span>:foo(<span class="number">1</span>) , </span><br><span class="line">              ... ,</span><br><span class="line">              arr[k]&gt;arr[k-<span class="number">1</span>]?foo(k-<span class="number">1</span>)+<span class="number">1</span>:foo(k-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>java代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class LISDemo &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        int[] arr = new int[10];</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        for (int i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] = random.nextInt(100);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;数组&quot;+Arrays.toString(arr));</span><br><span class="line">        long time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;结果: &quot;+foo(arr, arr.length-1));</span><br><span class="line">        System.out.println(&quot;耗时: &quot;+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    private static int foo(int[] arr,int end)&#123;</span><br><span class="line">        if (end==0) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        int len = 0;</span><br><span class="line">        for (int i = 0; i &lt; end; i++) &#123;</span><br><span class="line">            int temp = foo(arr,i);</span><br><span class="line">            len = Math.max(len,arr[end]&gt;arr[i]?temp+1:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        return len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码能计算出正确的结果，但是存在问题：<br>要计算 foo(n)必须先得到 foo(0)<del>foo(n-1)的值<br>要计算 foo(n-1)必须先得到 foo(0)</del>foo(n-2)的值<br>…<br>以此类推，可以把他画成一颗多叉树，时间复杂度达到O(2^n) </p>
+<p>运行这段代码就会发现 每当数组长度+1 运行耗时大致翻倍，数组长度为几十的时候，运行时间已经无法容忍的长了。</p>
+<p>以foo(3)为例，可以画成下面这棵树<br><img src="/images/1240123.png" alt><br>可以发现，相同参数的方法被重复计算了多遍，我们可以建立一个hashmap把参数和对应的值存入其中，当结果已经计算过，就直接从hashmap中取出结果不再计算，修改代码为如下,保留了原来的方法做个对比，执行效率天差地别:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LISDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">31</span>];</span><br><span class="line">        Random random = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] = random.nextInt(<span class="number">100</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"数组"</span>+Arrays.toString(arr));</span><br><span class="line">        LIS lis = <span class="keyword">new</span> LIS(arr);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"结果1: "</span>+lis.foo());</span><br><span class="line">        System.out.println(<span class="string">"耗时1: "</span>+(System.currentTimeMillis()-time));</span><br><span class="line"></span><br><span class="line">        time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"结果2: "</span>+foo(arr, arr.length-<span class="number">1</span>));</span><br><span class="line">        System.out.println(<span class="string">"耗时2: "</span>+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 最长递增子序列 longest increasing subsequence</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LIS</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr;</span><br><span class="line">        HashMap&lt;Integer,Integer&gt; values = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        LIS(<span class="keyword">int</span>[]arr)&#123;</span><br><span class="line">            <span class="keyword">this</span>.arr = arr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> foo(arr,arr.length-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">            Integer value = values.get(end);</span><br><span class="line">            <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> value;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">                values.put(<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">                len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">            &#125;</span><br><span class="line">            values.put(end,len);</span><br><span class="line">            <span class="keyword">return</span> len;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">            len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/03/10/最长递增子序列问题-Java/" data-id="cjwp5bp06000njkl3x4l26m8j" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SpringBoot-AJAX-长轮询实现简单即时通讯" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/" class="article-date">
   <time datetime="2018-03-09T16:00:00.000Z" itemprop="datePublished">2018-03-10</time>
@@ -77,8 +182,8 @@
       <header class="article-header">
         
   
-    <h1 class="article-title" itemprop="name">
-      SpringBoot+ajax长轮询实现简单即时通讯
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/">SpringBoot+ajax长轮询实现简单即时通讯</a>
     </h1>
   
 
@@ -143,28 +248,16 @@
     </footer>
   </div>
   
-    
-<nav id="article-nav">
-  
-    <a href="/2018/03/10/最长递增子序列问题-Java/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          最长递增子序列问题
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/02/12/mybatis批量插入方式的比较/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">mybatis批量插入方式的比较</div>
-    </a>
-  
-</nav>
+</article>
+
 
   
-</article>
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+  </nav>
 
 </section>
         

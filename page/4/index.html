@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>lz的个人空间</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="lz的个人空间">
+<meta property="og:url" content="http://lzlz000.github.io/page/4/index.html">
+<meta property="og:site_name" content="lz的个人空间">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="lz的个人空间">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <!-- <h1 id="logo-wrap">
+        <a href="/" id="logo">lz的个人空间</a>
+      </h1> -->
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lzlz000.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-使用Feign进行应用间通信" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/23/使用Feign进行应用间通信/" class="article-date">
+  <time datetime="2018-05-22T16:00:00.000Z" itemprop="datePublished">2018-05-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/23/使用Feign进行应用间通信/">使用Feign进行应用间通信</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用Feign进行应用间通信"><a href="#使用Feign进行应用间通信" class="headerlink" title="使用Feign进行应用间通信"></a>使用Feign进行应用间通信</h2><h5 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-feign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0.M2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>坑</strong><br>我是用了 <strong>Spring Boot 2.0.2.RELEASE</strong>  以及其对应的spring-cloud版本 <strong>Spring-Cloud Finchley.RC2</strong> 即2.0.0.RC2<br>按理说，spring-cloud-starter-feign 应该不再需要指定版本，然而maven的中央仓库中甚至都没有2.0版本的 Feign。spring官方仓库也没有对应版本，因此不指定版本就无法导入依赖了，但是好歹有可兼容的2.0.x版本，所以指定版本 <strong>2.0.0.M2</strong> </p>
+<p>大概是因为Spring Boot 2.0刚发布没几个月，对应的版本还没有发布吧？作为一个菜鸟，就不该作死用2.0版本学习spring cloud，一堆麻烦:(</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-30328eaf1c0a8a05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven中央仓库"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-d9745dbf1964ad6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring官方仓库"></p>
+<h5 id="使用Feign"><a href="#使用Feign" class="headerlink" title="使用Feign"></a>使用Feign</h5><p>Feign 的使用非常简单<br>新建类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lzlz.demo.springcloud.consumer.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其实不需要加@Component注解，只是idea无法识别，在注入的地方提示错误</span></span><br><span class="line"><span class="comment">// 虽然不影响编译运行，但是看着不舒服，不在意的可以忽略</span></span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="meta">@FeignClient</span>(name = <span class="string">"product"</span>) <span class="comment">//对应的应用名</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProductClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/echo"</span>)</span><br><span class="line">    <span class="function">String <span class="title">productMsg</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在需要使用的地方注入此对象，调用对应方法即可：</p>
+<figure class="highlight plain"><figcaption><span>resp </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在FeignClient中 可以完全像Controller那样使用各种 ```@RequestMapping``` 注解，用于类和方法上。</span><br></pre></td></tr></table></figure>
+
+<p>@Component<br>@FeignClient(name = “product”)<br>@RequestMapping(“test”)<br>public interface ProductClient {<br>    @GetMapping(“/echo”)<br>    String productMsg();</p>
+<pre><code>@PostMapping(&quot;/echo&quot;)
+String productMsg1();</code></pre><p>}</p>
+<pre><code>使用Feign，我们就如同调用本地方法一样使用rest远程调用，体验还是不错滴。</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/23/使用Feign进行应用间通信/" data-id="cjwp5bozu000ajkl3mxv6cmts" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用RestTemplate进行应用间通信" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/22/使用RestTemplate进行应用间通信/" class="article-date">
+  <time datetime="2018-05-21T16:00:00.000Z" itemprop="datePublished">2018-05-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/22/使用RestTemplate进行应用间通信/">使用RestTemplate进行应用间通信</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用RestTemplate进行应用间通信"><a href="#使用RestTemplate进行应用间通信" class="headerlink" title="使用RestTemplate进行应用间通信"></a>使用RestTemplate进行应用间通信</h2><p>上文中我们已经准备好了 Eureka Server，在测试环境中，就不需要多个Eureka了，启动一个应用即可，为了方便我们打包运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar .\target\eureka-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-ae7dbf9d401a1954.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>我们再创建两个 Spring Boot 项目，分别为product，consumer 并修改配置文件注册到 Eureka 中</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
+
+<p>记得在启动类添加注解 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">###### product项目中</span><br><span class="line">添加controller</span><br><span class="line">```java</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">public class ServerController &#123;</span><br><span class="line">    @GetMapping(&quot;echo&quot;)</span><br><span class="line">    public String echoeMessage(HttpServletRequest request)&#123;</span><br><span class="line">        return &quot;this is server &quot;+ request.getServerName()+&quot;:&quot;+request.getServerPort();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h6 id="consumer-项目中"><a href="#consumer-项目中" class="headerlink" title="consumer 项目中"></a>consumer 项目中</h6><p>添加config类，其中<figure class="highlight plain"><figcaption><span>Bean</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">```java</span><br><span class="line">import org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class RestTemplateConfig &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    @LoadBalanced</span><br><span class="line">    public RestTemplate restTemplate()&#123;</span><br><span class="line">        return new RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>添加 controller，其中 restTemplate直接在url中用在Eureka中注册的应用名代替地址和端口,在product项目中，我们配置的应用名</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">product</span></span><br></pre></td></tr></table></figure>
+
+<p>代码调用（应用名不区分大小写）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class ClientController &#123;</span><br><span class="line"></span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public ClientController(RestTemplate restTemplate) &#123;</span><br><span class="line">        this.restTemplate = restTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;/product-msg&quot;)</span><br><span class="line">    public String getProductMsg()&#123;</span><br><span class="line">        String resp = restTemplate.getForObject(&quot;http://product/echo&quot;,String.class);</span><br><span class="line">        log.info(&quot;response=&#123;&#125;&quot;,resp);</span><br><span class="line">        return resp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过-Dserver.port=xxxx设置不同的端口，启动多个product实例，idea中：<img src="https://upload-images.jianshu.io/upload_images/3867641-05f910499d165abd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>或者打包执行 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar xxxxx.jar --server.port=xxxx</span><br></pre></td></tr></table></figure>
+
+<p>我们启动两个实例，使用8080和8081端口</p>
+<p>启动consumer，反复请求地址 <a href="http://localhost:8180/product-msg" target="_blank" rel="noopener">http://localhost:8180/product-msg</a><br>将会得到不同的返回：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this is server 192.168.1.107:8081</span><br><span class="line">this is server 192.168.1.107:8080</span><br><span class="line">this is server 192.168.1.107:8081</span><br><span class="line">this is server 192.168.1.107:8080</span><br></pre></td></tr></table></figure>
+
+<p>可以发现，请求在两个服务器间轮换执行<br>我们可以在client的配置文件中配置负载均衡的规则，我们把负载均衡规则改为 随机</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#应用名</span></span><br><span class="line"><span class="attr">PRODUCT:</span></span><br><span class="line"><span class="attr">  ribbon:</span></span><br><span class="line"><span class="attr">    NFLoadBalancerRuleClassName:</span> <span class="string">com.netflix.loadbalancer.RandomRule</span></span><br></pre></td></tr></table></figure>
+
+<p>所有规则均在 com.netflix.loadbalancer包下并实现 com.netflix.loadbalancer.IRule接口，默认使用 com.netflix.loadbalancer.RoundRobinRule</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/22/使用RestTemplate进行应用间通信/" data-id="cjwp5bp00000hjkl3aokugiq0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用多个-Eureka-Server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/21/使用多个-Eureka-Server/" class="article-date">
+  <time datetime="2018-05-20T16:00:00.000Z" itemprop="datePublished">2018-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/21/使用多个-Eureka-Server/">使用多个 Eureka</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用多个-Eureka"><a href="#使用多个-Eureka" class="headerlink" title="使用多个 Eureka"></a>使用多个 Eureka</h2><p>通过不同的配置文件 application.yml 启动多个实例来实现</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+
+<p>这样 在 idea 或者 Eclipse 中我们需要启动一个实例，然后修改配置再启动一个实例，有点乱。<br>可以把 application.yml 定义为下面的形式：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无参数启动</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> <span class="comment">#防止由于eureka的机制导致 client 被错误显示在线 在开发环境使用</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server1</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server2</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="string">​</span>      <span class="attr">defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
+
+<p>运行方式</p>
+<ol>
+<li>在idea中运行<br>新建2个运行配置 server1 server2，按图片所示分别添加参数<br>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```--spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-311c2582738563e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<ol>
+<li>打包运行<br>启动两个cmd窗口，切换到项目目录下，分别运行<br>​<figure class="highlight java"><figcaption><span>-jar target/eureka-0.0.1-SNAPSHOT.jar --spring.profiles.active</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```java -jar target/eureka-<span class="number">0.0</span>.1-SNAPSHOT.jar --spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>我们同时运行刚才创建的 Client，注意我们只把 Client 注册到了<figure class="highlight plain"><figcaption><span>也就是server1中</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">此时，localhost:8761,localhost:8762的Eureka Server 均显示如下，即只在server1中注册的Client也被注册到了server2![](https://upload-images.jianshu.io/upload_images/3867641-b9e6e0ebca02eea4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">虽然，Client被自动注册到了server2，但是如果server1不启动，server2无法得到Client的注册（Client在server2注册后，server1变成不可用并不影响）。所以我们在Client中做修改,配置2个defaultZone</span><br><span class="line">​```yml</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">​    service-url:</span><br><span class="line">​      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/</span><br></pre></td></tr></table></figure></p>
+<p>当有3个Eureka Server时，以此类推，三个Server相互配置另外2个地址，Client 配置 3个地址</p>
+<p>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/21/使用多个-Eureka-Server/" data-id="cjwp5bozy000ejkl3cbs2ongw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/07/hello-hexo/">hello hexo</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/09/nginx配置反向代理/">nginx配置反向代理</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/20/量子密钥分发原理-python实现/">量子密钥分发原理(python实现)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 lzlz000<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+
+
+<script src="/js/script.js"></script><script type="text/javascript" src="/tiny-comment/load.js"></script>
+
+
+
+  </div>
+</body>
+</html>
