@@ -57,6 +57,63 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mysql的Ferderated引擎" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/25/mysql的Ferderated引擎/" class="article-date">
+  <time datetime="2019-06-24T17:19:14.000Z" itemprop="datePublished">2019-06-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/25/mysql的Ferderated引擎/">mysql的Ferderated引擎</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>Ferderated</strong> 引擎提供了以本地一张独立的表访问远程MySQL服务器上表的方法。本地不存储数据，数据全部放到远程服务器上，但是本地需要保存表结构和远程服务器的连接信息。</p>
+<p>首先Ferderated引擎在mysql中是默认关闭的，可以使用 <strong>show engines</strong> 命令查看是否开启了该引擎：</p>
+<p><img src="/images/1561399282036.png" alt></p>
+<p>可以发现 Ferderated 的 support为 NO</p>
+<p>我们需要在mysql配置文件中加入 federated</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">federated #加入这一行</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>重启服务，会发现Ferderated 已经开启</p>
+<p><img src="/images/1561399506237.png" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 在任意mysql服务器上创建一个表，作为Ferderated的目标远程服务器，该服务器不需要开启Ferderated引擎</span><br><span class="line"># 本例中，表创建在127.0.0.1:3307/mysql-test</span><br><span class="line">CREATE TABLE remote_fed (</span><br><span class="line">	id INT auto_increment NOT NULL,</span><br><span class="line">	c1 VARCHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	c2 CHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">PRIMARY KEY ( id ) </span><br><span class="line">) ENGINE = INNODB</span><br><span class="line"></span><br><span class="line"># 在开启了Ferderated引擎创建表</span><br><span class="line">CREATE TABLE local_fed (</span><br><span class="line">	id INT auto_increment NOT NULL,</span><br><span class="line">	c1 VARCHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	c2 CHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">PRIMARY KEY ( id ) </span><br><span class="line">) ENGINE=federated CONNECTION =&apos;mysql://root:123456@127.0.0.1:3307/mysql-test/remote_fed&apos;</span><br></pre></td></tr></table></figure>
+
+<p>一些注意事项</p>
+<ol>
+<li>对本地虚拟表的结构修改，并不会修改远程表的结构，但是改变自身的表结构会出现意想不到的错误</li>
+<li>truncate 命令，会清除远程表数据 </li>
+<li>drop命令只会删除虚拟表，并不会删除远程表</li>
+</ol>
+<hr>
+<p><a href="https://lzlz000.github.io"><img src="https://img.shields.io/badge/lzlz000-%E4%B8%AA%E4%BA%BA%E7%A9%BA%E9%97%B4-brightgreen.svg?style=flat&logo=data:image/gif;base64,R0lGODlhPAA8APf/AP/TAHsbG6ZJAGsBAcertKL75+jsZ93teMTk+o5BRruVm+72/3ILC7OGjbS7zIIqK4QyNZDDtKFbWqZuc//sN/v//8+7xN7X4eDc5JFJTa59gsHtpL+cpJx9iZ1dYpnu431xae/4/5Jpc6H965RNUIqonPH8/7rJ3MOlq/bsTm4KC9bI0ZpZXcPh9opTW6NpbKl0eqVkZOzy/nkeH8Da79jM0nUaHJNDQ3wgIZ2Cj6mcq7f1vbaLkaSToYItL4wpAHUQEIs0M+3z+ptTVOnt9enu+JFjbNO+yMHc8e/3/N3V3tXGz4E8Qoy+t5ZxfK2ru9rR2ujr9cTj+GUAAMPi+Obm7bW+0P/aAMmxuaGLmLK1xrCxwXwuMvL8/7nG2Y09Qv/WAJZPVMh6AMLg9cDb8MDY7bLuvplWWp9gZevx/IVHTo4+PrfD1r/Y7O71+nYVFXgVFdC9xW4VFqORnsy2vn4lKHY1M9rP2YY2ObmSmHMWG8KhqHwzOeLg65FGSHspLXEOD7yYnolNVI46OY5cZWsHCOzx/evw+ubn8dbJztPDzYs7Pqx4fcWoros5OYk2OHAQEoJDVnETFHYTE3gXGO30//T///X///P//34nM4VLX77W6r/X68Lf9O31//H7//b//8Pi96pwd/L+/+zy/fD6//D7/8DZ7u/5//L//8Le8/P+/8Hd8r7U6L/X7L/W6m8HB4ZNYuz0/7vN4IMnJ9fK1I04N+akANLtiv/sMNPEzMXm+6aZp6ecq69/hKhra5hMS5dUWKL/9Ojq76H349bH0KnvzKLt1af32I2zpciAAH+AduGdAMTi97eQlpVJSIcvL28kIl8AAKdxd2sNFufp77+fpbrusu32/6Jnae31/LT1w5335rK3yO30/qFGAII5Prbttezw9qqgr6ynuMHe8sLd8ngjJ+jq8uns8aD45Ofo88uzvMu1vX84PnY4NnBHQHwxNrvtrYg9P3gSDI07PdjN1nYOBbGzxM65wNPEyfH6/6NfXuzz/r7V6QAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4QUY2MjJFMDk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4QUY2MjJFMTk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjhBRjYyMkRFOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhBRjYyMkRGOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEg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" alt></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/06/25/mysql的Ferderated引擎/" data-id="cjxapvznf001musl3f8zbhbhh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-自制hexo评论插件（一）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/06/13/自制hexo评论插件（一）/" class="article-date">
@@ -91,11 +148,13 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"tiny-comment"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tiny-container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-wrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"昵称"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"邮箱"</span> <span class="attr">title</span>=<span class="string">"邮箱不会公布，有新的回复时接收邮件"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">id</span>=<span class="string">"tiny-comment-textarea"</span> <span class="attr">placeholder</span>=<span class="string">"你的留言..."</span>  <span class="attr">rows</span>=<span class="string">"5"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"height:35px;"</span>&gt;</span> <span class="tag">&lt;<span class="name">button</span> <span class="attr">style</span>=<span class="string">"float:right;"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-count"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"font-weight: bold"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 评论<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"segment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span></span><br><span class="line">            这是一条评论</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"segment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span></span><br><span class="line">            这是一条评论</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"segment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span></span><br><span class="line">            这是一条评论</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"reply"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span>这是一条回复<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"reply"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span>这是一条回复<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"reply"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span>这是一条回复<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"load-more"</span> <span class="attr">style</span>=<span class="string">"text-align: center"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>加载更多...<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tiny-footer"</span>&gt;</span></span><br><span class="line">    Powerd by <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0)"</span>&gt;</span>lzlz000<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>接下来，我们考虑如何让前端能简单的引入这个节点呢？</p>
+<hr>
+<p><a href="https://lzlz000.github.io"><img src="https://img.shields.io/badge/lzlz000-%E4%B8%AA%E4%BA%BA%E7%A9%BA%E9%97%B4-brightgreen.svg?style=flat&logo=data:image/gif;base64,R0lGODlhPAA8APf/AP/TAHsbG6ZJAGsBAcertKL75+jsZ93teMTk+o5BRruVm+72/3ILC7OGjbS7zIIqK4QyNZDDtKFbWqZuc//sN/v//8+7xN7X4eDc5JFJTa59gsHtpL+cpJx9iZ1dYpnu431xae/4/5Jpc6H965RNUIqonPH8/7rJ3MOlq/bsTm4KC9bI0ZpZXcPh9opTW6NpbKl0eqVkZOzy/nkeH8Da79jM0nUaHJNDQ3wgIZ2Cj6mcq7f1vbaLkaSToYItL4wpAHUQEIs0M+3z+ptTVOnt9enu+JFjbNO+yMHc8e/3/N3V3tXGz4E8Qoy+t5ZxfK2ru9rR2ujr9cTj+GUAAMPi+Obm7bW+0P/aAMmxuaGLmLK1xrCxwXwuMvL8/7nG2Y09Qv/WAJZPVMh6AMLg9cDb8MDY7bLuvplWWp9gZevx/IVHTo4+PrfD1r/Y7O71+nYVFXgVFdC9xW4VFqORnsy2vn4lKHY1M9rP2YY2ObmSmHMWG8KhqHwzOeLg65FGSHspLXEOD7yYnolNVI46OY5cZWsHCOzx/evw+ubn8dbJztPDzYs7Pqx4fcWoros5OYk2OHAQEoJDVnETFHYTE3gXGO30//T///X///P//34nM4VLX77W6r/X68Lf9O31//H7//b//8Pi96pwd/L+/+zy/fD6//D7/8DZ7u/5//L//8Le8/P+/8Hd8r7U6L/X7L/W6m8HB4ZNYuz0/7vN4IMnJ9fK1I04N+akANLtiv/sMNPEzMXm+6aZp6ecq69/hKhra5hMS5dUWKL/9Ojq76H349bH0KnvzKLt1af32I2zpciAAH+AduGdAMTi97eQlpVJSIcvL28kIl8AAKdxd2sNFufp77+fpbrusu32/6Jnae31/LT1w5335rK3yO30/qFGAII5Prbttezw9qqgr6ynuMHe8sLd8ngjJ+jq8uns8aD45Ofo88uzvMu1vX84PnY4NnBHQHwxNrvtrYg9P3gSDI07PdjN1nYOBbGzxM65wNPEyfH6/6NfXuzz/r7V6QAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4QUY2MjJFMDk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4QUY2MjJFMTk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjhBRjYyMkRFOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhBRjYyMkRGOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEg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" alt></a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/" data-id="cjwtj8hqq0000m0l3mglr54zz" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/" data-id="cjxapvzni001pusl3ob35fpvj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
@@ -149,59 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjwp5bozn0006jkl3pab6nluz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/07/hello-hexo/" class="article-date">
-  <time datetime="2019-06-07T14:11:24.000Z" itemprop="datePublished">2019-06-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/07/hello-hexo/">hello hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前市面上常见的静态博客框架就是 <code>hexo</code> 和 <code>jekyll</code>，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。</p>
-<hr>
-<p><strong>之所以想搭建一个静态页面，有以下几个原因</strong></p>
-<p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
-<p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
-<p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
-<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
-<p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
-<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
-<ol>
-<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
-<li>需要手动添加 yaml front matter</li>
-</ol>
-<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjwp5bozh0003jkl3nh74wktk" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjxapvzm60005usl3sqpnt1ue" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
@@ -231,7 +238,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
     </div>
   </div>
 
@@ -241,7 +248,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
+      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
     </div>
   </div>
 
@@ -263,6 +270,10 @@
       <ul>
         
           <li>
+            <a href="/2019/06/25/mysql的Ferderated引擎/">mysql的Ferderated引擎</a>
+          </li>
+        
+          <li>
             <a href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
           </li>
         
@@ -276,10 +287,6 @@
         
           <li>
             <a href="/2019/04/09/nginx配置反向代理/">nginx配置反向代理</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/20/量子密钥分发原理-python实现/">量子密钥分发原理(python实现)</a>
           </li>
         
       </ul>
