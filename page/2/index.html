@@ -5,15 +5,15 @@
   
 
   
-  <title>lz的个人空间</title>
+  <title>lzlz000的个人页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="lz的个人空间">
+<meta property="og:title" content="lzlz000的个人页">
 <meta property="og:url" content="http://lzlz000.github.io/page/2/index.html">
-<meta property="og:site_name" content="lz的个人空间">
+<meta property="og:site_name" content="lzlz000的个人页">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lz的个人空间">
+<meta name="twitter:title" content="lzlz000的个人页">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -32,7 +32,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <!-- <h1 id="logo-wrap">
-        <a href="/" id="logo">lz的个人空间</a>
+        <a href="/" id="logo">lzlz000的个人页</a>
       </h1> -->
       
     </div>
@@ -40,9 +40,9 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">Home</a>
+          <a class="main-nav-link" href="/">主页</a>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          <a class="main-nav-link" href="/archives">归档</a>
         
       </nav>
       <nav id="sub-nav">
@@ -57,10 +57,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mysql的Ferderated引擎" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/07/hello-hexo/" class="article-date">
-  <time datetime="2019-06-07T14:11:24.000Z" itemprop="datePublished">2019-06-07</time>
+    <a href="/2019/06/25/mysql的Ferderated引擎/" class="article-date">
+  <time datetime="2019-06-24T17:19:14.000Z" itemprop="datePublished">2019-06-25</time>
 </a>
     
   </div>
@@ -71,7 +71,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/07/hello-hexo/">hello hexo</a>
+      <a class="article-title" href="/2019/06/25/mysql的Ferderated引擎/">mysql的Ferderated引擎</a>
     </h1>
   
 
@@ -79,159 +79,137 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>目前市面上常见的静态博客框架就是 <code>hexo</code> 和 <code>jekyll</code>，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。</p>
-<hr>
-<p><strong>之所以想搭建一个静态页面，有以下几个原因</strong></p>
-<p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
-<p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
-<p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
-<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
-<p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
-<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
+        <p><strong>Ferderated</strong> 引擎提供了以本地一张独立的表访问远程MySQL服务器上表的方法。本地不存储数据，数据全部放到远程服务器上，但是本地需要保存表结构和远程服务器的连接信息。</p>
+<p>首先Ferderated引擎在mysql中是默认关闭的，可以使用 <strong>show engines</strong> 命令查看是否开启了该引擎：</p>
+<p><img src="/images/1561399282036.png" alt></p>
+<p>可以发现 Ferderated 的 support为 NO</p>
+<p>我们需要在mysql配置文件中加入 federated</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">datadir=/var/lib/mysql</span><br><span class="line">socket=/var/lib/mysql/mysql.sock</span><br><span class="line">federated #加入这一行</span><br><span class="line">...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>重启服务，会发现Ferderated 已经开启</p>
+<p><img src="/images/1561399506237.png" alt></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 在任意mysql服务器上创建一个表，作为Ferderated的目标远程服务器，该服务器不需要开启Ferderated引擎</span><br><span class="line"># 本例中，表创建在127.0.0.1:3307/mysql-test</span><br><span class="line">CREATE TABLE remote_fed (</span><br><span class="line">	id INT auto_increment NOT NULL,</span><br><span class="line">	c1 VARCHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	c2 CHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">PRIMARY KEY ( id ) </span><br><span class="line">) ENGINE = INNODB</span><br><span class="line"></span><br><span class="line"># 在开启了Ferderated引擎创建表</span><br><span class="line">CREATE TABLE local_fed (</span><br><span class="line">	id INT auto_increment NOT NULL,</span><br><span class="line">	c1 VARCHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">	c2 CHAR ( 10 ) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">PRIMARY KEY ( id ) </span><br><span class="line">) ENGINE=federated CONNECTION =&apos;mysql://root:123456@127.0.0.1:3307/mysql-test/remote_fed&apos;</span><br></pre></td></tr></table></figure>
+
+<p>一些注意事项</p>
 <ol>
-<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
-<li>需要手动添加 yaml front matter</li>
+<li>对本地虚拟表的结构修改，并不会修改远程表的结构，但是改变自身的表结构会出现意想不到的错误</li>
+<li>truncate 命令，会清除远程表数据 </li>
+<li>drop命令只会删除虚拟表，并不会删除远程表</li>
 </ol>
-<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjxapvzm50004usl3shjyjsr5" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/25/mysql的Ferderated引擎/" data-id="cjxdfi3gu000fpwl378y87egv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-自制hexo评论插件（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/13/自制hexo评论插件（一）/" class="article-date">
+  <time datetime="2019-06-12T17:13:00.000Z" itemprop="datePublished">2019-06-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>hexo等静态博客，现在有很多可使用的评论插件，基本都需要繁琐的注册，国内的还需要实名制审核（我本人特别特别讨厌实名制审核，有一种我在网上干什么都有别人偷窥的感觉，虽然我是守法公民，但是即使我在床上只睡觉不干其他不可描述的事情，我也不希望有摄像头对着我拍不是吗？）我就在想，能不能自己做一个？</p>
+<p>我仔细思考了一下，确实可以做，不过是一个前端界面和一个后端服务器。但是作为一个“插件”和一个前端页面还是有区别的，我希望能尽量让使用者简单的引入，最好启用一个服务器+引入一个js文件+少量配置就可以完成。</p>
+<p>首先，不要太复杂的功能：基本功能针对每个页面的评论、回复、邮件即可，考虑后续加上markdown语法支持，管理界面等功能。</p>
+<h3 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h3><p>我尝试使用了一些现有的插件，并试图模仿他们的样式并简化功能，于是我做出了下面这样的界面：</p>
+<p><img src="/images/1560364377217.png" alt></p>
+<p>是不是还挺像那么回事的😀？</p>
+<p>这部分的代码如下:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#tiny-comment</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#ffffff</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#C0C4CC</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.tiny-container</span>&#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">20px</span> <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.tiny-footer</span>&#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">5px</span>  <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#262A30</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#999999</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.tiny-footer</span> <span class="selector-tag">a</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#258FB8</span>;</span><br><span class="line">    <span class="attribute">text-decoration</span>:none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-tag">input</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">    <span class="attribute">border</span>: none;</span><br><span class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#C0C4CC</span>;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">    <span class="attribute">margin-right</span>: <span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-tag">input</span><span class="selector-pseudo">:focus</span>&#123;</span><br><span class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#409EFF</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.input-wrapper</span>&#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> dashed <span class="number">#C0C4CC</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">20px</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.input-wrapper</span> <span class="selector-tag">textarea</span>&#123;</span><br><span class="line">    <span class="comment">/* border: 1px dashed #C0C4CC; */</span></span><br><span class="line">    <span class="attribute">border</span>: none;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">5px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">resize</span>: vertical;</span><br><span class="line">    <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">    <span class="attribute">-webkit-box-sizing</span>: border-box;</span><br><span class="line">    <span class="attribute">-moz-box-sizing</span>: border-box;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-tag">button</span>&#123;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">5px</span> <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#DCDFE6</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">    <span class="attribute">background</span>: transparent;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-tag">button</span><span class="selector-pseudo">:active</span>&#123;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#409EFF</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#409EFF</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.comment-count</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.segment</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">border-bottom</span>: <span class="number">1px</span> solid <span class="number">#DCDFE6</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.secondary</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#C0C4CC</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.segment</span> <span class="selector-class">.nickname</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#409EFF</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: default;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.comment-content</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.reply-btn</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">border</span>: none;</span><br><span class="line">    <span class="attribute">cursor</span>: pointer;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#F56C6C</span>;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.reply-btn</span><span class="selector-pseudo">:active</span>&#123;</span><br><span class="line">    <span class="attribute">border</span>: none;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgb</span>(214, 0, 0);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.reply</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">5px</span> <span class="number">0</span> <span class="number">5px</span> <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">    <span class="attribute">border-top</span>: <span class="number">1px</span> solid <span class="number">#DCDFE6</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">13px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#tiny-comment</span> <span class="selector-class">.reply</span> <span class="selector-class">.comment-content</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"tiny-comment"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tiny-container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-wrapper"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"昵称"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">placeholder</span>=<span class="string">"邮箱"</span> <span class="attr">title</span>=<span class="string">"邮箱不会公布，有新的回复时接收邮件"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">id</span>=<span class="string">"tiny-comment-textarea"</span> <span class="attr">placeholder</span>=<span class="string">"你的留言..."</span>  <span class="attr">rows</span>=<span class="string">"5"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"height:35px;"</span>&gt;</span> <span class="tag">&lt;<span class="name">button</span> <span class="attr">style</span>=<span class="string">"float:right;"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-count"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">style</span>=<span class="string">"font-weight: bold"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">span</span>&gt;</span> 评论<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"segment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span></span><br><span class="line">            这是一条评论</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"segment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span></span><br><span class="line">            这是一条评论</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"segment"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span></span><br><span class="line">            这是一条评论</span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"reply"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span>这是一条回复<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"reply"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span>这是一条回复<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"reply"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"nickname"</span>&gt;</span>匿名用户<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"secondary"</span>&gt;</span>13秒前<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">class</span>=<span class="string">"reply-btn"</span> <span class="attr">style</span>=<span class="string">"float: right"</span>&gt;</span>回复<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"comment-content"</span>&gt;</span>这是一条回复<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"load-more"</span> <span class="attr">style</span>=<span class="string">"text-align: center"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">button</span>&gt;</span>加载更多...<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tiny-footer"</span>&gt;</span></span><br><span class="line">    Powerd by <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"javascript:void(0)"</span>&gt;</span>lzlz000<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们考虑如何让前端能简单的引入这个节点呢？</p>
+<hr>
+<p><a href="https://lzlz000.github.io"><img src="https://img.shields.io/badge/lzlz000-%E4%B8%AA%E4%BA%BA%E7%A9%BA%E9%97%B4-brightgreen.svg?style=flat&logo=data:image/gif;base64,R0lGODlhPAA8APf/AP/TAHsbG6ZJAGsBAcertKL75+jsZ93teMTk+o5BRruVm+72/3ILC7OGjbS7zIIqK4QyNZDDtKFbWqZuc//sN/v//8+7xN7X4eDc5JFJTa59gsHtpL+cpJx9iZ1dYpnu431xae/4/5Jpc6H965RNUIqonPH8/7rJ3MOlq/bsTm4KC9bI0ZpZXcPh9opTW6NpbKl0eqVkZOzy/nkeH8Da79jM0nUaHJNDQ3wgIZ2Cj6mcq7f1vbaLkaSToYItL4wpAHUQEIs0M+3z+ptTVOnt9enu+JFjbNO+yMHc8e/3/N3V3tXGz4E8Qoy+t5ZxfK2ru9rR2ujr9cTj+GUAAMPi+Obm7bW+0P/aAMmxuaGLmLK1xrCxwXwuMvL8/7nG2Y09Qv/WAJZPVMh6AMLg9cDb8MDY7bLuvplWWp9gZevx/IVHTo4+PrfD1r/Y7O71+nYVFXgVFdC9xW4VFqORnsy2vn4lKHY1M9rP2YY2ObmSmHMWG8KhqHwzOeLg65FGSHspLXEOD7yYnolNVI46OY5cZWsHCOzx/evw+ubn8dbJztPDzYs7Pqx4fcWoros5OYk2OHAQEoJDVnETFHYTE3gXGO30//T///X///P//34nM4VLX77W6r/X68Lf9O31//H7//b//8Pi96pwd/L+/+zy/fD6//D7/8DZ7u/5//L//8Le8/P+/8Hd8r7U6L/X7L/W6m8HB4ZNYuz0/7vN4IMnJ9fK1I04N+akANLtiv/sMNPEzMXm+6aZp6ecq69/hKhra5hMS5dUWKL/9Ojq76H349bH0KnvzKLt1af32I2zpciAAH+AduGdAMTi97eQlpVJSIcvL28kIl8AAKdxd2sNFufp77+fpbrusu32/6Jnae31/LT1w5335rK3yO30/qFGAII5Prbttezw9qqgr6ynuMHe8sLd8ngjJ+jq8uns8aD45Ofo88uzvMu1vX84PnY4NnBHQHwxNrvtrYg9P3gSDI07PdjN1nYOBbGzxM65wNPEyfH6/6NfXuzz/r7V6QAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4QUY2MjJFMDk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4QUY2MjJFMTk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjhBRjYyMkRFOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhBRjYyMkRGOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEgHx4dHBsaGRgXFhUUExIREA8ODQwLCgkIBwYFBAMCAQAAIfkEAQAA/wAsAAAAADwAPAAACP8A/wkcSLCgwYL8oAEZwBAWjmcHI0qcSHHgDUo4/ExwhoJAIw6+WPh486CiyZMEKdl4EYdIKkuWMKVKhQlmCCV58KgggbLnwRkzFBC5ZGJBv6NIkVZCZamLPhKFfvn0GaOQBnGWjCb1tKCrp0pJK5mwlO8PjqknIZxLBEprvwWjLKVaUGRdFFKmYqIC208WJiEvCqGlOCNBOkxI80Zpx8jPgwCUAuB45CGQEhOYPB1dcEnBlMERcWRIUupoKUs1sgUAFI9Qhx69eGVxosYGoDV7hGACWwkUis+gCQ7CkwRVv0qrMLBQwSeLF1VUWnRS1WlMqBb+nhCCRKvRKOOyQAX/GhB8oKQqn2QswBQIEB9ynVqc2uSvvv36nFhJOSGiUJgqiFVyyQRvlDcAHZbIgEoSaBSSgzmd0HffhPedgkA3XASQiCVvJfEAP6AFwcIl/YTgRgZybIEAJxS2OKEqp7igQhwJjqIIeYPBgkEpnpgQhh5sYOfikPad0owRsNQwSj+XBHMDWoOgQaIljBRixRhEUtjKKaGQYV8bobgQQDWomGAPjj7BUssno8QxgA5SZEkhDQ44oYWQ/pxSxjlD7LbKImg9UMoCSdDiAgJyUkhFB9JIMg4CEnayxQDsrGJJIAH4NAgMl2DCQSEn0JDofZuccgI4UxSShRQs+oOAC9CU/3kBAz7BgQUmqPhgBKKj1rcJGTS00IogUwzghHz+kGEFLHSsEkIdPgFygSWKwOIAEr36swkNRjBhxS5IGDHFFITQUIY/UjDBAkwkxNATJVGAwsgfrEg4Kiec1CHNDFvsEkoHA0whyCuctJAFJUWAMsGTKOHgzSr1GBFntsk68McUgOgQihQ9qDCAA8BawcASoDQQRE91hHBIAHNgSbE/nczCRLE9jDEGPuNoy6INHFTAAzQ94YBKH0A8wcrL9SHBiQtTdIAdEqr4Wg4XGlRg8rv9KAGEFl4inScn+LRir31jMDFBBTAwfBIQfVwASDdde80JEq+02InZFZwhQU+TWP+ASNFHe03kJqxw4UsFEPgUhC/7BNBDJ4ITufMe2kwy1SOgPCLCxJG3SIPIdygCxFSwIAIDHxF23uIYc1BSyjSDTEVLAyuowIaoqk8ohSBhWDLDYAjj0AHnuftTxiyAYBEHrWhNwgEPNrTRavFU5EAJKl+AONgkGEySA/Gdu+KKDbSjiRYtEyigwiy4qy5FB0AU4YO7wQ1AgCNqSFF350iwUcgezgBEeQQCCSwwoAO8EpwrOuEOP9TCfMEZgg/yAIseJPBlm0CACN6wAhsMkCBrwIMGVNADf7XghChMoQpRGIpddEAFBICA2j74jzX44AxTiEQsNMHDHvrwhz2MRST/VMADPDiChgWRQCF+IIAmOvGJUIziN+hhA4ggsSCTYMYVAMDFLnrxi18Eww/CcEWDAOEWWwSjGsF4hR+U0SBf+IYyxEDHOtrxjni8xxsLAgxqZOKPgAykIAeph9HtcSAqgIIpKsHIRjrykY4MAToesLdDAiEPoKiEJ75igkt48pOgvIQlsLHJSmDigYf8Bw6S4BZULAEGooilLGWZPiHwpR+gQIMt9jg7Eh2lEl3wAzxAQMxiGlMOK/hEYqAAiz0yQAml+eU+EpAMYRTgmtgswAhGYIcjmEApXcDDHuuwSaV8IgElIIYBUpACMxyAndf4QDe/iRRLaOBkZcwAYsyJ/051yGMDGzhGOABqDHl6MymjwAIcyiiBdYXlnOnExQEmSlEzGJSeRzFFLQyJxIZyiJ8lUEcKckGBklIgFxu4aFJQcQGO0tCjD0XnCLaxg5raFBnceMdBkRKCPljuihLwgC9/2YVFLCMCTUiqUpMagWjs9CghkEGmrjiEDIjSLV1wBhcgwNWuepUEVcDGZjCBCQtA8IOSgIA10BGTEFSiFKQ4RBrSYAhS2NWuhkDFAkJQkyigYB4qoN8bKUEJFjQCA0wRJSZGYYLGmuAlogwBBlDAAkq8QSqpFMgQAvCGG2rAGu3QhT3ucIcl0MEavgiGDyYxgyFkViISCEIAgMAABgzAorZACEAQKgmagAAAOw==" alt></a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/" data-id="cjxdfi3hv001zpwl37ac1rstf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hexo-插入图片" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/08/hexo-插入图片/" class="article-date">
+  <time datetime="2019-06-08T02:37:22.000Z" itemprop="datePublished">2019-06-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。</p>
+<h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>通过搜索得到的解决方案最常见的是安装插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xxx.png ，搜索下解决方法 ，还要自己手动去 node_modules 中修改脚本才能用，我们知道，node_modules 实际上都是npm install的时候自动生成的，这样的改动以后还要反复手动操作，太难受了，此方法不可取。</p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>hexo官方给了两种解决方式 <a href="https://hexo.io/zh-cn/docs/asset-folders" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders</a> </p>
+<p>一个是使用hexo的标签：</p>
+<p><img src="/images/1559990605779.png" alt></p>
+<p>这个方式看起来完美解决了问题，但是在我本地通过typora编辑文档时，是看不到图片的，不方便使用。</p>
+<h3 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h3><p>使用最简单的方式在 source 目录下创建images目录，然后图片都保存在这里。</p>
+<p>关键是要在typora上做以下设置：</p>
+<p>在md文件头部的配置项中，添加 <code>typora-root-url: ../</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:  hexo+typora 插入图片</span><br><span class="line">date: 2019-06-08 10:37:22</span><br><span class="line">tags:</span><br><span class="line">typora-root-url: ../</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>这样引用的图片都以上一级目录即 sourse作为根目录了，此时插入的图片时，只要点击“复制图片到…”并选择一次文件夹，以后每次都会自动保存在 sourse/image目录下，并且本地的显示和服务器上的根目录完全一致。</p>
+<p><img src="/images/1559989480817.png" alt="本地路径和服务器路径一致"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="cjxdfi3gg0006pwl3p6py0zs1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-nginx配置反向代理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/09/nginx配置反向代理/" class="article-date">
-  <time datetime="2019-04-08T20:23:49.000Z" itemprop="datePublished">2019-04-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/09/nginx配置反向代理/">nginx配置反向代理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
-
-<p>启动Nginx并设置开机自动运行 ：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
-
-<p>默认端口80<br>浏览器输入 服务器地址 即可看到 nginx的首页<br>yum 安装的 nginx 配置路径在 <strong>/etc/nginx/nginx.conf</strong> ,可以修改端口号再重启</p>
-<h3 id="域名转发"><a href="#域名转发" class="headerlink" title="域名转发"></a>域名转发</h3><p>在本机上，我事先装了一个 nexus 私服，端口是8081，以此为例子, 我们通过域名转发把 nexus.xx.xx 转发到 xx.xx:8081.</p>
-<p>首先，要有一个域名。</p>
-<h6 id="配置dns-解析"><a href="#配置dns-解析" class="headerlink" title="配置dns 解析"></a>配置dns 解析</h6><p>然后新建一个DNS解析配置，把子域名 nexus.xx.xx  解析到服务器IP地址，稍等片刻，等待DNS服务器更新解析，我自己的域名使用了 <a href="https://www.dns.com/" target="_blank" rel="noopener">https://www.dns.com/</a> 提供的 DNS服务器<br><img src="/images/12404.png" alt="image.png"></p>
-<p>浏览器键入 nexus.xx.xx，进入了nginx的首页。此步骤完成</p>
-<h6 id="配置nginx域名转发"><a href="#配置nginx域名转发" class="headerlink" title="配置nginx域名转发"></a>配置nginx域名转发</h6><p>在 nginx.conf的 http 模块中 加入一个 server </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">   &#123;</span><br><span class="line">       listen 80;</span><br><span class="line">       server_name nexus.xx.xx;</span><br><span class="line">       location / &#123;</span><br><span class="line">           proxy_redirect off;</span><br><span class="line">           proxy_set_header Host $host;</span><br><span class="line">           proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">           proxy_pass http://127.0.0.1:8081; # 转发地址 可以是 baidu.com 或者任何地址</span><br><span class="line">       &#125;</span><br><span class="line">       access_log logs/nexus.log;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>保存并重启服务器 （我尝试使用nginx -s reload 重新加载配置文件无效，只能重启）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
-
-<p>浏览器键入 nexus.xx.xx 咦 404? 没错啦，这是nexus的404 nexus的web 首页在 nexus.xx.xx/nexus </p>
-<p>END</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/04/09/nginx配置反向代理/" data-id="cjxapvzmf000busl3sqonkjl6" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-量子密钥分发原理-python实现" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/20/量子密钥分发原理-python实现/" class="article-date">
-  <time datetime="2019-03-20T05:57:15.000Z" itemprop="datePublished">2019-03-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/20/量子密钥分发原理-python实现/">量子密钥分发原理(python实现)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我只是一个程序员，对自然科学比较感兴趣。首先说明，我对量子力学仅停留在科普级别的了解。我仅仅利用其性质，来用代码尝试说明量子加密是如何实现的，仅供拓展思维。打个比方，本文对量子加密的讨论就如同通过“窜天猴”鞭炮作为demo来了解运载火箭的原理。</p>
-<p><img src="/images/12402.png" alt="本文内容"> <img src="/images/124.png" alt="量子通讯"></p>
-<h4 id="观测对测量结果的影响"><a href="#观测对测量结果的影响" class="headerlink" title="观测对测量结果的影响"></a>观测对测量结果的影响</h4><p>观测对测量结果产生影响的这种思想，真的对我的世界观产生了极大的挑战，世间万物居然遵循着这样的规律运行，让人感觉十分奇妙。</p>
-<p>一个宏观对象，假设他有a,b,c 3个属性，该属性在对象生成时就确定，值可以为0或者1。就如同你生来就是男生/女生 不可修改，当然现在可以变性，但是实际上你的基因并不会改变，仅仅是“形似”罢了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.__a = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        self.__b = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        self.__c = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_a</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__a</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_b</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__b</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_c</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__b</span><br><span class="line"></span><br><span class="line">o = Object()</span><br><span class="line">print(<span class="string">"a:"</span>+str(o.get_a())+<span class="string">" b:"</span>+str(o.get_b())+<span class="string">" c:"</span>+str(o.get_c()))</span><br><span class="line">print(<span class="string">"b:"</span>+str(o.get_b())+<span class="string">" a:"</span>+str(o.get_a()))</span><br><span class="line">print(<span class="string">"c:"</span>+str(o.get_a())+<span class="string">" b:"</span>+str(o.get_b()))</span><br><span class="line">print(<span class="string">"a:"</span>+str(o.get_a())+<span class="string">" c:"</span>+str(o.get_b()))</span><br></pre></td></tr></table></figure>
-
-<p>显而易见，对象生成后它的属性便是一个确定的值，该结果不会因为你的测量顺序而改变。比如你是一个汉族男性，不会因为先检查你的性别还是先检查你的民族而有所差别，在人类没有发现量子世界的性质之前，世间万物皆为如此。可能的运行结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a:1 b:0 c:0</span><br><span class="line">b:0 a:1</span><br><span class="line">c:0 b:0</span><br><span class="line">a:1 c:0</span><br></pre></td></tr></table></figure>
-
-<p><strong>量子的观测不对异性</strong><br>对量子的不同特征进行测量，观测的顺序会影响测量的结果，这种性质被称为 “量子的观测不对异性” 。嗯，一个充满哲♂学气息的性质，可见量子是个gay，观测只对同性。<br>注意，该结果不是随机的，而是“叠加的”，因为当你的测量顺序一定时得到的结果是确定的。在两个属性（a,b）的情况下，一个量子的观测方式有[a,b],[b,a]两种，因此其a,b属性应该是两种状态的叠加。以此类推我们用代码来描述一个拥有a,b,c 3个属性的“量子对象”。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">            self.__children = &#123;&#125;</span><br><span class="line">            self.__val = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">set_child</span><span class="params">(self, name, child)</span>:</span></span><br><span class="line">            self.__children[name]=child</span><br><span class="line">            <span class="keyword">return</span> child <span class="comment"># 方便连续调用简化代码</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get_child</span><span class="params">(self, name)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> self.__children[name]</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get_val</span><span class="params">(self)</span>:</span></span><br><span class="line">            <span class="keyword">return</span> self.__val</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Quantum</span>:</span></span><br><span class="line">    <span class="comment">#关于叠加态 我们可以用树结构来维护</span></span><br><span class="line">    <span class="comment">#一个3个属性的量子，可表示为,</span></span><br><span class="line">    <span class="comment">#     root</span></span><br><span class="line">    <span class="comment">#   /   |   \</span></span><br><span class="line">    <span class="comment">#  a    b    c</span></span><br><span class="line">    <span class="comment">#  /\   /\   /\</span></span><br><span class="line">    <span class="comment"># b  c a  c a  b </span></span><br><span class="line">    <span class="comment"># |  | |  | |  |</span></span><br><span class="line">    <span class="comment"># c  b c  a b  a</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测量方式，队列，如果新的测量属性和队列中最后一个值不一致则加入队列，</span></span><br><span class="line">    <span class="comment"># 如果队列长度大于（属性数-1）则头部数据出列，，为了便于理解，假设有abc三个属性</span></span><br><span class="line">    <span class="comment"># 测量属性 队列值</span></span><br><span class="line">    <span class="comment"># a       [a]</span></span><br><span class="line">    <span class="comment"># b       [a,b]  </span></span><br><span class="line">    <span class="comment"># c       [b,c]  </span></span><br><span class="line">    <span class="comment"># c       [b,c]   和最后一次测量一样 不发生改变</span></span><br><span class="line">    <span class="comment"># a       [c,a]  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.route = []</span><br><span class="line">        root = TreeNode()</span><br><span class="line">        self.root = root</span><br><span class="line">        root.set_child(<span class="string">'a'</span>,TreeNode()).set_child(<span class="string">'b'</span>,TreeNode()).set_child(<span class="string">'c'</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">'a'</span>).set_child(<span class="string">'c'</span>,TreeNode()).set_child(<span class="string">'b'</span>,TreeNode())</span><br><span class="line">        root.set_child(<span class="string">'b'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode()).set_child(<span class="string">'c'</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">'b'</span>).set_child(<span class="string">'c'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode())</span><br><span class="line">        root.set_child(<span class="string">'c'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode()).set_child(<span class="string">'b'</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">'c'</span>).set_child(<span class="string">'b'</span>,TreeNode()).set_child(<span class="string">'a'</span>,TreeNode())</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get</span><span class="params">(self, name)</span>:</span></span><br><span class="line">        length = len(self.route)</span><br><span class="line">        <span class="keyword">if</span> (length == <span class="number">0</span> <span class="keyword">or</span> self.route[<span class="number">-1</span>]!=name):</span><br><span class="line">            self.route.append(name)</span><br><span class="line">            <span class="keyword">if</span> (len(self.route) &gt;<span class="number">2</span>):</span><br><span class="line">                self.route.pop(<span class="number">0</span>)</span><br><span class="line">        node = self.root</span><br><span class="line">        <span class="keyword">for</span> name <span class="keyword">in</span> self.route:</span><br><span class="line">            node = node.get_child(name)</span><br><span class="line">        <span class="keyword">return</span> node.get_val()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_a</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">'a'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_b</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">'b'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_c</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">'c'</span>)</span><br></pre></td></tr></table></figure>
-
-<p>好了，我们已经通过代码实现了“观测对测量结果产生影响”的效果。每一次get属性值，就是对对象的一次观测，不同观测顺序下，变量会返回不同的值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创造一个量子并对他的属性反复观测</span></span><br><span class="line">q = Quantum()</span><br><span class="line">print(<span class="string">'a'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'b'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'a'</span>,q.get_b())</span><br><span class="line">print(<span class="string">'c'</span>,q.get_c())</span><br><span class="line">print(<span class="string">'a'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'b'</span>,q.get_a())</span><br><span class="line">print(<span class="string">'a'</span>,q.get_a())</span><br></pre></td></tr></table></figure>
-
-<p>可能的运行结果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a 0</span><br><span class="line">b 0</span><br><span class="line">a 1</span><br><span class="line">c 1</span><br><span class="line">a 0</span><br><span class="line">b 0</span><br><span class="line">a 0</span><br></pre></td></tr></table></figure>
-
-<h4 id="量子秘钥分发"><a href="#量子秘钥分发" class="headerlink" title="量子秘钥分发"></a>量子秘钥分发</h4><p>通过量子的物理性质，保证了秘钥分发时的绝对安全<br>用代码来模拟该过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">from quantum import Quantum</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Observer:</span><br><span class="line">    length = 20</span><br><span class="line"></span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.q_list = []  # 量子集合</span><br><span class="line"></span><br><span class="line">    # 初始化量子集合</span><br><span class="line">    def init_quantum(self):</span><br><span class="line">        for i in range(Observer.length):</span><br><span class="line">            self.q_list.append(Quantum())</span><br><span class="line"></span><br><span class="line">    # 观测</span><br><span class="line">    def observe(self):</span><br><span class="line">        def __observe(quantum):</span><br><span class="line">            ran = random.randint(0, 2)</span><br><span class="line">            #最常见的光量子就有“线偏振”和“圆偏振”两种属性</span><br><span class="line">            # 只使用a,b两个属性 来模拟这种情况</span><br><span class="line">            if (ran == 0):</span><br><span class="line">                return (&apos;a&apos;, q.get_a())</span><br><span class="line">            else:</span><br><span class="line">                return (&apos;b&apos;, q.get_b())</span><br><span class="line">        self.path = []</span><br><span class="line">        self.result = []</span><br><span class="line">        for q in self.q_list:</span><br><span class="line">            result = __observe(q)</span><br><span class="line">            self.path.append(result[0])</span><br><span class="line">            self.result.append(result[1])</span><br><span class="line">        print(self.name,&apos;观测方式：&apos;, self.path)</span><br><span class="line">        print(self.name,&apos;观测结果：&apos;, self.result)</span><br><span class="line">    </span><br><span class="line">    # 从另一个观测者获取量子序列</span><br><span class="line">    def get_quantum(self, another):</span><br><span class="line">        self.q_list=another.q_list</span><br><span class="line">    </span><br><span class="line">    # 从另一个观测者获取观测方式</span><br><span class="line">    def get_path(self, another):</span><br><span class="line">        self.key = []</span><br><span class="line">        for i in range(Observer.length):</span><br><span class="line">            if (another.path[i] == self.path[i]):</span><br><span class="line">                self.key.append(self.result[i])</span><br><span class="line">        print(self.name,&apos;秘钥：&apos;, self.key)</span><br></pre></td></tr></table></figure>
-
-<p>观测和秘钥传输</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sender = Observer(&apos;发送者&apos;)</span><br><span class="line">sender.init_quantum() # 初始化量子序列</span><br><span class="line">sender.observe() # 对量子序列进行观测</span><br><span class="line"></span><br><span class="line">reciver = Observer(&apos;接收者&apos;)</span><br><span class="line">reciver.get_quantum(sender) # 发送者把量子传输给接收者</span><br><span class="line">reciver.observe() # 接收者对其观测</span><br><span class="line"></span><br><span class="line"># 双方交换观察方式</span><br><span class="line">sender.get_path(reciver)</span><br><span class="line">reciver.get_path(sender)</span><br></pre></td></tr></table></figure>
-
-<p>可以得到这样的运行结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">发送者 观测方式： ['b', 'b', 'a', 'a', 'a', 'b', 'b', 'a', 'a', 'a', 'a', 'b', 'b', 'b', 'a', 'b', 'a', 'b', 'b', 'b']</span><br><span class="line">发送者 观测结果： [0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1]</span><br><span class="line">接收者 观测方式： ['a', 'b', 'a', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'b', 'b', 'a', 'b', 'b', 'b', 'b', 'b', 'b', 'a']</span><br><span class="line">接收者 观测结果： [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0]</span><br><span class="line">发送者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]</span><br><span class="line">接收者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]</span><br></pre></td></tr></table></figure>
-
-<h4 id="如何保证安全"><a href="#如何保证安全" class="headerlink" title="如何保证安全"></a>如何保证安全</h4><p>在模拟的代码中，“量子的观测不对异性” 通过存储观测方式 path 在Quantum对象中实现。这是我们在宏观世界来模拟这种现象的一种实现手段，实际上这是一种基本物理性质，观测者不可能从量子上得到之前对它观测的方式。</p>
-<p><strong>量子不可克隆</strong><br>要保证安全还需要量子的另一个特性“量子不可克隆”。就是说，世间没有两个相同的量子，你不可能通过一个已得到的量子获得完全相同的另一个量子。没有这个原理，窃听者完全可以复制一个量子对它进行观测并把原来的量子传送给接收者。</p>
-<p><strong>窃听过程</strong><br>知道上述两个物理性质后，如果有人试图监听，便是只能中截获了发送者传输的量子，并观测其值，然后再把它发送给接收者。然而此时所有人都不知道发送者的观测方式。窃听者也只能按自己的想法随意观测其属性。但没有关系，你对量子的观测便改变了量子的状态，当接收者获取到量子时，即便和发送者用同样的方式观测，也有可能得到不同的结果，当这个序列数量非常大的时候,这是必然发生的，结果就是得到了和发送者不一样的秘钥，这样窃听便被发现了。</p>
-<p>模拟上述过程：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sender = Observer(<span class="string">'发送者'</span>)</span><br><span class="line">sender.init_quantum() <span class="comment"># 初始化量子序列</span></span><br><span class="line">sender.observe() <span class="comment"># 对量子序列进行观测</span></span><br><span class="line"></span><br><span class="line">interceptor = Observer(<span class="string">'窃听者'</span>)</span><br><span class="line">interceptor.get_quantum(sender) <span class="comment"># 截取信息</span></span><br><span class="line">interceptor.observe() <span class="comment"># 观测</span></span><br><span class="line"></span><br><span class="line">reciver = Observer(<span class="string">'接收者'</span>)</span><br><span class="line">reciver.get_quantum(interceptor) <span class="comment"># 发送者把量子传输给接收者</span></span><br><span class="line">reciver.observe() <span class="comment"># 接收者对其观测</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 双方交换观察方式</span></span><br><span class="line">sender.get_path(reciver)</span><br><span class="line">reciver.get_path(sender)</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">发送者 观测方式： ['b', 'a', 'b', 'a', 'b', 'b', 'b', 'a', 'b', 'a', 'b', 'b', 'a', 'a', 'b', 'b', 'b', 'a', 'b', 'a']</span><br><span class="line">发送者 观测结果： [1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1]</span><br><span class="line">窃听者 观测方式： ['a', 'b', 'a', 'b', 'b', 'b', 'b', 'a', 'b', 'a', 'a', 'b', 'b', 'b', 'a', 'b', 'b', 'b', 'b', 'b']</span><br><span class="line">窃听者 观测结果： [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]</span><br><span class="line">接收者 观测方式： ['a', 'a', 'b', 'b', 'a', 'a', 'a', 'b', 'a', 'b', 'b', 'b', 'b', 'a', 'b', 'b', 'b', 'a', 'b', 'a']</span><br><span class="line">接收者 观测结果： [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0]</span><br><span class="line">发送者 秘钥： [1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1]</span><br><span class="line">接收者 秘钥： [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0]</span><br></pre></td></tr></table></figure>
-
-<p>代码请参考<br><a href="https://github.com/lzlz000/simple-clear-knowledge/tree/master/%5Bpython%5D%E9%87%8F%E5%AD%90%E9%80%9A%E8%AE%AF" target="_blank" rel="noopener">https://github.com/lzlz000/simple-clear-knowledge/tree/master/%5Bpython%5D%E9%87%8F%E5%AD%90%E9%80%9A%E8%AE%AF</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="cjxapvznk001tusl3m17cgdbi" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li></ul>
 
     </footer>
   </div>
@@ -244,12 +222,31 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
         
           <aside id="sidebar">
+  
+    <div class="widget-wrap" style="margin-bottom:-20px">
+  <h3 class="widget-title">
+    <a href="https://lzlz000.github.io">
+      <img src="/static/lzlz000-个人主页-brightgreen.svg">
+    </a>
+  </h3>
+  <div class="widget">
+    自闭中（；´д｀）ゞ
+    <br><br>
+    Email   <a href="mailto:lzlz0x000@gmail.com">
+      lzlz0x000@gmail.com
+    </a>
+    <br>
+    Github  <a href="https://github.com/lzlz000">
+      github.com/lzlz000
+    </a>
+  </div>
+</div>
   
     
 
@@ -268,7 +265,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
+      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 17.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
     </div>
   </div>
 
@@ -290,23 +287,23 @@
       <ul>
         
           <li>
+            <a href="/2019/06/27/mysql优化（三）/">mysql优化问题（三）sql优化</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/26/mysql优化（二）/">mysql优化问题（二）执行计划</a>
+          </li>
+        
+          <li>
+            <a href="/2019/06/25/mysql优化（一）/">mysql优化问题（一）慢查询</a>
+          </li>
+        
+          <li>
             <a href="/2019/06/25/mysql的Ferderated引擎/">mysql的Ferderated引擎</a>
           </li>
         
           <li>
             <a href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
-          </li>
-        
-          <li>
-            <a href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片</a>
-          </li>
-        
-          <li>
-            <a href="/2019/06/07/hello-hexo/">hello hexo</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/09/nginx配置反向代理/">nginx配置反向代理</a>
           </li>
         
       </ul>
@@ -329,18 +326,15 @@
     </div>
     <nav id="mobile-nav">
   
-    <a href="/" class="mobile-nav-link">Home</a>
+    <a href="/" class="mobile-nav-link">主页</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+    <a href="/archives" class="mobile-nav-link">归档</a>
   
 </nav>
     
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  
 
 
 <script src="/js/script.js"></script><script type="text/javascript" src="/tiny-comment/load.js"></script>

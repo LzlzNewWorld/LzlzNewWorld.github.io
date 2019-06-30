@@ -5,20 +5,17 @@
   
 
   
-  <title>hello hexo | lzlz000的个人页</title>
+  <title>mysql优化问题（三）sql优化 | lzlz000的个人页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="目前市面上常见的静态博客框架就是 hexo 和 jekyll，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。  之所以想搭建一个静态页面，有以下几个原因 目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一">
-<meta name="keywords" content="hexo">
+  <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hello hexo">
-<meta property="og:url" content="http://lzlz000.github.io/2019/06/07/hello-hexo/index.html">
+<meta property="og:title" content="mysql优化问题（三）sql优化">
+<meta property="og:url" content="http://lzlz000.github.io/2019/06/27/mysql优化（三）/index.html">
 <meta property="og:site_name" content="lzlz000的个人页">
-<meta property="og:description" content="目前市面上常见的静态博客框架就是 hexo 和 jekyll，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。  之所以想搭建一个静态页面，有以下几个原因 目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-09T17:00:13.226Z">
+<meta property="og:updated_time" content="2019-06-26T16:03:02.657Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hello hexo">
-<meta name="twitter:description" content="目前市面上常见的静态博客框架就是 hexo 和 jekyll，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。  之所以想搭建一个静态页面，有以下几个原因 目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一">
+<meta name="twitter:title" content="mysql优化问题（三）sql优化">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -60,10 +57,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-mysql优化（三）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/07/hello-hexo/" class="article-date">
-  <time datetime="2019-06-07T14:11:24.000Z" itemprop="datePublished">2019-06-07</time>
+    <a href="/2019/06/27/mysql优化（三）/" class="article-date">
+  <time datetime="2019-06-27T14:12:12.000Z" itemprop="datePublished">2019-06-27</time>
 </a>
     
   </div>
@@ -74,7 +71,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hello hexo
+      mysql优化问题（三）sql优化
     </h1>
   
 
@@ -82,28 +79,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>目前市面上常见的静态博客框架就是 <code>hexo</code> 和 <code>jekyll</code>，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。</p>
-<hr>
-<p><strong>之所以想搭建一个静态页面，有以下几个原因</strong></p>
-<p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
-<p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
-<p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
-<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
-<p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
-<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
-<ol>
-<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
-<li>需要手动添加 yaml front matter</li>
-</ol>
-<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
-
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjxdfi3gb0003pwl38cqh023y" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/27/mysql优化（三）/" data-id="cjxdfi3go000apwl3wteesuo2" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
     </footer>
   </div>
@@ -111,19 +94,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/06/08/hexo-插入图片/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          hexo+typora 插入图片
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/04/09/nginx配置反向代理/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/06/26/mysql优化（二）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">nginx配置反向代理</div>
+      <div class="article-nav-title">mysql优化问题（二）执行计划</div>
     </a>
   
 </nav>

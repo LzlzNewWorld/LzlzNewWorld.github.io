@@ -5,15 +5,20 @@
   
 
   
-  <title>lzlz000的个人页</title>
+  <title>mysql优化问题（一）慢查询 | lzlz000的个人页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="lzlz000的个人页">
-<meta property="og:url" content="http://lzlz000.github.io/index.html">
+  <meta name="description" content="lzlz000的个人空间 总结一下最近学习整理的mysql优化问题 😀 我感觉mysql优化特别像看病：通过慢查询来定位症状，执行计划则是检测项目-CT,X光,验血…，sql优化就是治疗手段。 慢查询即慢查询日志，是指mysql记录所有执行超过long_query_time参数设定的时间阈值的SQL语句的日志。该日志能为SQL语句的优化带来很好的帮助 开启慢查询默认情况下，慢查询日志是关闭的，要">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql优化问题（一）慢查询">
+<meta property="og:url" content="http://lzlz000.github.io/2019/06/25/mysql优化（一）/index.html">
 <meta property="og:site_name" content="lzlz000的个人页">
+<meta property="og:description" content="lzlz000的个人空间 总结一下最近学习整理的mysql优化问题 😀 我感觉mysql优化特别像看病：通过慢查询来定位症状，执行计划则是检测项目-CT,X光,验血…，sql优化就是治疗手段。 慢查询即慢查询日志，是指mysql记录所有执行超过long_query_time参数设定的时间阈值的SQL语句的日志。该日志能为SQL语句的优化带来很好的帮助 开启慢查询默认情况下，慢查询日志是关闭的，要">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-30T17:01:22.718Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lzlz000的个人页">
+<meta name="twitter:title" content="mysql优化问题（一）慢查询">
+<meta name="twitter:description" content="lzlz000的个人空间 总结一下最近学习整理的mysql优化问题 😀 我感觉mysql优化特别像看病：通过慢查询来定位症状，执行计划则是检测项目-CT,X光,验血…，sql优化就是治疗手段。 慢查询即慢查询日志，是指mysql记录所有执行超过long_query_time参数设定的时间阈值的SQL语句的日志。该日志能为SQL语句的优化带来很好的帮助 开启慢查询默认情况下，慢查询日志是关闭的，要">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -55,102 +60,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-mysql优化（三）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/27/mysql优化（三）/" class="article-date">
-  <time datetime="2019-06-27T14:12:12.000Z" itemprop="datePublished">2019-06-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/27/mysql优化（三）/">mysql优化问题（三）sql优化</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/27/mysql优化（三）/" data-id="cjxdfi3go000apwl3wteesuo2" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-mysql优化（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/26/mysql优化（二）/" class="article-date">
-  <time datetime="2019-06-26T15:46:31.000Z" itemprop="datePublished">2019-06-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/26/mysql优化（二）/">mysql优化问题（二）执行计划</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a><strong>执行计划</strong></h2><p>使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是表结构的性能瓶颈</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Explain [SQL语句]</span><br></pre></td></tr></table></figure>
-
-<h3 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h3><p>执行 Explain 语句得到的结果将包含以下列</p>
-<p><img src="/images/1561914397839.png" alt></p>
-<h4 id="ID列"><a href="#ID列" class="headerlink" title="ID列"></a>ID列</h4><p>id列表明了语句间的执行顺序，顺序判断规则如下</p>
-<ul>
-<li>id相同：执行顺序由上至下</li>
-<li>id不同：如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行</li>
-</ul>
-<p>举个栗子：</p>
-<p>这是一个复杂的关联查询语句的执行计划内容，其查询顺序按照1-&gt;2-&gt;3-&gt;4的顺序执行。</p>
-<p><img src="/images/1561915413315.png" alt></p>
-<h4 id="select-type列"><a href="#select-type列" class="headerlink" title="select_type列"></a>select_type列</h4><p><img src="/images/clip_image002.jpg" alt></p>
-<h4 id="table列"><a href="#table列" class="headerlink" title="table列"></a>table列</h4><p>当前查询的表，没有可解释的地方</p>
-<h4 id="Type列"><a href="#Type列" class="headerlink" title="Type列"></a>Type列</h4><p>访问类型，一个重要的参数指标，结果值从最好到最坏依次是：<br>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; ALL </p>
-<p>常见的有 system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;ALL 这几种类型</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/26/mysql优化（二）/" data-id="cjxdfi3gs000dpwl37682v90e" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-mysql优化（一）" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-mysql优化（一）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/06/25/mysql优化（一）/" class="article-date">
   <time datetime="2019-06-25T12:24:03.000Z" itemprop="datePublished">2019-06-25</time>
@@ -163,8 +73,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/25/mysql优化（一）/">mysql优化问题（一）慢查询</a>
+    <h1 class="article-title" itemprop="name">
+      mysql优化问题（一）慢查询
     </h1>
   
 
@@ -302,16 +212,28 @@
     </footer>
   </div>
   
-</article>
-
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/26/mysql优化（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mysql优化问题（二）执行计划
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/25/mysql的Ferderated引擎/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mysql的Ferderated引擎</div>
+    </a>
+  
+</nav>
 
   
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-  </nav>
+</article>
 
 </section>
         

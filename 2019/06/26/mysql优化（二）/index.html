@@ -5,20 +5,24 @@
   
 
   
-  <title>hello hexo | lzlz000的个人页</title>
+  <title>mysql优化问题（二）执行计划 | lzlz000的个人页</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="目前市面上常见的静态博客框架就是 hexo 和 jekyll，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。  之所以想搭建一个静态页面，有以下几个原因 目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一">
-<meta name="keywords" content="hexo">
+  <meta name="description" content="执行计划使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是表结构的性能瓶颈 1Explain [SQL语句]  详解执行 Explain 语句得到的结果将包含以下列  ID列id列表明了语句间的执行顺序，顺序判断规则如下  id相同：执行顺序由上至下 id不同：如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hello hexo">
-<meta property="og:url" content="http://lzlz000.github.io/2019/06/07/hello-hexo/index.html">
+<meta property="og:title" content="mysql优化问题（二）执行计划">
+<meta property="og:url" content="http://lzlz000.github.io/2019/06/26/mysql优化（二）/index.html">
 <meta property="og:site_name" content="lzlz000的个人页">
-<meta property="og:description" content="目前市面上常见的静态博客框架就是 hexo 和 jekyll，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。  之所以想搭建一个静态页面，有以下几个原因 目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一">
+<meta property="og:description" content="执行计划使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是表结构的性能瓶颈 1Explain [SQL语句]  详解执行 Explain 语句得到的结果将包含以下列  ID列id列表明了语句间的执行顺序，顺序判断规则如下  id相同：执行顺序由上至下 id不同：如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-09T17:00:13.226Z">
+<meta property="og:image" content="http://lzlz000.github.io/images/1561914397839.png">
+<meta property="og:image" content="http://lzlz000.github.io/images/1561915413315.png">
+<meta property="og:image" content="http://lzlz000.github.io/images/clip_image002.jpg">
+<meta property="og:updated_time" content="2019-06-30T17:39:38.790Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hello hexo">
-<meta name="twitter:description" content="目前市面上常见的静态博客框架就是 hexo 和 jekyll，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。  之所以想搭建一个静态页面，有以下几个原因 目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一">
+<meta name="twitter:title" content="mysql优化问题（二）执行计划">
+<meta name="twitter:description" content="执行计划使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是表结构的性能瓶颈 1Explain [SQL语句]  详解执行 Explain 语句得到的结果将包含以下列  ID列id列表明了语句间的执行顺序，顺序判断规则如下  id相同：执行顺序由上至下 id不同：如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行">
+<meta name="twitter:image" content="http://lzlz000.github.io/images/1561914397839.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -60,10 +64,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-mysql优化（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/06/07/hello-hexo/" class="article-date">
-  <time datetime="2019-06-07T14:11:24.000Z" itemprop="datePublished">2019-06-07</time>
+    <a href="/2019/06/26/mysql优化（二）/" class="article-date">
+  <time datetime="2019-06-26T15:46:31.000Z" itemprop="datePublished">2019-06-26</time>
 </a>
     
   </div>
@@ -74,7 +78,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      hello hexo
+      mysql优化问题（二）执行计划
     </h1>
   
 
@@ -82,28 +86,31 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>目前市面上常见的静态博客框架就是 <code>hexo</code> 和 <code>jekyll</code>，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。</p>
-<hr>
-<p><strong>之所以想搭建一个静态页面，有以下几个原因</strong></p>
-<p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
-<p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
-<p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
-<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
-<p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
-<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
-<ol>
-<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
-<li>需要手动添加 yaml front matter</li>
-</ol>
-<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
+        <h2 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a><strong>执行计划</strong></h2><p>使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是表结构的性能瓶颈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Explain [SQL语句]</span><br></pre></td></tr></table></figure>
+
+<h3 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h3><p>执行 Explain 语句得到的结果将包含以下列</p>
+<p><img src="/images/1561914397839.png" alt></p>
+<h4 id="ID列"><a href="#ID列" class="headerlink" title="ID列"></a>ID列</h4><p>id列表明了语句间的执行顺序，顺序判断规则如下</p>
+<ul>
+<li>id相同：执行顺序由上至下</li>
+<li>id不同：如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行</li>
+</ul>
+<p>举个栗子：</p>
+<p>这是一个复杂的关联查询语句的执行计划内容，其查询顺序按照1-&gt;2-&gt;3-&gt;4的顺序执行。</p>
+<p><img src="/images/1561915413315.png" alt></p>
+<h4 id="select-type列"><a href="#select-type列" class="headerlink" title="select_type列"></a>select_type列</h4><p><img src="/images/clip_image002.jpg" alt></p>
+<h4 id="table列"><a href="#table列" class="headerlink" title="table列"></a>table列</h4><p>当前查询的表，没有可解释的地方</p>
+<h4 id="Type列"><a href="#Type列" class="headerlink" title="Type列"></a>Type列</h4><p>访问类型，一个重要的参数指标，结果值从最好到最坏依次是：<br>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; ALL </p>
+<p>常见的有 system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;ALL 这几种类型</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="cjxdfi3gb0003pwl38cqh023y" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/26/mysql优化（二）/" data-id="cjxdfi3gs000dpwl37682v90e" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
     </footer>
   </div>
@@ -111,19 +118,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/06/08/hexo-插入图片/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/06/27/mysql优化（三）/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          hexo+typora 插入图片
+          mysql优化问题（三）sql优化
         
       </div>
     </a>
   
   
-    <a href="/2019/04/09/nginx配置反向代理/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/06/25/mysql优化（一）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">nginx配置反向代理</div>
+      <div class="article-nav-title">mysql优化问题（一）慢查询</div>
     </a>
   
 </nav>
