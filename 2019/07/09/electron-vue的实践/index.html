@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>electron+vue的实践 | lzlz000</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="个人主页 吐槽一下，我一个后端程序猿怎么天天在写前端呢😔？ 我们项目要用到一个客户端程序，从我们本身的技术栈出发，最合适的就是electron+vue来实现了。网上有各种文章写到这些，我尝试了一下，记录一下踩坑的过程。 首先需要npm 和 vue-cli 这个就不再赘述了， 初始化-开发-打包百度上搜索关键词”electron vue” 找到的很多文章会让人误入歧途，比如这个： https://">
+<meta name="keywords" content="electron,前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="electron+vue的实践">
+<meta property="og:url" content="http://lzlz000.github.io/2019/07/09/electron-vue的实践/index.html">
+<meta property="og:site_name" content="lzlz000">
+<meta property="og:description" content="个人主页 吐槽一下，我一个后端程序猿怎么天天在写前端呢😔？ 我们项目要用到一个客户端程序，从我们本身的技术栈出发，最合适的就是electron+vue来实现了。网上有各种文章写到这些，我尝试了一下，记录一下踩坑的过程。 首先需要npm 和 vue-cli 这个就不再赘述了， 初始化-开发-打包百度上搜索关键词”electron vue” 找到的很多文章会让人误入歧途，比如这个： https://">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-10-30T09:56:41.148Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="electron+vue的实践">
+<meta name="twitter:description" content="个人主页 吐槽一下，我一个后端程序猿怎么天天在写前端呢😔？ 我们项目要用到一个客户端程序，从我们本身的技术栈出发，最合适的就是electron+vue来实现了。网上有各种文章写到这些，我尝试了一下，记录一下踩坑的过程。 首先需要npm 和 vue-cli 这个就不再赘述了， 初始化-开发-打包百度上搜索关键词”electron vue” 找到的很多文章会让人误入歧途，比如这个： https://">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <!-- <h1 id="logo-wrap">
+        <a href="/" id="logo">lzlz000</a>
+      </h1> -->
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/" target>主页</a>
+        
+          <a class="main-nav-link" href="/archives" target>归档</a>
+        
+          <a class="main-nav-link" href="/hello/" target>test</a>
+        
+          <a class="main-nav-link" href="https://travellings.now.sh/" target="_blank">前往</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lzlz000.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-electron-vue的实践" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/09/electron-vue的实践/" class="article-date">
+  <time datetime="2019-07-09T09:59:26.000Z" itemprop="datePublished">2019-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      electron+vue的实践
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://lzlz000.github.io">个人主页</a></p>
+<p>吐槽一下，我一个后端程序猿怎么天天在写前端呢😔？</p>
+<p>我们项目要用到一个客户端程序，从我们本身的技术栈出发，最合适的就是electron+vue来实现了。网上有各种文章写到这些，我尝试了一下，记录一下踩坑的过程。</p>
+<p>首先需要npm 和 vue-cli 这个就不再赘述了，</p>
+<h4 id="初始化-开发-打包"><a href="#初始化-开发-打包" class="headerlink" title="初始化-开发-打包"></a>初始化-开发-打包</h4><p>百度上搜索关键词”electron vue” 找到的很多文章会让人误入歧途，比如这个：</p>
+<p><a href="https://www.cnblogs.com/jiangxifanzhouyudu/p/9517651.html" target="_blank" rel="noopener">https://www.cnblogs.com/jiangxifanzhouyudu/p/9517651.html</a>， 搜到的第一个就是它。使用 vue-cli 常规webpack打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack xxx</span><br></pre></td></tr></table></figure>
+
+<p>初始化普通vue单页面项目的方式都是不对的，electron中运行和服务器上运行的web应用有很多区别，对于以后的开发和调试都非常不方便。这才是正确方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init simulatedgreg/electron-vue ele-vue</span><br></pre></td></tr></table></figure>
+
+<p>这个模板帮助定义好了开发、调试、打包成多平台客户端的各方面配置。值得注意的是，electron和打包工具都非常大，npm的墙内速度真的会让你等到天荒地老，然后网络异常重来一遍。 如果你可以翻墙，就完美了，如果不幸可以在package.json的 build属性下新增以下内容使用淘宝镜像</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"build": &#123;</span><br><span class="line">    "electronDownload": &#123;</span><br><span class="line">      "mirror": "https://npm.taobao.org/mirrors/electron/"</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仍然有一些其他依赖资源不，例如winCodeSign，参考文章  <a href="https://www.cnblogs.com/chenweixuan/p/7693718.html" target="_blank" rel="noopener">https://www.cnblogs.com/chenweixuan/p/7693718.html</a></p>
+<p>但经过我在不同电脑上多次配置，还是或多或少存在问题，仅在本地开发时，淘宝镜像安装一切正常，electron-builder打包最好的解决方案仍然删除node_modules然后翻墙使用npm install 简单方便没有任何奇怪的问题发生。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2019/07/09/electron-vue的实践/" data-id="ckgwjydyt0005pgl3uuyowxw1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron/">electron</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/16/electron-vue多窗口/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          electron-vue多窗口
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/02/基于element-ui的页面内面包屑组件/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">基于element-ui的页面内面包屑组件</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap" style="margin-bottom:-20px">
+  <h3 style="margin-top:-5px;margin-bottom:5px;">
+    <a href="https://lzlz000.github.io">
+      <img src="/lzlz000-个人主页-brightgreen.svg" height="25">
+    </a>
+  </h3>
+  <div class="widget">
+    <div>自闭中（；´д｀）ゞ</div>
+    <br>
+    Email   <a href="mailto:lzlz0x000@gmail.com">
+      lzlz0x000@gmail.com
+    </a>
+    <br>
+    Github  <a href="https://github.com/lzlz000">
+      github.com/lzlz000
+    </a>
+  </div>
+</div>
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/探索与发现/">探索与发现</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/electron/" style="font-size: 12px;">electron</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 16px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 12px;">springboot</a> <a href="/tags/前端/" style="font-size: 18px;">前端</a> <a href="/tags/探索与发现/" style="font-size: 12px;">探索与发现</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/31/过去的一年(2)/">过去的一年(2)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/30/重新开始更新-说说过去的一年/">重新开始更新-说说过去的一年</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/16/electron-vue多窗口/">electron-vue多窗口</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 lzlz000<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/hello/" class="mobile-nav-link">test</a>
+  
+    <a href="https://travellings.now.sh/" class="mobile-nav-link">前往</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+
+
+
+
+
+  </div>
+</body>
+</html>

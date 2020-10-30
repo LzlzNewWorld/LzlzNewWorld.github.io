@@ -5,15 +5,15 @@
   
 
   
-  <title>lzlz000的个人页</title>
+  <title>lzlz000</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
-<meta property="og:title" content="lzlz000的个人页">
+<meta property="og:title" content="lzlz000">
 <meta property="og:url" content="http://lzlz000.github.io/page/5/index.html">
-<meta property="og:site_name" content="lzlz000的个人页">
+<meta property="og:site_name" content="lzlz000">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lzlz000的个人页">
+<meta name="twitter:title" content="lzlz000">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -32,7 +32,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <!-- <h1 id="logo-wrap">
-        <a href="/" id="logo">lzlz000的个人页</a>
+        <a href="/" id="logo">lzlz000</a>
       </h1> -->
       
     </div>
@@ -40,9 +40,13 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">主页</a>
+          <a class="main-nav-link" href="/" target>主页</a>
         
-          <a class="main-nav-link" href="/archives">归档</a>
+          <a class="main-nav-link" href="/archives" target>归档</a>
+        
+          <a class="main-nav-link" href="/hello/" target>test</a>
+        
+          <a class="main-nav-link" href="https://travellings.now.sh/" target="_blank">前往</a>
         
       </nav>
       <nav id="sub-nav">
@@ -56,119 +60,6 @@
 </header>
       <div class="outer">
         <section id="main">
-  
-    <article id="post-element-ui-的响应式栅格布局" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/10/element-ui-的响应式栅格布局/" class="article-date">
-  <time datetime="2018-07-10T12:05:10.000Z" itemprop="datePublished">2018-07-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/10/element-ui-的响应式栅格布局/">element-ui的响应式栅格布局</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>要注意的问题</p>
-<ul>
-<li>xs、sm、md、lg、xl 五个尺寸的默认值均为24，意味着，任何一个尺寸属性不设置，则该尺寸下响应式宽度为24，这与bootstrap不同</li>
-<li>尺寸属性可以设为0，则该el-col不显示</li>
-<li>不论尺寸属性设置为多少，若el-col中没有任何内容则该el-col不显示（内部元素为空也不行，如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col&gt;</span><br><span class="line">    &lt;div&gt;&lt;/div&gt;</span><br><span class="line">    &lt;span&gt;&lt;/span&gt;</span><br><span class="line">&lt;/el-col&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-row&gt;</span><br><span class="line">    &lt;el-col :xs=&quot;12&quot; :sm=&quot;9&quot; :md=&quot;6&quot; :lg=&quot;0&quot; :xl=&quot;0&quot;&gt;123&lt;/el-col&gt;</span><br><span class="line">    &lt;el-col :xs=&quot;12&quot; :sm=&quot;15&quot; :md=&quot;18&quot; :lg=&quot;21&quot; :xl=&quot;24&quot;&gt;456&lt;/el-col&gt;</span><br><span class="line">&lt;/el-row&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>offset 属性是没有响应式的，可以通过加入一个带一个空格的el-col解决： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;3&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>可以把固定的响应式布局作为组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;my-container&apos;,&#123;</span><br><span class="line">    template:`</span><br><span class="line">    &lt;el-row&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;4&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;24&quot; :sm=&quot;22&quot; :md=&quot;20&quot; :lg=&quot;18&quot; :xl=&quot;18&quot;&gt;</span><br><span class="line">            &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;/el-col&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;4&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br><span class="line">    &lt;/el-row&gt;</span><br><span class="line">    `</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>就可以愉快的使用了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-container&gt;</span><br><span class="line">    &lt;div style=&quot;background: red&quot;&gt;内容&lt;/div&gt;</span><br><span class="line">&lt;/my-container&gt;`</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/07/10/element-ui-的响应式栅格布局/" data-id="cjxdfi3gv000hpwl3w6711b28" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-使用Feign进行应用间通信" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/23/使用Feign进行应用间通信/" class="article-date">
-  <time datetime="2018-05-22T16:00:00.000Z" itemprop="datePublished">2018-05-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/23/使用Feign进行应用间通信/">使用Feign进行应用间通信</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用Feign进行应用间通信"><a href="#使用Feign进行应用间通信" class="headerlink" title="使用Feign进行应用间通信"></a>使用Feign进行应用间通信</h2><h5 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-feign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0.M2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>坑</strong><br>我是用了 <strong>Spring Boot 2.0.2.RELEASE</strong>  以及其对应的spring-cloud版本 <strong>Spring-Cloud Finchley.RC2</strong> 即2.0.0.RC2<br>按理说，spring-cloud-starter-feign 应该不再需要指定版本，然而maven的中央仓库中甚至都没有2.0版本的 Feign。spring官方仓库也没有对应版本，因此不指定版本就无法导入依赖了，但是好歹有可兼容的2.0.x版本，所以指定版本 <strong>2.0.0.M2</strong> </p>
-<p>大概是因为Spring Boot 2.0刚发布没几个月，对应的版本还没有发布吧？作为一个菜鸟，就不该作死用2.0版本学习spring cloud，一堆麻烦:(</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3867641-30328eaf1c0a8a05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven中央仓库"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3867641-d9745dbf1964ad6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring官方仓库"></p>
-<h5 id="使用Feign"><a href="#使用Feign" class="headerlink" title="使用Feign"></a>使用Feign</h5><p>Feign 的使用非常简单<br>新建类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lzlz.demo.springcloud.consumer.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其实不需要加@Component注解，只是idea无法识别，在注入的地方提示错误</span></span><br><span class="line"><span class="comment">// 虽然不影响编译运行，但是看着不舒服，不在意的可以忽略</span></span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="meta">@FeignClient</span>(name = <span class="string">"product"</span>) <span class="comment">//对应的应用名</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProductClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/echo"</span>)</span><br><span class="line">    <span class="function">String <span class="title">productMsg</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在需要使用的地方注入此对象，调用对应方法即可：</p>
-<figure class="highlight plain"><figcaption><span>resp </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在FeignClient中 可以完全像Controller那样使用各种 ```@RequestMapping``` 注解，用于类和方法上。</span><br></pre></td></tr></table></figure>
-
-<p>@Component<br>@FeignClient(name = “product”)<br>@RequestMapping(“test”)<br>public interface ProductClient {<br>    @GetMapping(“/echo”)<br>    String productMsg();</p>
-<pre><code>@PostMapping(&quot;/echo&quot;)
-String productMsg1();</code></pre><p>}</p>
-<pre><code>使用Feign，我们就如同调用本地方法一样使用rest远程调用，体验还是不错滴。</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/05/23/使用Feign进行应用间通信/" data-id="cjxdfi3h4000qpwl35cut0jp7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
   
     <article id="post-使用RestTemplate进行应用间通信" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -223,10 +114,262 @@ String productMsg1();</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/05/22/使用RestTemplate进行应用间通信/" data-id="cjxdfi3gy000kpwl3sqiwvcmv" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2018/05/22/使用RestTemplate进行应用间通信/" data-id="ckgwjydza000ppgl39b4l2pl4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-使用多个-Eureka-Server" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/21/使用多个-Eureka-Server/" class="article-date">
+  <time datetime="2018-05-20T16:00:00.000Z" itemprop="datePublished">2018-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/21/使用多个-Eureka-Server/">使用多个 Eureka</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用多个-Eureka"><a href="#使用多个-Eureka" class="headerlink" title="使用多个 Eureka"></a>使用多个 Eureka</h2><p>通过不同的配置文件 application.yml 启动多个实例来实现</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+
+<p>这样 在 idea 或者 Eclipse 中我们需要启动一个实例，然后修改配置再启动一个实例，有点乱。<br>可以把 application.yml 定义为下面的形式：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无参数启动</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-demo</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  server:</span></span><br><span class="line"><span class="attr">    enable-self-preservation:</span> <span class="literal">false</span> <span class="comment">#防止由于eureka的机制导致 client 被错误显示在线 在开发环境使用</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server1</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8762/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server2</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span> <span class="string">server2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="string">​</span>      <span class="attr">defaultZone:</span> <span class="attr">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
+
+<p>运行方式</p>
+<ol>
+<li>在idea中运行<br>新建2个运行配置 server1 server2，按图片所示分别添加参数<br>​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```--spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><img src="https://upload-images.jianshu.io/upload_images/3867641-311c2582738563e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<ol>
+<li>打包运行<br>启动两个cmd窗口，切换到项目目录下，分别运行<br>​<figure class="highlight java"><figcaption><span>-jar target/eureka-0.0.1-SNAPSHOT.jar --spring.profiles.active</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">​```java -jar target/eureka-<span class="number">0.0</span>.1-SNAPSHOT.jar --spring.profiles.active=server2</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>我们同时运行刚才创建的 Client，注意我们只把 Client 注册到了<figure class="highlight plain"><figcaption><span>也就是server1中</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">此时，localhost:8761,localhost:8762的Eureka Server 均显示如下，即只在server1中注册的Client也被注册到了server2![](https://upload-images.jianshu.io/upload_images/3867641-b9e6e0ebca02eea4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">虽然，Client被自动注册到了server2，但是如果server1不启动，server2无法得到Client的注册（Client在server2注册后，server1变成不可用并不影响）。所以我们在Client中做修改,配置2个defaultZone</span><br><span class="line">​```yml</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">​    service-url:</span><br><span class="line">​      defaultZone: http://localhost:8761/eureka/,http://localhost:8762/eureka/</span><br></pre></td></tr></table></figure></p>
+<p>当有3个Eureka Server时，以此类推，三个Server相互配置另外2个地址，Client 配置 3个地址</p>
+<p>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/21/使用多个-Eureka-Server/" data-id="ckgwjydzc000spgl38fzae9lt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-创建、配置Eureka-Server-和-Client" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/20/创建、配置Eureka-Server-和-Client/" class="article-date">
+  <time datetime="2018-05-19T16:00:00.000Z" itemprop="datePublished">2018-05-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/创建、配置Eureka-Server-和-Client/">创建配置Eureka</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开发环境 Windows10、 IDEA 2018.1.3 ，Spring Boot 版本 2.0.2.RELEASE</p>
+<h5 id="通过-idea-创建Eureka-server项目"><a href="#通过-idea-创建Eureka-server项目" class="headerlink" title="通过 idea 创建Eureka server项目"></a>通过 idea 创建Eureka server项目</h5><p>New Project-&gt; Spring Initalizr<br>next 修改group 和 artifact<br>next 我使用的是2.0.2版本的SpringBoot 注意在选择依赖时 勾选 Web 和 Eureka Server<br><img src="https://upload-images.jianshu.io/upload_images/3867641-9a7c8bf374c7217f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>一路确定 完成创建。</p>
+<h5 id="配置启动项目"><a href="#配置启动项目" class="headerlink" title="配置启动项目"></a>配置启动项目</h5><p>首先就有一个坑，在墙内我们喜欢用阿里云的maven仓库，<br>与 <em>SpringBoot</em>  <figure class="highlight plain"><figcaption><span>_Spring Cloud_ 版本是```Finchley.RC2```，通过_Spring Initalizr_创建的项目会自动选择合适的版本。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">但是阿里云仓库里似乎没有这个版本的 _Spring Cloud_ ，导致 _Eureka_ 相关的包都找不到。</span><br><span class="line"></span><br><span class="line">哎，我也是搞了好久才发现是这个问题，以前都以为阿里云maven仓库应该是完整的。后来我发现这个锅也不能让阿里仓库背，maven中央仓库的版本甚至比阿里仓库还低，在pom中手动添加spring官方仓库，里面有所需版本 ```Finchley.RC2```。菜鸟学习技术需谨慎啊，盲目使用最新版本，给自己带来不必要的麻烦。</span><br></pre></td></tr></table></figure></p>
+<repositories>
+    <repository>
+        <id>spring-milestones</id>
+        <name>Spring Milestones</name>
+        <url>https://repo.spring.io/milestone</url>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">使用 application.yml 的配置</span><br><span class="line">```yml</span><br><span class="line">server:</span><br><span class="line">  port: 8761 # 8761是eureka server的默认端口</span><br><span class="line">eureka:</span><br><span class="line">  server:</span><br><span class="line">    enable-self-preservation: false #防止由于Eureka的机制导致Client被错误显示在线 仅在开发环境使用</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8761/eureka/ #这便是此eureka server的应用注册地址</span><br><span class="line">    register-with-eureka: false #不显示对server应用的注册</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: eureka-demo</span><br></pre></td></tr></table></figure>
+
+<p>记得在springboot 启动类上加上注解<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">package lzlz.demo.springcloud.eureka;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaServer</span><br><span class="line">public class EurekaApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(EurekaApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>现在就可以启动啦，红色的警告部分就是配置<figure class="highlight plain"><figcaption><span>false ```造成的</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">![image.png](https://upload-images.jianshu.io/upload_images/3867641-247ff9a28424023f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">也可以通过 ```mvn clean package``` 把此项目编译成jar包方便使用，jar包在 target目录下。</span><br><span class="line"></span><br><span class="line">##### 创建 配置Eureka Client项目</span><br><span class="line"></span><br><span class="line">New Project-&gt; Spring Initalizr</span><br><span class="line">next 修改group 和 artifact</span><br><span class="line">next 我使用的是2.0.2版本的SpringBoot 选择 Web 和 Eureka Discovery 依赖</span><br><span class="line">![](https://upload-images.jianshu.io/upload_images/3867641-6ea44056d7fa4fee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">一路确定 完成创建。</span><br><span class="line"></span><br><span class="line">使用 application.yml 的配置</span><br><span class="line">```yml</span><br><span class="line">server:</span><br><span class="line">  port: 8081</span><br><span class="line">eureka:</span><br><span class="line">  client:</span><br><span class="line">    service-url:</span><br><span class="line">      defaultZone: http://localhost:8761/eureka/ #注册到刚才那台Eureka Server地址</span><br><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: client-0</span><br></pre></td></tr></table></figure></p>
+<p>记得在 <em>SpringBoot</em> 启动类上加上注解<code>@EnableDiscoveryClient</code></p>
+<h6 id="运行Server-和-Client"><a href="#运行Server-和-Client" class="headerlink" title="运行Server 和 Client"></a>运行Server 和 Client</h6><p>可以看到名为 <em>client-0</em> 的应用已经注册到 <em>Eureka</em> 中<br><img src="https://upload-images.jianshu.io/upload_images/3867641-485fb1c48cf134f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>注意 Eureka 服务端和客户端的连接有心跳检测的机制，因此客户端连接或者断开连接都可能不是即时反应的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/05/20/创建、配置Eureka-Server-和-Client/" data-id="ckgwjydze000upgl32o02gq96" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SpringBoot-AJAX-长轮询实现简单即时通讯" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/" class="article-date">
+  <time datetime="2018-03-09T16:00:00.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/">SpringBoot+ajax长轮询实现简单即时通讯</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先来看看需要实现的效果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// 客户端A</span><br><span class="line">&gt; IM.subscribe(&apos;频道1&apos;)</span><br><span class="line">&gt; IM.subscribe(&apos;频道2&apos;)</span><br><span class="line">&lt; undefined</span><br><span class="line">订阅 [频道1] 成功</span><br><span class="line"></span><br><span class="line">// 客户端B 发送了消息</span><br><span class="line">&gt; IM.send(&apos;频道1&apos;,&apos;hello world&apos;)</span><br><span class="line">// 客户端C 短时间内向 [频道1] 和 [频道2] 发送了多条消息 “频道1message1”-&quot;频道1message10&quot;,“频道2message1”-&quot;频道2message10&quot;</span><br><span class="line">for(...)&#123;IM.send(&apos;频道1&apos;,&apos;....&apos;)&#125;;for(...)&#123;IM.send(&apos;频道2&apos;,&apos;....&apos;)&#125;</span><br><span class="line">发送成功</span><br><span class="line"></span><br><span class="line">// 客户端A收到消息</span><br><span class="line">[&#123;&quot;text&quot;:&quot;hello world&quot;&#125;]</span><br><span class="line">// 客户端A收到消息</span><br><span class="line">[&#123;&quot;text&quot;:&quot;频道1message1&quot;&#125;,&#123;&quot;text&quot;:&quot;频道1message2&quot;&#125;, ...... </span><br><span class="line">&#123;&quot;text&quot;:&quot;频道1message10&quot;&#125;,&#123;&quot;text&quot;:&quot;频道2message1&quot;&#125;, ...... </span><br><span class="line">&#123;&quot;text&quot;:&quot;频道2message10&quot;&#125;]</span><br><span class="line"></span><br><span class="line">//取消订阅 频道2</span><br><span class="line">&gt; IM.unsubscribe(&apos;频道2&apos;)</span><br></pre></td></tr></table></figure>
+
+<p>需要实现</p>
+<ol>
+<li>订阅频道</li>
+<li>取消订阅</li>
+<li>发送消息</li>
+<li>接收消息</li>
+</ol>
+<hr>
+<p>首先，我们需要使用 <figure class="highlight plain"><figcaption><span>来做消息的异步返回。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">关于```DeferredResult```的用法，不做详细介绍，可以看看这个简单的例子：</span><br><span class="line">```java</span><br><span class="line">import org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line">import java.util.LinkedList;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/test/deferredResult&quot;)</span><br><span class="line">public class DeferredResultController &#123;</span><br><span class="line">    //DeferredResult存储在队列中，若同时有多个request1接收到时，request2可以把消息发送给所有的request1请求</span><br><span class="line">    private final List&lt;DeferredResult&lt;String&gt;&gt; queue = new LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;request1&quot;)</span><br><span class="line">    public DeferredResult&lt;String&gt; request1()&#123;</span><br><span class="line">        DeferredResult&lt;String&gt; result = new DeferredResult&lt;&gt;(10000L); //设置过期时间 10000ms</span><br><span class="line">        result.onTimeout(()-&gt;result.setResult(&quot;deferredResult已过期&quot;));</span><br><span class="line">        synchronized (queue)&#123;</span><br><span class="line">            queue.add(result);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @RequestMapping(&quot;request2&quot;)</span><br><span class="line">    public String request2(String message)&#123;</span><br><span class="line">        synchronized (queue)&#123;</span><br><span class="line">            queue.forEach(deferredResult -&gt; &#123;</span><br><span class="line">                deferredResult.setResult(message);</span><br><span class="line">                queue.remove(deferredResult);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        return &quot;success&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>向request1 <em>/test/deferredResult/request1</em> 发送请求</li>
+<li>向request1 <em>/test/deferredResult/request2</em> 发送请求，data为 <em>{“message”:”hello world”}</em> 。此时request1、request2分别返回了值*”hello world”,”success”*</li>
+<li>若过期时间内没有请求request2 返回消息 “deferredResult已过期”</li>
+</ol>
+<p>这就是通过长轮询接收消息的基本方式：发送请求到服务器，服务器收到请求后保持请求，当收到消息时通过此请求返回消息。</p>
+<hr>
+<p>定义客户端和频道这两个类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//客户端</span><br><span class="line">@Data</span><br><span class="line">public class IMClient&#123;</span><br><span class="line">    String id;</span><br><span class="line">    String name;</span><br><span class="line">    long saveTime;</span><br><span class="line">    /**</span><br><span class="line">     * 过期时间 ms，&lt;=0即不过期</span><br><span class="line">     */</span><br><span class="line">    int expire;</span><br><span class="line">&#125;</span><br><span class="line">//频道</span><br><span class="line">@Data</span><br><span class="line">public class Channel &#123;</span><br><span class="line">    String name;</span><br><span class="line">    Set&lt;IMClient&gt; subscriptionSet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们在客户端通过循环调用的方式-收到返回的结果时再次发送请求，来保证服务器一直手握着客户端的请求，而且对于一个客户端至多只有一个请求，节省资源。<br><img src="/images/1240" alt></p>
+<p>通过jquery实现的代码如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">poll</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url:<span class="string">"/im/poll"</span>,</span><br><span class="line">        type: <span class="string">"POST"</span>,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(data));</span><br><span class="line">            setTimeout(poll,<span class="number">500</span>);<span class="comment">//给点延时 减少请求的频率</span></span><br><span class="line">        &#125;,</span><br><span class="line">        error: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">            setTimeout(poll,<span class="number">5000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然而 ，在服务器端返回请求后直到收到客户端下一个请求之前的这段时间，服务器并没有维持着客户端的请求。这段时间内发送给服务器的消息将被丢失，因此我们需要一个消息队列来保存未发送的消息：<img src="/images/12401" alt>通过在收到消息和收到轮询请求时都调用flush方法，消息可以尽可能即时地发送给客户端 – 当DeferredResult可用时，收到消息立刻返回，当DeferredResult不可用时，在收到轮询请求后立刻返回消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.CommonMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IMMessageQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; result;</span><br><span class="line">    <span class="comment">//使用LinkedList作为消息队列</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> LinkedList&lt;CommonMessage&gt; messageQueue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(CommonMessage message)</span></span>&#123;</span><br><span class="line">        messageQueue.add(message);</span><br><span class="line">        flush();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll()&#123;</span><br><span class="line">        result = <span class="keyword">new</span> DeferredResult&lt;&gt;(<span class="number">10000L</span>);</span><br><span class="line">        flush();</span><br><span class="line">        result.onTimeout(()-&gt;result.setResult(<span class="keyword">null</span>));</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * flush()方法会在DeferredResult可用（非空且未被使用）时把消息发送出去，在send和poll时都会执行flush(),</span></span><br><span class="line"><span class="comment"> * 这样无论什么情况下消息最终都会被发送出去</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (result!=<span class="keyword">null</span>&amp;&amp;!result.hasResult()&amp;&amp;messageQueue.size()&gt;<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//这里需要拷贝一份消息，因为此处为异步调用，而在当前线程中，messageQueue的引用随后将被clear()</span></span><br><span class="line">            result.setResult(<span class="keyword">new</span> ArrayList&lt;&gt;(messageQueue));</span><br><span class="line">            messageQueue.clear();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>接下来就是要维护频道和客户端了，我通过ClientService 和 ChannelService来实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.im.IMClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> expire = <span class="number">600</span> * <span class="number">1000</span>;<span class="comment">//user的过期时间 600s没有活动 频道中的user自动过期</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 过期时间间隔</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 过期时间间隔(ms)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getExpire</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> expire;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取默认过期时间的IMClient </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session httpSession</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IMClient <span class="title">getIMClient</span><span class="params">(HttpSession session)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getIMClient(session,<span class="keyword">this</span>.expire);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取指定过期时间的IMClient </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session httpSession</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> expire 过期时间，&lt;=0代表不会过期</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> IMClient <span class="title">getIMClient</span><span class="params">(HttpSession session, <span class="keyword">int</span> expire)</span></span>&#123;</span><br><span class="line">        IMClient client =(IMClient)session.getAttribute(<span class="string">"imUser"</span>);</span><br><span class="line">        <span class="keyword">if</span>(client != <span class="keyword">null</span>&amp;&amp;client.getSaveTime()&lt;= <span class="keyword">new</span> Date().getTime())&#123;<span class="comment">//如果过期 则从session中删除用户</span></span><br><span class="line">            session.removeAttribute(<span class="string">"imUser"</span>);</span><br><span class="line">            client = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (client == <span class="keyword">null</span>) &#123;</span><br><span class="line">            client = <span class="keyword">new</span> IMClient();<span class="comment">//测试时client的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">            client.setId(UUID.randomUUID().toString());</span><br><span class="line">            client.setSaveTime(<span class="keyword">new</span> Date().getTime()+expire);<span class="comment">//设置过期时间</span></span><br><span class="line">            session.setAttribute(<span class="string">"imUser"</span>,client);</span><br><span class="line">        &#125;</span><br><span class="line">        client.setExpire(expire);</span><br><span class="line">        <span class="keyword">return</span> client;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isExpired</span><span class="params">(IMClient client)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> client.getExpire() &gt; <span class="number">0</span> &amp;&amp; client.getSaveTime() &lt;= <span class="keyword">new</span> Date().getTime();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ChannelService</strong>  实现订阅、取消订阅、发送、接收的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.im.Channel;</span><br><span class="line"><span class="keyword">import</span> lzlz000.entity.CommonMessage;</span><br><span class="line"><span class="keyword">import</span> lzlz000.entity.im.IMClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ConcurrentHashMap;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChannelService</span> <span class="keyword">implements</span> <span class="title">IChannelService</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ClientService clientService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//客户端ID与消息队列映射</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String,IMMessageQueue&gt; resultMap = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">    <span class="comment">//客户端ID与频道的映射</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String,Channel&gt; channelMap = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ChannelService</span><span class="params">(ClientService imUserService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.clientService = imUserService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(String channelName, IMClient client)</span> </span>&#123;</span><br><span class="line">        Channel channel = channelMap.get(channelName);</span><br><span class="line">        <span class="keyword">if</span> (channel==<span class="keyword">null</span>) &#123;</span><br><span class="line">            channel = <span class="keyword">new</span> Channel(channelName,<span class="keyword">new</span> HashSet&lt;&gt;());</span><br><span class="line">            channelMap.put(channelName,channel);</span><br><span class="line">        &#125;</span><br><span class="line">        channel.getSubscriptionSet().add(client);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unsubscribe</span><span class="params">(String channelName, IMClient client)</span> </span>&#123;</span><br><span class="line">        Channel channel = channelMap.get(channelName);</span><br><span class="line">        <span class="keyword">if</span> (channel==<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Set subscriptionSet = channel.getSubscriptionSet();</span><br><span class="line">        subscriptionSet.remove(client);</span><br><span class="line">        <span class="keyword">if</span>(subscriptionSet.size()==<span class="number">0</span>)&#123;</span><br><span class="line">            channelMap.remove(channelName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unsubscribe</span><span class="params">(IMClient client)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (client != <span class="keyword">null</span>) &#123;</span><br><span class="line">            channelMap.values().forEach(channel -&gt; channel.getSubscriptionSet().remove(client));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">emit</span><span class="params">(String channelName, IMClient sender , CommonMessage data)</span> </span>&#123;</span><br><span class="line">        sender.setSaveTime(<span class="keyword">new</span> Date().getTime() + clientService.getExpire());<span class="comment">//发送消息时候更新savetime</span></span><br><span class="line">        Channel channel = channelMap.get(channelName);</span><br><span class="line">        <span class="keyword">if</span> (channel!=<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//当已达到过期时间 删除此client,并且从resultMap中删除对应的消息</span></span><br><span class="line">            channel.getSubscriptionSet().forEach(imUser -&gt; &#123;</span><br><span class="line">                <span class="keyword">boolean</span> isExpired = clientService.isExpired(imUser);</span><br><span class="line">                <span class="keyword">if</span>(isExpired)&#123;</span><br><span class="line">                    channel.getSubscriptionSet().remove(imUser);</span><br><span class="line">                    resultMap.remove(imUser.getId());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            channel.getSubscriptionSet().forEach(client-&gt; send(client,data));</span><br><span class="line">            <span class="comment">//当channel中没有订阅者，删除此channel</span></span><br><span class="line">            <span class="keyword">if</span>( channel.getSubscriptionSet().size()==<span class="number">0</span>)&#123;</span><br><span class="line">                channelMap.remove(channelName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll(IMClient receiver)&#123;</span><br><span class="line">        IMMessageQueue queue = resultMap.get(receiver.getId());</span><br><span class="line">        <span class="keyword">if</span> (queue==<span class="keyword">null</span>) &#123;</span><br><span class="line">            queue = <span class="keyword">new</span> IMMessageQueue();</span><br><span class="line">            resultMap.put(receiver.getId(),queue);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> queue.poll();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(IMClient receiver, CommonMessage message)</span></span>&#123;</span><br><span class="line">        IMMessageQueue queue = resultMap.get(receiver.getId());</span><br><span class="line">        <span class="keyword">if</span> (queue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            queue.send(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Controller</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.im.Message;</span><br><span class="line"><span class="keyword">import</span> lzlz000.service.im.ChannelService;</span><br><span class="line"><span class="keyword">import</span> lzlz000.service.im.ClientService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 长轮询即时通讯Controller</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"im"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IMController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ChannelService channelService;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ClientService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IMController</span><span class="params">(ChannelService channelService, ClientService userService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.channelService = channelService;</span><br><span class="line">        <span class="keyword">this</span>.userService = userService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//长轮询</span></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"poll"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll(HttpServletRequest req)&#123;</span><br><span class="line">        <span class="keyword">return</span> channelService.poll(userService.getIMClient(req.getSession()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//订阅</span></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"subscribe"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">subscribe</span><span class="params">(HttpServletRequest req,Message channel)</span></span>&#123;</span><br><span class="line">        channelService.subscribe(channel.getChannel(),userService.getIMClient(req.getSession()));<span class="comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"订阅: "</span>+channel.getChannel();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//取消订阅</span></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"unsubscribe"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">unsubscribe</span><span class="params">(HttpServletRequest req,Message channel)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (channel != <span class="keyword">null</span>&amp;&amp;channel.getChannel()!=<span class="keyword">null</span>) &#123;</span><br><span class="line">            channelService.unsubscribe(channel.getChannel(),userService.getIMClient(req.getSession()));<span class="comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"取消订阅:"</span>+channel.getChannel();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            channelService.unsubscribe(userService.getIMClient(req.getSession()));<span class="comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">"取消订阅全部频道"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 似乎识别不了内部的自定义对象CommonMessage,需要HTTP请求设置contentType: "application/json",</span></span><br><span class="line">    <span class="comment">// 把json转化为字符串传给data,并且此方法设置@RequestBody</span></span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"emit"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">emit</span><span class="params">(HttpServletRequest req, @RequestBody Message msg)</span></span>&#123;</span><br><span class="line">        msg.setSender(userService.getIMClient(req.getSession()));</span><br><span class="line">        channelService.emit(msg.getChannel(),msg.getSender(),msg.getMessage());</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"发送成功"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后把controller提供的方法在封装在js中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 长轮询即时通讯</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> IM =(<span class="function"><span class="keyword">function</span>(<span class="params">jQuery</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $ =jQuery;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        poll : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url:<span class="string">"/im/poll"</span>,</span><br><span class="line">                type: <span class="string">"POST"</span>,</span><br><span class="line">                success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(data));</span><br><span class="line">                    IM.poll();</span><br><span class="line">                &#125;,</span><br><span class="line">                error: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">                    setTimeout(IM.poll,<span class="number">2000</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        subscribe : <span class="function"><span class="keyword">function</span>(<span class="params">channel</span>) </span>&#123;</span><br><span class="line">            $.post(<span class="string">'/im/subscribe'</span>,&#123;</span><br><span class="line">                channel:channel</span><br><span class="line">            &#125;,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(e);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        unsubscribe : <span class="function"><span class="keyword">function</span> (<span class="params">channelName</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> channel = channelName?&#123;<span class="attr">channel</span>:channelName&#125;:<span class="literal">null</span>;</span><br><span class="line">            $.post(<span class="string">'/im/unsubscribe'</span>,channel,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(e);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        send : <span class="function"><span class="keyword">function</span>(<span class="params">channel,text</span>) </span>&#123;</span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url:<span class="string">"/im/emit"</span>,</span><br><span class="line">                type: <span class="string">"POST"</span>,</span><br><span class="line">                data: <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                    channel:channel,</span><br><span class="line">                    message:&#123;</span><br><span class="line">                        text:text</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;),</span><br><span class="line">                success: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(e);</span><br><span class="line">                &#125;,</span><br><span class="line">                dataType: <span class="string">"json"</span>,</span><br><span class="line">                contentType: <span class="string">"application/json"</span></span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)(jQuery);</span><br></pre></td></tr></table></figure>
+
+<p>至此，可实现文章开头所说的效果</p>
+<hr>
+<p>这其实就是一种 <strong>发布订阅模式</strong><br>客户端既是订阅者（Subscriber）又是发布者（Publisher）<br>但是http请求是客户端主动向服务器发送请求获取返回，发布订阅模式是被动的接收被订阅频道的通知。<br>因此我们只能把客户端的请求存储在服务器中（请求存储在<strong>DeferredResult</strong>对象中），当服务器数据发生改变时，通知订阅者（返回请求）。<br><img src="https://upload-images.jianshu.io/upload_images/3867641-ee9130c763f5f948.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>为了保证数据的及时性以及完整性，获取消息–&gt;返回消息–&gt;获取消息 循环执行（即<strong>长轮询</strong>），而服务器对应频道的对应客户端有一个队列保存着未发送的消息，在收到<strong>获取消息</strong>的请求或者<strong>发送消息</strong>的请求时都会尝试<strong>返回消息</strong>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/03/10/SpringBoot-AJAX-长轮询实现简单即时通讯/" data-id="ckgwjye0f0025pgl3c63v7ays" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-最长递增子序列问题-Java" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/最长递增子序列问题-Java/" class="article-date">
+  <time datetime="2018-03-09T16:00:00.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/最长递增子序列问题-Java/">最长递增子序列问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最长递增子序列问题 LIS(longest increasing subsequence) 例如</p>
+<blockquote>
+<p>给定一个数列，长度为N，<br>求这个数列的最长上升（递增）子数列（LIS）的长度.<br>以
+1, 7, 2, 8, 3, 4<br>为例。<br>这个数列的最长递增子数列是 1 2 3 4，长度为4；<br>次长的长度为3， 包括 1 7 8; 1 2 3 等.</p>
+</blockquote>
+<p>设数组为：arr<br>设  foo(k) 为：以数列中第k项 (为了与java数组逻辑一致，这里的k从0开始计算) 结尾的最长递增子序列的长度<br>则：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo(<span class="number">0</span>) == <span class="number">1</span> </span><br><span class="line">foo(k) == max(arr[k]&gt;arr[<span class="number">0</span>]?foo(<span class="number">0</span>)+<span class="number">1</span>:foo(<span class="number">0</span>),</span><br><span class="line">              arr[k]&gt;arr[<span class="number">1</span>]?foo(<span class="number">1</span>)+<span class="number">1</span>:foo(<span class="number">1</span>) , </span><br><span class="line">              ... ,</span><br><span class="line">              arr[k]&gt;arr[k-<span class="number">1</span>]?foo(k-<span class="number">1</span>)+<span class="number">1</span>:foo(k-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<p>java代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class LISDemo &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        int[] arr = new int[10];</span><br><span class="line">        Random random = new Random();</span><br><span class="line">        for (int i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] = random.nextInt(100);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;数组&quot;+Arrays.toString(arr));</span><br><span class="line">        long time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;结果: &quot;+foo(arr, arr.length-1));</span><br><span class="line">        System.out.println(&quot;耗时: &quot;+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    private static int foo(int[] arr,int end)&#123;</span><br><span class="line">        if (end==0) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        int len = 0;</span><br><span class="line">        for (int i = 0; i &lt; end; i++) &#123;</span><br><span class="line">            int temp = foo(arr,i);</span><br><span class="line">            len = Math.max(len,arr[end]&gt;arr[i]?temp+1:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        return len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码能计算出正确的结果，但是存在问题：<br>要计算 foo(n)必须先得到 foo(0)<del>foo(n-1)的值<br>要计算 foo(n-1)必须先得到 foo(0)</del>foo(n-2)的值<br>…<br>以此类推，可以把他画成一颗多叉树，时间复杂度达到O(2^n) </p>
+<p>运行这段代码就会发现 每当数组长度+1 运行耗时大致翻倍，数组长度为几十的时候，运行时间已经无法容忍的长了。</p>
+<p>以foo(3)为例，可以画成下面这棵树<br><img src="/images/1240123.png" alt><br>可以发现，相同参数的方法被重复计算了多遍，我们可以建立一个hashmap把参数和对应的值存入其中，当结果已经计算过，就直接从hashmap中取出结果不再计算，修改代码为如下,保留了原来的方法做个对比，执行效率天差地别:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LISDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">31</span>];</span><br><span class="line">        Random random = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] = random.nextInt(<span class="number">100</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"数组"</span>+Arrays.toString(arr));</span><br><span class="line">        LIS lis = <span class="keyword">new</span> LIS(arr);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"结果1: "</span>+lis.foo());</span><br><span class="line">        System.out.println(<span class="string">"耗时1: "</span>+(System.currentTimeMillis()-time));</span><br><span class="line"></span><br><span class="line">        time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"结果2: "</span>+foo(arr, arr.length-<span class="number">1</span>));</span><br><span class="line">        System.out.println(<span class="string">"耗时2: "</span>+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 最长递增子序列 longest increasing subsequence</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LIS</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr;</span><br><span class="line">        HashMap&lt;Integer,Integer&gt; values = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        LIS(<span class="keyword">int</span>[]arr)&#123;</span><br><span class="line">            <span class="keyword">this</span>.arr = arr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> foo(arr,arr.length-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">            Integer value = values.get(end);</span><br><span class="line">            <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> value;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">                values.put(<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">                len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">            &#125;</span><br><span class="line">            values.put(end,len);</span><br><span class="line">            <span class="keyword">return</span> len;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">            len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://lzlz000.github.io/2018/03/10/最长递增子序列问题-Java/" data-id="ckgwjydzg000xpgl3go367nu1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
     </footer>
   </div>
@@ -239,7 +382,7 @@ String productMsg1();</code></pre><p>}</p>
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -247,14 +390,14 @@ String productMsg1();</code></pre><p>}</p>
           <aside id="sidebar">
   
     <div class="widget-wrap" style="margin-bottom:-20px">
-  <h3 class="widget-title">
+  <h3 style="margin-top:-5px;margin-bottom:5px;">
     <a href="https://lzlz000.github.io">
-      <img src="/static/lzlz000-个人主页-brightgreen.svg">
+      <img src="/lzlz000-个人主页-brightgreen.svg" height="25">
     </a>
   </h3>
   <div class="widget">
-    自闭中（；´д｀）ゞ
-    <br><br>
+    <div>自闭中（；´д｀）ゞ</div>
+    <br>
     Email   <a href="mailto:lzlz0x000@gmail.com">
       lzlz0x000@gmail.com
     </a>
@@ -272,7 +415,7 @@ String productMsg1();</code></pre><p>}</p>
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/探索与发现/">探索与发现</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
   </div>
 
@@ -282,7 +425,7 @@ String productMsg1();</code></pre><p>}</p>
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 17.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
+      <a href="/tags/electron/" style="font-size: 12px;">electron</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 16px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 12px;">springboot</a> <a href="/tags/前端/" style="font-size: 18px;">前端</a> <a href="/tags/探索与发现/" style="font-size: 12px;">探索与发现</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
     </div>
   </div>
 
@@ -291,7 +434,7 @@ String productMsg1();</code></pre><p>}</p>
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -304,23 +447,23 @@ String productMsg1();</code></pre><p>}</p>
       <ul>
         
           <li>
-            <a href="/2019/06/27/mysql优化（三）/">mysql优化问题（三）sql优化</a>
+            <a href="/2020/10/31/过去的一年(2)/">过去的一年(2)</a>
           </li>
         
           <li>
-            <a href="/2019/06/26/mysql优化（二）/">mysql优化问题（二）执行计划</a>
+            <a href="/2020/10/30/重新开始更新-说说过去的一年/">重新开始更新-说说过去的一年</a>
           </li>
         
           <li>
-            <a href="/2019/06/25/mysql优化（一）/">mysql优化问题（一）慢查询</a>
+            <a href="/2019/07/16/electron-vue多窗口/">electron-vue多窗口</a>
           </li>
         
           <li>
-            <a href="/2019/06/25/mysql的Ferderated引擎/">mysql的Ferderated引擎</a>
+            <a href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
           </li>
         
           <li>
-            <a href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
+            <a href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
           </li>
         
       </ul>
@@ -335,7 +478,7 @@ String productMsg1();</code></pre><p>}</p>
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 lzlz000<br>
+      &copy; 2020 lzlz000<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -347,6 +490,10 @@ String productMsg1();</code></pre><p>}</p>
   
     <a href="/archives" class="mobile-nav-link">归档</a>
   
+    <a href="/hello/" class="mobile-nav-link">test</a>
+  
+    <a href="https://travellings.now.sh/" class="mobile-nav-link">前往</a>
+  
 </nav>
     
 
@@ -354,7 +501,7 @@ String productMsg1();</code></pre><p>}</p>
 
 
 
-<script src="/js/script.js"></script><script type="text/javascript" src="/tiny-comment/load.js"></script>
+
 
 
 

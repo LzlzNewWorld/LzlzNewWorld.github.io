@@ -5,14 +5,14 @@
   
 
   
-  <title>java正则表达式-环视、反向引用、贪婪 | lzlz000的个人页</title>
+  <title>java正则表达式-环视、反向引用、贪婪 | lzlz000</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="环视什么是环视 环视顾名思义就是从四周看。正则表达式一向都是从左向右工作的，但是环视也能从右向左工作。最典型的列子就是给你一个数字如12345678，需要你改成12，345，678这种格式。如果按照我们的思维来，应该是会从右边开始划分吧，每三个数字加一个逗号。环视就能按照我们的思维去解决这样的问题。这里要注意的是环视不匹配任何字符，只是匹配位置而已。作用和^,&amp;amp;相似。环视又分为顺序环视和逆">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java正则表达式-环视、反向引用、贪婪">
 <meta property="og:url" content="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/index.html">
-<meta property="og:site_name" content="lzlz000的个人页">
+<meta property="og:site_name" content="lzlz000">
 <meta property="og:description" content="环视什么是环视 环视顾名思义就是从四周看。正则表达式一向都是从左向右工作的，但是环视也能从右向左工作。最典型的列子就是给你一个数字如12345678，需要你改成12，345，678这种格式。如果按照我们的思维来，应该是会从右边开始划分吧，每三个数字加一个逗号。环视就能按照我们的思维去解决这样的问题。这里要注意的是环视不匹配任何字符，只是匹配位置而已。作用和^,&amp;amp;相似。环视又分为顺序环视和逆">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-06-08T19:37:01.701Z">
@@ -37,7 +37,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <!-- <h1 id="logo-wrap">
-        <a href="/" id="logo">lzlz000的个人页</a>
+        <a href="/" id="logo">lzlz000</a>
       </h1> -->
       
     </div>
@@ -45,9 +45,13 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">主页</a>
+          <a class="main-nav-link" href="/" target>主页</a>
         
-          <a class="main-nav-link" href="/archives">归档</a>
+          <a class="main-nav-link" href="/archives" target>归档</a>
+        
+          <a class="main-nav-link" href="/hello/" target>test</a>
+        
+          <a class="main-nav-link" href="https://travellings.now.sh/" target="_blank">前往</a>
         
       </nav>
       <nav id="sub-nav">
@@ -108,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/" data-id="cjxdfi3gr000cpwl348aans5d" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/" data-id="ckgwjydz1000cpgl30zl7jk1w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
@@ -129,9 +133,9 @@
     </a>
   
   
-    <a href="/2018/07/20/junit单元测试中使用mock/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/10/01/mysql优化（三）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">springboot单元测试中使用 mock</div>
+      <div class="article-nav-title">mysql优化问题（三）sql优化</div>
     </a>
   
 </nav>
@@ -144,14 +148,14 @@
           <aside id="sidebar">
   
     <div class="widget-wrap" style="margin-bottom:-20px">
-  <h3 class="widget-title">
+  <h3 style="margin-top:-5px;margin-bottom:5px;">
     <a href="https://lzlz000.github.io">
-      <img src="/static/lzlz000-个人主页-brightgreen.svg">
+      <img src="/lzlz000-个人主页-brightgreen.svg" height="25">
     </a>
   </h3>
   <div class="widget">
-    自闭中（；´д｀）ゞ
-    <br><br>
+    <div>自闭中（；´д｀）ゞ</div>
+    <br>
     Email   <a href="mailto:lzlz0x000@gmail.com">
       lzlz0x000@gmail.com
     </a>
@@ -169,7 +173,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/探索与发现/">探索与发现</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
   </div>
 
@@ -179,7 +183,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 17.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
+      <a href="/tags/electron/" style="font-size: 12px;">electron</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 16px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 12px;">springboot</a> <a href="/tags/前端/" style="font-size: 18px;">前端</a> <a href="/tags/探索与发现/" style="font-size: 12px;">探索与发现</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
     </div>
   </div>
 
@@ -188,7 +192,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -201,23 +205,23 @@
       <ul>
         
           <li>
-            <a href="/2019/06/27/mysql优化（三）/">mysql优化问题（三）sql优化</a>
+            <a href="/2020/10/31/过去的一年(2)/">过去的一年(2)</a>
           </li>
         
           <li>
-            <a href="/2019/06/26/mysql优化（二）/">mysql优化问题（二）执行计划</a>
+            <a href="/2020/10/30/重新开始更新-说说过去的一年/">重新开始更新-说说过去的一年</a>
           </li>
         
           <li>
-            <a href="/2019/06/25/mysql优化（一）/">mysql优化问题（一）慢查询</a>
+            <a href="/2019/07/16/electron-vue多窗口/">electron-vue多窗口</a>
           </li>
         
           <li>
-            <a href="/2019/06/25/mysql的Ferderated引擎/">mysql的Ferderated引擎</a>
+            <a href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
           </li>
         
           <li>
-            <a href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
+            <a href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
           </li>
         
       </ul>
@@ -232,7 +236,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 lzlz000<br>
+      &copy; 2020 lzlz000<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -244,6 +248,10 @@
   
     <a href="/archives" class="mobile-nav-link">归档</a>
   
+    <a href="/hello/" class="mobile-nav-link">test</a>
+  
+    <a href="https://travellings.now.sh/" class="mobile-nav-link">前往</a>
+  
 </nav>
     
 
@@ -251,7 +259,7 @@
 
 
 
-<script src="/js/script.js"></script><script type="text/javascript" src="/tiny-comment/load.js"></script>
+
 
 
 

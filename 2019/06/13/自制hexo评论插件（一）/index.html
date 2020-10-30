@@ -5,19 +5,18 @@
   
 
   
-  <title>自制hexo评论插件（一） | lzlz000的个人页</title>
+  <title>自制hexo评论插件（一） | lzlz000</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="hexo等静态博客，现在有很多可使用的评论插件，基本都需要繁琐的注册，国内的还需要实名制审核（我本人特别特别讨厌实名制审核，有一种我在网上干什么都有别人偷窥的感觉，虽然我是守法公民，但是即使我在床上只睡觉不干其他不可描述的事情，我也不希望有摄像头对着我拍不是吗？）我就在想，能不能自己做一个？ 我仔细思考了一下，确实可以做，不过是一个前端界面和一个后端服务器。但是作为一个“插件”和一个前端页面还是有">
-<meta name="keywords" content="hexo,自制hexo评论插件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自制hexo评论插件（一）">
 <meta property="og:url" content="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/index.html">
-<meta property="og:site_name" content="lzlz000的个人页">
+<meta property="og:site_name" content="lzlz000">
 <meta property="og:description" content="hexo等静态博客，现在有很多可使用的评论插件，基本都需要繁琐的注册，国内的还需要实名制审核（我本人特别特别讨厌实名制审核，有一种我在网上干什么都有别人偷窥的感觉，虽然我是守法公民，但是即使我在床上只睡觉不干其他不可描述的事情，我也不希望有摄像头对着我拍不是吗？）我就在想，能不能自己做一个？ 我仔细思考了一下，确实可以做，不过是一个前端界面和一个后端服务器。但是作为一个“插件”和一个前端页面还是有">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://lzlz000.github.io/images/1560364377217.png">
 <meta property="og:image" content="https://img.shields.io/badge/lzlz000-%E4%B8%AA%E4%BA%BA%E7%A9%BA%E9%97%B4-brightgreen.svg?style=flat&logo=data:image/gif;base64,R0lGODlhPAA8APf/AP/TAHsbG6ZJAGsBAcertKL75+jsZ93teMTk+o5BRruVm+72/3ILC7OGjbS7zIIqK4QyNZDDtKFbWqZuc//sN/v//8+7xN7X4eDc5JFJTa59gsHtpL+cpJx9iZ1dYpnu431xae/4/5Jpc6H965RNUIqonPH8/7rJ3MOlq/bsTm4KC9bI0ZpZXcPh9opTW6NpbKl0eqVkZOzy/nkeH8Da79jM0nUaHJNDQ3wgIZ2Cj6mcq7f1vbaLkaSToYItL4wpAHUQEIs0M+3z+ptTVOnt9enu+JFjbNO+yMHc8e/3/N3V3tXGz4E8Qoy+t5ZxfK2ru9rR2ujr9cTj+GUAAMPi+Obm7bW+0P/aAMmxuaGLmLK1xrCxwXwuMvL8/7nG2Y09Qv/WAJZPVMh6AMLg9cDb8MDY7bLuvplWWp9gZevx/IVHTo4+PrfD1r/Y7O71+nYVFXgVFdC9xW4VFqORnsy2vn4lKHY1M9rP2YY2ObmSmHMWG8KhqHwzOeLg65FGSHspLXEOD7yYnolNVI46OY5cZWsHCOzx/evw+ubn8dbJztPDzYs7Pqx4fcWoros5OYk2OHAQEoJDVnETFHYTE3gXGO30//T///X///P//34nM4VLX77W6r/X68Lf9O31//H7//b//8Pi96pwd/L+/+zy/fD6//D7/8DZ7u/5//L//8Le8/P+/8Hd8r7U6L/X7L/W6m8HB4ZNYuz0/7vN4IMnJ9fK1I04N+akANLtiv/sMNPEzMXm+6aZp6ecq69/hKhra5hMS5dUWKL/9Ojq76H349bH0KnvzKLt1af32I2zpciAAH+AduGdAMTi97eQlpVJSIcvL28kIl8AAKdxd2sNFufp77+fpbrusu32/6Jnae31/LT1w5335rK3yO30/qFGAII5Prbttezw9qqgr6ynuMHe8sLd8ngjJ+jq8uns8aD45Ofo88uzvMu1vX84PnY4NnBHQHwxNrvtrYg9P3gSDI07PdjN1nYOBbGzxM65wNPEyfH6/6NfXuzz/r7V6QAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4zLWMwMTEgNjYuMTQ1NjYxLCAyMDEyLzAyLzA2LTE0OjU2OjI3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M2IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4QUY2MjJFMDk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo4QUY2MjJFMTk2QTgxMUU5QjE4QTlEMjI1ODQ3MTdFQSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjhBRjYyMkRFOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjhBRjYyMkRGOTZBODExRTlCMThBOUQyMjU4NDcxN0VBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Af/+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHg397d3Nva2djX1tXU09LR0M/OzczLysnIx8bFxMPCwcC/vr28u7q5uLe2tbSzsrGwr66trKuqqainpqWko6KhoJ+enZybmpmYl5aVlJOSkZCPjo2Mi4qJiIeGhYSDgoGAf359fHt6eXh3dnV0c3JxcG9ubWxramloZ2ZlZGNiYWBfXl1cW1pZWFdWVVRTUlFQT05NTEtKSUhHRkVEQ0JBQD8+PTw7Ojk4NzY1NDMyMTAvLi0sKyopKCcmJSQjIiEg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">
-<meta property="og:updated_time" content="2019-06-24T18:34:05.762Z">
+<meta property="og:updated_time" content="2020-10-30T09:56:41.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自制hexo评论插件（一）">
 <meta name="twitter:description" content="hexo等静态博客，现在有很多可使用的评论插件，基本都需要繁琐的注册，国内的还需要实名制审核（我本人特别特别讨厌实名制审核，有一种我在网上干什么都有别人偷窥的感觉，虽然我是守法公民，但是即使我在床上只睡觉不干其他不可描述的事情，我也不希望有摄像头对着我拍不是吗？）我就在想，能不能自己做一个？ 我仔细思考了一下，确实可以做，不过是一个前端界面和一个后端服务器。但是作为一个“插件”和一个前端页面还是有">
@@ -40,7 +39,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <!-- <h1 id="logo-wrap">
-        <a href="/" id="logo">lzlz000的个人页</a>
+        <a href="/" id="logo">lzlz000</a>
       </h1> -->
       
     </div>
@@ -48,9 +47,13 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
         
-          <a class="main-nav-link" href="/">主页</a>
+          <a class="main-nav-link" href="/" target>主页</a>
         
-          <a class="main-nav-link" href="/archives">归档</a>
+          <a class="main-nav-link" href="/archives" target>归档</a>
+        
+          <a class="main-nav-link" href="/hello/" target>test</a>
+        
+          <a class="main-nav-link" href="https://travellings.now.sh/" target="_blank">前往</a>
         
       </nav>
       <nav id="sub-nav">
@@ -103,11 +106,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/" data-id="cjxdfi3hv001zpwl37ac1rstf" class="article-share-link">Share</a>
+      <a data-url="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/" data-id="ckgwjye0q002hpgl3pr7bfly3" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
-
     </footer>
   </div>
   
@@ -126,7 +127,7 @@
   
     <a href="/2019/06/08/hexo-插入图片/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">hexo+typora 插入图片</div>
+      <div class="article-nav-title">hexo+typora 插入图片的简便解决方案</div>
     </a>
   
 </nav>
@@ -139,14 +140,14 @@
           <aside id="sidebar">
   
     <div class="widget-wrap" style="margin-bottom:-20px">
-  <h3 class="widget-title">
+  <h3 style="margin-top:-5px;margin-bottom:5px;">
     <a href="https://lzlz000.github.io">
-      <img src="/static/lzlz000-个人主页-brightgreen.svg">
+      <img src="/lzlz000-个人主页-brightgreen.svg" height="25">
     </a>
   </h3>
   <div class="widget">
-    自闭中（；´д｀）ゞ
-    <br><br>
+    <div>自闭中（；´д｀）ゞ</div>
+    <br>
     Email   <a href="mailto:lzlz0x000@gmail.com">
       lzlz0x000@gmail.com
     </a>
@@ -164,7 +165,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/好奇心害死猫/">好奇心害死猫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自制hexo评论插件/">自制hexo评论插件</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/electron/">electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/">java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mybatis/">mybatis</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nginx/">nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/">springboot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/探索与发现/">探索与发现</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
   </div>
 
@@ -174,7 +175,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 17.5px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 12.5px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 17.5px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/好奇心害死猫/" style="font-size: 10px;">好奇心害死猫</a> <a href="/tags/算法/" style="font-size: 12.5px;">算法</a> <a href="/tags/自制hexo评论插件/" style="font-size: 10px;">自制hexo评论插件</a>
+      <a href="/tags/electron/" style="font-size: 12px;">electron</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 16px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/python/" style="font-size: 14px;">python</a> <a href="/tags/spring-cloud/" style="font-size: 16px;">spring-cloud</a> <a href="/tags/springboot/" style="font-size: 12px;">springboot</a> <a href="/tags/前端/" style="font-size: 18px;">前端</a> <a href="/tags/探索与发现/" style="font-size: 12px;">探索与发现</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
     </div>
   </div>
 
@@ -183,7 +184,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -196,23 +197,23 @@
       <ul>
         
           <li>
-            <a href="/2019/06/27/mysql优化（三）/">mysql优化问题（三）sql优化</a>
+            <a href="/2020/10/31/过去的一年(2)/">过去的一年(2)</a>
           </li>
         
           <li>
-            <a href="/2019/06/26/mysql优化（二）/">mysql优化问题（二）执行计划</a>
+            <a href="/2020/10/30/重新开始更新-说说过去的一年/">重新开始更新-说说过去的一年</a>
           </li>
         
           <li>
-            <a href="/2019/06/25/mysql优化（一）/">mysql优化问题（一）慢查询</a>
+            <a href="/2019/07/16/electron-vue多窗口/">electron-vue多窗口</a>
           </li>
         
           <li>
-            <a href="/2019/06/25/mysql的Ferderated引擎/">mysql的Ferderated引擎</a>
+            <a href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
           </li>
         
           <li>
-            <a href="/2019/06/13/自制hexo评论插件（一）/">自制hexo评论插件（一）</a>
+            <a href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
           </li>
         
       </ul>
@@ -227,7 +228,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 lzlz000<br>
+      &copy; 2020 lzlz000<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
@@ -239,6 +240,10 @@
   
     <a href="/archives" class="mobile-nav-link">归档</a>
   
+    <a href="/hello/" class="mobile-nav-link">test</a>
+  
+    <a href="https://travellings.now.sh/" class="mobile-nav-link">前往</a>
+  
 </nav>
     
 
@@ -246,7 +251,7 @@
 
 
 
-<script src="/js/script.js"></script><script type="text/javascript" src="/tiny-comment/load.js"></script>
+
 
 
 
