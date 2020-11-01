@@ -15,6 +15,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lzlz000">
   
+    <link rel="alternate" href="/atom.xml" title="lzlz000" type="application/atom+xml">
+  
   
     <link rel="icon" href="/favicon.ico">
   
@@ -44,8 +46,6 @@
         
           <a class="main-nav-link" href="/archives" target>归档</a>
         
-          <a class="main-nav-link" href="/hello/" target>test</a>
-        
           <a class="main-nav-link" href="https://travellings.now.sh/" target="_blank">开往</a>
         
       </nav>
@@ -60,6 +60,197 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-electron-vue的实践" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/09/electron-vue的实践/" class="article-date">
+  <time datetime="2019-07-09T09:59:26.000Z" itemprop="datePublished">2019-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://lzlz000.github.io">个人主页</a></p>
+<p>吐槽一下，我一个后端程序猿怎么天天在写前端呢😔？</p>
+<p>我们项目要用到一个客户端程序，从我们本身的技术栈出发，最合适的就是electron+vue来实现了。网上有各种文章写到这些，我尝试了一下，记录一下踩坑的过程。</p>
+<p>首先需要npm 和 vue-cli 这个就不再赘述了，</p>
+<h4 id="初始化-开发-打包"><a href="#初始化-开发-打包" class="headerlink" title="初始化-开发-打包"></a>初始化-开发-打包</h4><p>百度上搜索关键词”electron vue” 找到的很多文章会让人误入歧途，比如这个：</p>
+<p><a href="https://www.cnblogs.com/jiangxifanzhouyudu/p/9517651.html" target="_blank" rel="noopener">https://www.cnblogs.com/jiangxifanzhouyudu/p/9517651.html</a>， 搜到的第一个就是它。使用 vue-cli 常规webpack打包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init webpack xxx</span><br></pre></td></tr></table></figure>
+
+<p>初始化普通vue单页面项目的方式都是不对的，electron中运行和服务器上运行的web应用有很多区别，对于以后的开发和调试都非常不方便。这才是正确方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vue init simulatedgreg/electron-vue ele-vue</span><br></pre></td></tr></table></figure>
+
+<p>这个模板帮助定义好了开发、调试、打包成多平台客户端的各方面配置。值得注意的是，electron和打包工具都非常大，npm的墙内速度真的会让你等到天荒地老，然后网络异常重来一遍。 如果你可以翻墙，就完美了，如果不幸可以在package.json的 build属性下新增以下内容使用淘宝镜像</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">"build": &#123;</span><br><span class="line">    "electronDownload": &#123;</span><br><span class="line">      "mirror": "https://npm.taobao.org/mirrors/electron/"</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>仍然有一些其他依赖资源不，例如winCodeSign，参考文章  <a href="https://www.cnblogs.com/chenweixuan/p/7693718.html" target="_blank" rel="noopener">https://www.cnblogs.com/chenweixuan/p/7693718.html</a></p>
+<p>但经过我在不同电脑上多次配置，还是或多或少存在问题，仅在本地开发时，淘宝镜像安装一切正常，electron-builder打包最好的解决方案仍然删除node_modules然后翻墙使用npm install 简单方便没有任何奇怪的问题发生。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://lzlz000.github.io/2019/07/09/electron-vue的实践/" data-id="ckgzbnf980006p8l36sio0q2z" class="article-share-link">Share</a> -->
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/electron/">electron</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-基于element-ui的页面内面包屑组件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/基于element-ui的页面内面包屑组件/" class="article-date">
+  <time datetime="2019-07-02T09:54:20.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://lzlz000.github.io">lzlz000的个人主页</a></p>
+<p>elment-ui提供了面包屑组件 <strong>el-breadcrumb</strong> 然而他要配合url跳转路由使用，在项目中需要用到页面内的面包屑，因此我写了一个组件 <strong>inner-breadcrumb</strong>(源码在文章底部)</p>
+<p>inner-breadcrumb 包装了 el-breadcrumb 显示效果基本相同，不同的是，不再跳转页面，而是提供一个v-model控制当前的path值，并且提供了动态路径显示的功能（样式只是因为我们的需求如此，这个可以很容易更改）<br>原版样式<br><img src="/images/5d037c361553b.png" alt><br>本组件样式<br><img src="/images/5d037bd441e48.png" alt></p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>v-model</td>
+<td>绑定路径值</td>
+<td>string/number</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>path</td>
+<td>面包屑全路径参数，详见下文</td>
+<td>object</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>showInRoot</td>
+<td>是否在根页面显示该组件</td>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr>
+<td>showBack</td>
+<td>是否在右侧显示“返回上一级”</td>
+<td>boolean</td>
+<td>false</td>
+</tr>
+<tr>
+<td>labelArgs</td>
+<td>面包屑标签动态参数,详见下文</td>
+<td>object</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id="例"><a href="#例" class="headerlink" title="例"></a>例</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">inner-breadcrumb</span></span></span><br><span class="line"><span class="tag">  <span class="attr">v-model</span>=<span class="string">"innerPath"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:path</span>=<span class="string">"&#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">    label: '一级页面',</span></span></span><br><span class="line"><span class="tag"><span class="string">    key: '1',</span></span></span><br><span class="line"><span class="tag"><span class="string">    children: [</span></span></span><br><span class="line"><span class="tag"><span class="string">      &#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">        key: '2A',</span></span></span><br><span class="line"><span class="tag"><span class="string">        label: '二级页面A'</span></span></span><br><span class="line"><span class="tag"><span class="string">      &#125;,</span></span></span><br><span class="line"><span class="tag"><span class="string">      &#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">        key: '2B',</span></span></span><br><span class="line"><span class="tag"><span class="string">        label: '二级页面B',</span></span></span><br><span class="line"><span class="tag"><span class="string">        children: [</span></span></span><br><span class="line"><span class="tag"><span class="string">          &#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">            key: '3',</span></span></span><br><span class="line"><span class="tag"><span class="string">            label: '三级页面'</span></span></span><br><span class="line"><span class="tag"><span class="string">          &#125;</span></span></span><br><span class="line"><span class="tag"><span class="string">        ]</span></span></span><br><span class="line"><span class="tag"><span class="string">      &#125;</span></span></span><br><span class="line"><span class="tag"><span class="string">    ]</span></span></span><br><span class="line"><span class="tag"><span class="string">&#125;"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当 v-model绑定值为”3”时，页面为：<br><img src="/images/5d037bd441e48.png" alt></p>
+<ul>
+<li>控制页面的方式</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-if=&quot;innerPath==&apos;1&apos;&quot;&gt;...&lt;/div&gt;</span><br><span class="line">&lt;div v-else-if=&quot;innerPath==&apos;2A&apos;&quot;&gt;...&lt;/div&gt;</span><br><span class="line">&lt;div v-else-if=&quot;innerPath==&apos;2B&apos;&quot;&gt;...&lt;/div&gt;</span><br><span class="line">&lt;div v-else-if=&quot;innerPath==&apos;3&apos;&quot;&gt;...&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以此类推，页面会按照树形结构自动生成当前位置的面包屑，你可以无限添加。</p>
+<p>值得注意的是，当回到主页面时候，面包屑默认隐藏，因为绝大多数需求和常理都不需要在主页面显示孤零零的面包屑。当然可以通过添加参数 <strong>showInRoot</strong> 来显示它</p>
+<h3 id="属性path的设置"><a href="#属性path的设置" class="headerlink" title="属性path的设置"></a>属性path的设置</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>label</td>
+<td>页面标签显示的值</td>
+<td>string/number</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>key</td>
+<td>标签的key</td>
+<td>string/number</td>
+<td>必填</td>
+</tr>
+<tr>
+<td>children</td>
+<td>下一级路径的集合</td>
+<td>array,其中每个元素都是一个节点，多叉树结构</td>
+<td>-</td>
+</tr>
+<tr>
+<td>disable</td>
+<td>如果当前路径不允许被点击则加上</td>
+<td>boolean</td>
+<td>false</td>
+</tr>
+</tbody></table>
+<ul>
+<li>注意，开启“返回上一级”按钮，若上一级目录是disable，则会跳过，若所有上级目录均为disable，则无效，控制台会打印警告信息</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	label: "一级页面", </span><br><span class="line">	key: "1",</span><br><span class="line">	children: [</span><br><span class="line">	  &#123;</span><br><span class="line">		key: "2A",</span><br><span class="line">		label: "二级页面A",</span><br><span class="line">		disable: true</span><br><span class="line">	  &#125;,</span><br><span class="line">	  &#123;</span><br><span class="line">		key: "2B",</span><br><span class="line">		label: "二级页面B",</span><br><span class="line">		children: [</span><br><span class="line">		  &#123;</span><br><span class="line">			key: "3",</span><br><span class="line">			label: "三级页面"</span><br><span class="line">		  &#125;</span><br><span class="line">		]</span><br><span class="line">	  &#125;</span><br><span class="line">	]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="动态参数"><a href="#动态参数" class="headerlink" title="动态参数"></a>动态参数</h3><p>动态参数通过属性 <strong>labelArgs</strong> 设置，适用于需要路径动态标签的情况</p>
+<h4 id="例-1"><a href="#例-1" class="headerlink" title="例"></a>例</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">inner-breadcrumb</span></span></span><br><span class="line"><span class="tag">  <span class="attr">v-model</span>=<span class="string">"pathKey"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:label-args</span> =<span class="string">"&#123;code: active.code&#125;"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:path</span>=<span class="string">"&#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">    label: '排课管理',</span></span></span><br><span class="line"><span class="tag"><span class="string">    key:'main',</span></span></span><br><span class="line"><span class="tag"><span class="string">    children:[&#123;</span></span></span><br><span class="line"><span class="tag"><span class="string">      label: '教学班排课(&#123;code&#125;)',</span></span></span><br><span class="line"><span class="tag"><span class="string">      key:'arrange'</span></span></span><br><span class="line"><span class="tag"><span class="string">    &#125;,]</span></span></span><br><span class="line"><span class="tag"><span class="string">  &#125;"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>当切换到对应路径<strong>arrange</strong>时候，会显示：<br><img src="/images/5d037be97b8c2.png" alt></p>
+<p>源码如下:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 页面内部使用的面包屑组件（URL不变,不适用router跳转） --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"inner-breadcrumb"</span> <span class="attr">v-show</span>=<span class="string">"showInRoot || value!=root"</span> <span class="attr">style</span>=<span class="string">"height:24px;padding:0 3px 10px;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-breadcrumb</span> <span class="attr">class</span>=<span class="string">"breadcrumb"</span> <span class="attr">separator</span>=<span class="string">"/"</span> <span class="attr">style</span>=<span class="string">"float:left;"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-breadcrumb-item</span> <span class="attr">v-for</span>=<span class="string">"(node, index) in pathArr"</span> <span class="attr">:key</span>=<span class="string">"index"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">v-if</span>=<span class="string">"node.disable &amp;&amp; index&lt;pathArr.length-1"</span> <span class="attr">class</span>=<span class="string">"disable"</span> <span class="attr">:class</span>=<span class="string">"&#123;'last':index==pathArr.length-1&#125;"</span>&gt;</span>&#123;&#123;parse(node.label)&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">v-else</span> <span class="attr">:class</span>=<span class="string">"&#123;'last':index==pathArr.length-1&#125;"</span> <span class="attr">href</span>=<span class="string">"javascript:;"</span> @<span class="attr">click</span>=<span class="string">"change(node.key,node.disable)"</span>&gt;</span>&#123;&#123;parse(node.label)&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-breadcrumb-item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-breadcrumb</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-button</span> <span class="attr">v-if</span>=<span class="string">"showBack&amp;&amp;pathArr.length&gt;1"</span> <span class="attr">style</span>=<span class="string">"float:right;padding:0;"</span> <span class="attr">type</span>=<span class="string">"text"</span> @<span class="attr">click</span>=<span class="string">"back"</span>&gt;</span>返回上一级<span class="tag">&lt;/<span class="name">el-button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">/**</span><br><span class="line"> * 页面内部使用的面包屑组件（URL不变,不适用router跳转）</span><br><span class="line"> */</span><br><span class="line"><span class="javascript"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="javascript">  name: <span class="string">"InnerBreadcrumb"</span>,</span></span><br><span class="line">  props: &#123;</span><br><span class="line">    value: &#123;</span><br><span class="line"><span class="javascript">      type: <span class="built_in">String</span>,</span></span><br><span class="line">    &#125;,</span><br><span class="line">    path: &#123;</span><br><span class="line"><span class="javascript">      type: <span class="built_in">Object</span>,</span></span><br><span class="line"><span class="javascript">      required: <span class="literal">true</span>,</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 形如：</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">default</span>: &#123;</span></span><br><span class="line"><span class="javascript">        label: <span class="string">"一级页面"</span>,</span></span><br><span class="line"><span class="javascript">        key: <span class="string">"1"</span>,</span></span><br><span class="line">        children: [</span><br><span class="line">          &#123;</span><br><span class="line"><span class="javascript">            key: <span class="string">"2A"</span>,</span></span><br><span class="line"><span class="javascript">            label: <span class="string">"二级页面A"</span></span></span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line"><span class="javascript">            key: <span class="string">"2B"</span>,</span></span><br><span class="line"><span class="javascript">            label: <span class="string">"二级页面B"</span>,</span></span><br><span class="line"><span class="javascript">            disable: <span class="literal">true</span>,</span></span><br><span class="line">            children: [</span><br><span class="line">              &#123;</span><br><span class="line"><span class="javascript">                key: <span class="string">"3"</span>,</span></span><br><span class="line"><span class="javascript">                label: <span class="string">"三级页面"</span></span></span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line"><span class="javascript">    showBack:&#123; <span class="comment">// 是否显示返回上一级</span></span></span><br><span class="line"><span class="javascript">      type: <span class="built_in">Boolean</span>,</span></span><br><span class="line"><span class="javascript">      <span class="keyword">default</span>: <span class="literal">false</span></span></span><br><span class="line">    &#125;,</span><br><span class="line"><span class="javascript">    showInRoot: &#123; <span class="comment">// 是否在根目录显示</span></span></span><br><span class="line"><span class="javascript">      type: <span class="built_in">Boolean</span>,</span></span><br><span class="line"><span class="javascript">      <span class="keyword">default</span>: <span class="literal">false</span></span></span><br><span class="line">    &#125;,</span><br><span class="line"><span class="javascript">    labelArgs:&#123; <span class="comment">// 用于回显的参数 例如在 label 中使用 '设置:&#123;info&#125;',在 labelArgs传入&#123;info:'用户信息'&#125; 即可</span></span></span><br><span class="line"><span class="javascript">      type: <span class="built_in">Object</span>,</span></span><br><span class="line"><span class="javascript">      <span class="keyword">default</span>: &#123;&#125;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  data() &#123;</span><br><span class="line"><span class="javascript">    <span class="keyword">return</span> &#123;</span></span><br><span class="line"><span class="javascript">      pathMap: <span class="literal">null</span>,</span></span><br><span class="line"><span class="javascript">      root: <span class="literal">null</span>,</span></span><br><span class="line">      pathArr: []</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    value(val) &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">this</span>.buildPath(val);</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    init() &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> path = <span class="keyword">this</span>.path;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">this</span>.root = path.key;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> pathMap = &#123;&#125;;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 遍历path树,给每个节点加上父节点的key，parentKey空则是根节点</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> traverse = <span class="function">(<span class="params">node, parentKey</span>) =&gt;</span> &#123;</span></span><br><span class="line">        node.parentKey = parentKey;</span><br><span class="line">        pathMap[node.key] = node;</span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (node.children &amp;&amp; node.children.length) &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; node.children.length; i++) &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">const</span> child = node.children[i];</span></span><br><span class="line">            traverse(child, node.key);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;;</span><br><span class="line">      traverse(path);</span><br><span class="line"><span class="javascript">      <span class="keyword">this</span>.pathMap = pathMap;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    buildPath(key) &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">if</span>(!key)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// 建立路径数组</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> node = <span class="keyword">this</span>.pathMap[key];</span></span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (!node) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// console.warn("InnerBreadcrumb 找不到key:" + key);</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span>;</span></span><br><span class="line">      &#125;</span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> arr = [];</span></span><br><span class="line"><span class="javascript">      <span class="keyword">while</span> (node) &#123;</span></span><br><span class="line">        arr.push(node);</span><br><span class="line"><span class="javascript">        node = <span class="keyword">this</span>.pathMap[node.parentKey];</span></span><br><span class="line">      &#125;</span><br><span class="line">      arr.reverse();</span><br><span class="line"><span class="javascript">      <span class="keyword">this</span>.pathArr = arr;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    parse(label)&#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> reg = <span class="regexp">/\&#123;[^\&#125;]+\&#125;/g</span>;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> labelCopy = label; <span class="comment">// 复制一份</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">let</span> match;</span></span><br><span class="line">      /* match的值</span><br><span class="line"><span class="javascript">        <span class="number">0</span>: <span class="string">"&#123;abc&#125;"</span></span></span><br><span class="line"><span class="javascript">        groups: <span class="literal">undefined</span></span></span><br><span class="line">        index: 3</span><br><span class="line"><span class="javascript">        input: <span class="string">"123&#123;abc&#125;,&#123;b&#125;"</span></span></span><br><span class="line">      */</span><br><span class="line"><span class="javascript">      <span class="keyword">while</span>((match = reg.exec(label))!=<span class="literal">null</span>)&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> key = match[<span class="number">0</span>].substr(<span class="number">1</span>,match[<span class="number">0</span>].length<span class="number">-2</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> value = <span class="keyword">this</span>.labelArgs[key];</span></span><br><span class="line"><span class="javascript">        <span class="keyword">if</span> (value)&#123;</span></span><br><span class="line"><span class="javascript">          <span class="comment">// console.warn('InnerBreadcrumb 找不到参数:', key);</span></span></span><br><span class="line">          labelCopy = labelCopy.replace(match[0],value);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"><span class="javascript">      <span class="keyword">return</span> labelCopy;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    change(key, disable) &#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">if</span> (disable) <span class="keyword">return</span>;</span></span><br><span class="line"><span class="javascript">      <span class="comment">// console.log(key);</span></span></span><br><span class="line"><span class="javascript">      <span class="keyword">this</span>.$emit(<span class="string">"input"</span>, key);</span></span><br><span class="line">    &#125;,</span><br><span class="line">    back()&#123;</span><br><span class="line"><span class="javascript">      <span class="keyword">if</span>(<span class="keyword">this</span>.pathArr &amp;&amp; <span class="keyword">this</span>.pathArr.length&gt;<span class="number">1</span>)&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="keyword">this</span>.pathArr.length<span class="number">-2</span>; i &gt;=<span class="number">0</span>; i--) &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">const</span> node = <span class="keyword">this</span>.pathArr[i];</span></span><br><span class="line"><span class="javascript">          <span class="keyword">if</span> (!node.disable)&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">this</span>.change(node.key);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span>;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"><span class="javascript">      <span class="built_in">console</span>.warn(<span class="string">'InnerBreadcrumb 没有非disalbe的上级路径'</span>);</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;&#125;,</span><br><span class="line">  mounted() &#123;</span><br><span class="line"><span class="javascript">    <span class="keyword">this</span>.init();</span></span><br><span class="line"><span class="javascript">    <span class="keyword">this</span>.buildPath(<span class="keyword">this</span>.value);</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">"scss"</span>&gt;</span></span><br><span class="line">.inner-breadcrumb &#123;</span><br><span class="line">  .breadcrumb&#123;</span><br><span class="line">    span &#123;</span><br><span class="line">      font-weight: normal;</span><br><span class="line">      color: #aaa;</span><br><span class="line">    &#125;</span><br><span class="line">    a &#123;</span><br><span class="line">      font-weight: normal;</span><br><span class="line">      color: #aaa;</span><br><span class="line">    &#125;</span><br><span class="line">    a:hover&#123;</span><br><span class="line">      color: #409EFF;</span><br><span class="line">    &#125;</span><br><span class="line">    .last&#123;</span><br><span class="line">      font-weight: bold!important;</span><br><span class="line">      cursor: default!important;</span><br><span class="line">    &#125;</span><br><span class="line">    .disable&#123;</span><br><span class="line">      cursor: default!important;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://lzlz000.github.io/2019/07/02/基于element-ui的页面内面包屑组件/" data-id="ckgzbnfb4002ip8l30xcw0w9q" class="article-share-link">Share</a> -->
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-万年历是如何计算的" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -117,7 +308,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/07/01/万年历是如何计算的/" data-id="ckgwjye0m002apgl3eae4fb6l" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2019/07/01/万年历是如何计算的/" data-id="ckgzbnfb2002fp8l31dw8b22z" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/探索与发现/">探索与发现</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -172,7 +363,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/25/mysql的Ferderated引擎/" data-id="ckgwjydz6000kpgl3lpjc1tn6" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2019/06/25/mysql的Ferderated引擎/" data-id="ckgzbnf9q000rp8l3m3i2jjkf" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -224,115 +415,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/" data-id="ckgwjye0q002hpgl3pr7bfly3" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2019/06/13/自制hexo评论插件（一）/" data-id="ckgzbnfb8002np8l3p5pd389h" class="article-share-link">Share</a> -->
       
       
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo-插入图片" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/08/hexo-插入图片/" class="article-date">
-  <time datetime="2019-06-08T02:37:22.000Z" itemprop="datePublished">2019-06-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片的简便解决方案</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。</p>
-<h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>通过搜索得到的解决方案最常见的是安装插件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-
-<p>这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xxx.png ，搜索下解决方法 ，还要自己手动去 node_modules 中修改脚本才能用，我们知道，node_modules 实际上都是npm install的时候自动生成的，这样的改动以后还要反复手动操作，太难受了，此方法不可取。</p>
-<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>hexo官方给了两种解决方式 <a href="https://hexo.io/zh-cn/docs/asset-folders" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders</a> </p>
-<p>一个是使用hexo的标签：</p>
-<p><img src="/images/1559990605779.png" alt></p>
-<p>这个方式看起来完美解决了问题，但是在我本地通过typora编辑文档时，是看不到图片的，不方便使用。</p>
-<h3 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h3><p>使用最简单的方式在 source 目录下创建images目录，然后图片都保存在这里。</p>
-<p>关键是要在typora上做以下设置：</p>
-<p>在md文件头部的配置项中，添加 <code>typora-root-url: ../</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:  hexo+typora 插入图片</span><br><span class="line">date: 2019-06-08 10:37:22</span><br><span class="line">tags:</span><br><span class="line">typora-root-url: ../</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<p>这样引用的图片都以上一级目录即 sourse作为根目录了，此时插入的图片时，只要点击“复制图片到…”并选择一次文件夹，以后每次都会自动保存在 sourse/image目录下，并且本地的显示和服务器上的根目录完全一致，使用体验还是很方便的。</p>
-<p><img src="/images/1559989480817.png" alt="本地路径和服务器路径一致"></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="ckgwjydyz000apgl3k36vf9r6" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/07/hello-hexo/" class="article-date">
-  <time datetime="2019-06-07T14:11:24.000Z" itemprop="datePublished">2019-06-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/07/hello-hexo/">hello hexo</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>目前市面上常见的静态博客框架就是 <code>hexo</code> 和 <code>jekyll</code>，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。</p>
-<hr>
-<p><strong>之所以想搭建一个静态页面，有以下几个原因</strong></p>
-<p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
-<p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
-<p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
-<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
-<p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
-<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
-<ol>
-<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
-<li>需要手动添加 yaml front matter</li>
-</ol>
-<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="ckgwjydyx0007pgl3wi3bxz1b" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
     </footer>
   </div>
   
@@ -396,7 +481,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -409,23 +494,23 @@
       <ul>
         
           <li>
-            <a href="/2020/10/31/过去的一年(2)/">过去的一年(2)</a>
+            <a href="/2020/11/02/last-year-4/">过去的一年(4) 年轻人患上癌症，除了健康还会失去什么</a>
           </li>
         
           <li>
-            <a href="/2020/10/30/重新开始更新-说说过去的一年/">重新开始更新-说说过去的一年</a>
+            <a href="/2020/11/01/last_year-3/">过去的一年(3) 关于癌症治疗的一些过程和想法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/31/last_year-2/">过去的一年(2)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/30/last_year-1/">重新开始更新-说说过去的一年</a>
           </li>
         
           <li>
             <a href="/2019/07/16/electron-vue多窗口/">electron-vue多窗口</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
           </li>
         
       </ul>
@@ -451,8 +536,6 @@
     <a href="/" class="mobile-nav-link">主页</a>
   
     <a href="/archives" class="mobile-nav-link">归档</a>
-  
-    <a href="/hello/" class="mobile-nav-link">test</a>
   
     <a href="https://travellings.now.sh/" class="mobile-nav-link">开往</a>
   

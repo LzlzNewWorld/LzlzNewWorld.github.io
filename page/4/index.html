@@ -15,6 +15,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lzlz000">
   
+    <link rel="alternate" href="/atom.xml" title="lzlz000" type="application/atom+xml">
+  
   
     <link rel="icon" href="/favicon.ico">
   
@@ -44,8 +46,6 @@
         
           <a class="main-nav-link" href="/archives" target>归档</a>
         
-          <a class="main-nav-link" href="/hello/" target>test</a>
-        
           <a class="main-nav-link" href="https://travellings.now.sh/" target="_blank">开往</a>
         
       </nav>
@@ -60,6 +60,104 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-java正则表达式-环视与贪婪" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/01/java正则表达式-环视与贪婪/" class="article-date">
+  <time datetime="2019-03-01T05:29:42.000Z" itemprop="datePublished">2019-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/01/java正则表达式-环视与贪婪/">java正则表达式-环视、反向引用、贪婪</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="环视"><a href="#环视" class="headerlink" title="环视"></a>环视</h3><h4 id="什么是环视"><a href="#什么是环视" class="headerlink" title="什么是环视"></a>什么是环视</h4><p> 环视顾名思义就是从四周看。正则表达式一向都是从左向右工作的，但是环视也能从右向左工作。最典型的列子就是给你一个数字如12345678，需要你改成12，345，678这种格式。如果按照我们的思维来，应该是会从右边开始划分吧，每三个数字加一个逗号。环视就能按照我们的思维去解决这样的问题。这里要注意的是环视不匹配任何字符，只是匹配位置而已。作用和^,&amp;相似。环视又分为顺序环视和逆序环视。也就是从左到右工作和从右到左的区别.顺序环视在正则中用(?=)表示，包含括号。逆序用(?&lt;=)</p>
+<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p><strong>(?=Expression)</strong>  顺序肯定环视，表示所在位置右侧能够匹配Expression<br><strong>(?!Expression)</strong>   顺序否定环视，表示所在位置右侧不能匹配Expression<br><strong>(?&lt;=Expression)</strong> 逆序肯定环视，表示所在位置左侧能够匹配Expression<br><strong>(?&lt;!Expression)</strong>  逆序否定环视，表示所在位置左侧不能匹配Expression</p>
+<p><strong>java中的使用方法</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配 前缀为 test的字母</span></span><br><span class="line">String s = <span class="string">"123testabc abc 123testLttt"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"(?&lt;=test)\\w+"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">	System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h3><p>按照()子表达式划分成若干组；每出现一对()就是一个捕获组；引擎会对捕获组进行编号，编号规则是左括号(从左到右出现的顺序，从1开始编号。</p>
+<p><strong>例：</strong></p>
+<p><strong>\1</strong> 代表对第一次匹配 <strong>(\w+)</strong> 的引用</p>
+<p>在使用了括号来包裹表达式后，matcher.groupCount()的值&gt;0，可以通过其获取捕获的值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"123testabc abc 123testLttt"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"(\\w+) \\1"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line">System.out.println(matcher.groupCount());</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group(<span class="number">0</span>));</span><br><span class="line">    System.out.println(matcher.group(<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="贪婪"><a href="#贪婪" class="headerlink" title="贪婪"></a>贪婪</h3><p>java中正则默认为贪婪模式，即尽可能多的匹配多的字符， “趋向于最大长度匹配”</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"&lt;div&gt;.*&lt;/div&gt;"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>非贪婪</strong></p>
+<p>使用方法 在需要匹配的串后面加上 <strong>?</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"&lt;div&gt;.*?&lt;/div&gt;"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;hello&lt;/div&gt;</span><br><span class="line">&lt;div&gt;world&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/" data-id="ckgzbnf9e000bp8l3mb17vmdf" class="article-share-link">Share</a> -->
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-mysql优化（三）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/01/mysql优化（三）/" class="article-date">
+  <time datetime="2018-10-01T14:12:12.000Z" itemprop="datePublished">2018-10-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/01/mysql优化（三）/">mysql优化问题（三）sql优化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://lzlz000.github.io/2018/10/01/mysql优化（三）/" data-id="ckgzbnf9n000np8l3so0lpkj3" class="article-share-link">Share</a> -->
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-mysql优化（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -104,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/09/27/mysql优化（二）/" data-id="ckgwjydz4000ipgl350eeg3vo" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2018/09/27/mysql优化（二）/" data-id="ckgzbnf9p000qp8l3cdz38l53" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -265,7 +363,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/09/25/mysql优化（一）/" data-id="ckgwjye0i0027pgl3rljtkdqy" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2018/09/25/mysql优化（一）/" data-id="ckgzbnfb0002cp8l3dwlpf3q1" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
@@ -314,123 +412,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/07/20/junit单元测试中使用mock/" data-id="ckgwjydyy0009pgl3rsc46iza" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2018/07/20/junit单元测试中使用mock/" data-id="ckgzbnf9g000dp8l3ub10byq2" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-element-ui-的响应式栅格布局" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/10/element-ui-的响应式栅格布局/" class="article-date">
-  <time datetime="2018-07-10T12:05:10.000Z" itemprop="datePublished">2018-07-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/10/element-ui-的响应式栅格布局/">element-ui的响应式栅格布局</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>要注意的问题</p>
-<ul>
-<li>xs、sm、md、lg、xl 五个尺寸的默认值均为24，意味着，任何一个尺寸属性不设置，则该尺寸下响应式宽度为24，这与bootstrap不同</li>
-<li>尺寸属性可以设为0，则该el-col不显示</li>
-<li>不论尺寸属性设置为多少，若el-col中没有任何内容则该el-col不显示（内部元素为空也不行，如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col&gt;</span><br><span class="line">    &lt;div&gt;&lt;/div&gt;</span><br><span class="line">    &lt;span&gt;&lt;/span&gt;</span><br><span class="line">&lt;/el-col&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-row&gt;</span><br><span class="line">    &lt;el-col :xs=&quot;12&quot; :sm=&quot;9&quot; :md=&quot;6&quot; :lg=&quot;0&quot; :xl=&quot;0&quot;&gt;123&lt;/el-col&gt;</span><br><span class="line">    &lt;el-col :xs=&quot;12&quot; :sm=&quot;15&quot; :md=&quot;18&quot; :lg=&quot;21&quot; :xl=&quot;24&quot;&gt;456&lt;/el-col&gt;</span><br><span class="line">&lt;/el-row&gt;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>offset 属性是没有响应式的，可以通过加入一个带一个空格的el-col解决： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;3&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>可以把固定的响应式布局作为组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&apos;my-container&apos;,&#123;</span><br><span class="line">    template:`</span><br><span class="line">    &lt;el-row&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;4&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;24&quot; :sm=&quot;22&quot; :md=&quot;20&quot; :lg=&quot;18&quot; :xl=&quot;18&quot;&gt;</span><br><span class="line">            &lt;slot&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;/el-col&gt;</span><br><span class="line">        &lt;el-col :xs=&quot;0&quot; :sm=&quot;1&quot; :md=&quot;2&quot; :lg=&quot;3&quot; :xl=&quot;4&quot;&gt;&amp;nbsp;&lt;/el-col&gt;</span><br><span class="line">    &lt;/el-row&gt;</span><br><span class="line">    `</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>就可以愉快的使用了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-container&gt;</span><br><span class="line">    &lt;div style=&quot;background: red&quot;&gt;内容&lt;/div&gt;</span><br><span class="line">&lt;/my-container&gt;`</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/07/10/element-ui-的响应式栅格布局/" data-id="ckgwjydyw0006pgl3ortsvru1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-使用Feign进行应用间通信" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/23/使用Feign进行应用间通信/" class="article-date">
-  <time datetime="2018-05-22T16:00:00.000Z" itemprop="datePublished">2018-05-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/23/使用Feign进行应用间通信/">使用Feign进行应用间通信</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用Feign进行应用间通信"><a href="#使用Feign进行应用间通信" class="headerlink" title="使用Feign进行应用间通信"></a>使用Feign进行应用间通信</h2><h5 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-feign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0.M2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>坑</strong><br>我是用了 <strong>Spring Boot 2.0.2.RELEASE</strong>  以及其对应的spring-cloud版本 <strong>Spring-Cloud Finchley.RC2</strong> 即2.0.0.RC2<br>按理说，spring-cloud-starter-feign 应该不再需要指定版本，然而maven的中央仓库中甚至都没有2.0版本的 Feign。spring官方仓库也没有对应版本，因此不指定版本就无法导入依赖了，但是好歹有可兼容的2.0.x版本，所以指定版本 <strong>2.0.0.M2</strong> </p>
-<p>大概是因为Spring Boot 2.0刚发布没几个月，对应的版本还没有发布吧？作为一个菜鸟，就不该作死用2.0版本学习spring cloud，一堆麻烦:(</p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3867641-30328eaf1c0a8a05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven中央仓库"></p>
-<p><img src="https://upload-images.jianshu.io/upload_images/3867641-d9745dbf1964ad6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring官方仓库"></p>
-<h5 id="使用Feign"><a href="#使用Feign" class="headerlink" title="使用Feign"></a>使用Feign</h5><p>Feign 的使用非常简单<br>新建类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lzlz.demo.springcloud.consumer.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其实不需要加@Component注解，只是idea无法识别，在注入的地方提示错误</span></span><br><span class="line"><span class="comment">// 虽然不影响编译运行，但是看着不舒服，不在意的可以忽略</span></span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="meta">@FeignClient</span>(name = <span class="string">"product"</span>) <span class="comment">//对应的应用名</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProductClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/echo"</span>)</span><br><span class="line">    <span class="function">String <span class="title">productMsg</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在需要使用的地方注入此对象，调用对应方法即可：</p>
-<figure class="highlight plain"><figcaption><span>resp </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在FeignClient中 可以完全像Controller那样使用各种 ```@RequestMapping``` 注解，用于类和方法上。</span><br></pre></td></tr></table></figure>
-
-<p>@Component<br>@FeignClient(name = “product”)<br>@RequestMapping(“test”)<br>public interface ProductClient {<br>    @GetMapping(“/echo”)<br>    String productMsg();</p>
-<pre><code>@PostMapping(&quot;/echo&quot;)
-String productMsg1();</code></pre><p>}</p>
-<pre><code>使用Feign，我们就如同调用本地方法一样使用rest远程调用，体验还是不错滴。</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/05/23/使用Feign进行应用间通信/" data-id="ckgwjydzb000qpgl3414itbzg" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spring-cloud/">spring-cloud</a></li></ul>
 
     </footer>
   </div>
@@ -495,7 +480,7 @@ String productMsg1();</code></pre><p>}</p>
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -508,23 +493,23 @@ String productMsg1();</code></pre><p>}</p>
       <ul>
         
           <li>
-            <a href="/2020/10/31/过去的一年(2)/">过去的一年(2)</a>
+            <a href="/2020/11/02/last-year-4/">过去的一年(4) 年轻人患上癌症，除了健康还会失去什么</a>
           </li>
         
           <li>
-            <a href="/2020/10/30/重新开始更新-说说过去的一年/">重新开始更新-说说过去的一年</a>
+            <a href="/2020/11/01/last_year-3/">过去的一年(3) 关于癌症治疗的一些过程和想法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/31/last_year-2/">过去的一年(2)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/30/last_year-1/">重新开始更新-说说过去的一年</a>
           </li>
         
           <li>
             <a href="/2019/07/16/electron-vue多窗口/">electron-vue多窗口</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
           </li>
         
       </ul>
@@ -550,8 +535,6 @@ String productMsg1();</code></pre><p>}</p>
     <a href="/" class="mobile-nav-link">主页</a>
   
     <a href="/archives" class="mobile-nav-link">归档</a>
-  
-    <a href="/hello/" class="mobile-nav-link">test</a>
   
     <a href="https://travellings.now.sh/" class="mobile-nav-link">开往</a>
   

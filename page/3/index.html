@@ -15,6 +15,8 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lzlz000">
   
+    <link rel="alternate" href="/atom.xml" title="lzlz000" type="application/atom+xml">
+  
   
     <link rel="icon" href="/favicon.ico">
   
@@ -44,8 +46,6 @@
         
           <a class="main-nav-link" href="/archives" target>归档</a>
         
-          <a class="main-nav-link" href="/hello/" target>test</a>
-        
           <a class="main-nav-link" href="https://travellings.now.sh/" target="_blank">开往</a>
         
       </nav>
@@ -60,6 +60,112 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-hexo-插入图片" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/08/hexo-插入图片/" class="article-date">
+  <time datetime="2019-06-08T02:37:22.000Z" itemprop="datePublished">2019-06-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/08/hexo-插入图片/">hexo+typora 插入图片的简便解决方案</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>hexo 官方有推荐的方式，但是结合实际使用，我的文章通过typora编辑，希望能得到所见即所得的效果，还能尽可能的减少重复操作。</p>
+<h3 id="方法1"><a href="#方法1" class="headerlink" title="方法1"></a>方法1</h3><p>通过搜索得到的解决方案最常见的是安装插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
+
+<p>这个方式其实非常不好用，首先这插件是基于 hexo2开发的，在hexo3上使用有bug,解析的图片地址 都变成了形如  xxx/.io//xxx.png ，搜索下解决方法 ，还要自己手动去 node_modules 中修改脚本才能用，我们知道，node_modules 实际上都是npm install的时候自动生成的，这样的改动以后还要反复手动操作，太难受了，此方法不可取。</p>
+<h3 id="方法2"><a href="#方法2" class="headerlink" title="方法2"></a>方法2</h3><p>hexo官方给了两种解决方式 <a href="https://hexo.io/zh-cn/docs/asset-folders" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/asset-folders</a> </p>
+<p>一个是使用hexo的标签：</p>
+<p><img src="/images/1559990605779.png" alt></p>
+<p>这个方式看起来完美解决了问题，但是在我本地通过typora编辑文档时，是看不到图片的，不方便使用。</p>
+<h3 id="方法3"><a href="#方法3" class="headerlink" title="方法3"></a>方法3</h3><p>使用最简单的方式在 source 目录下创建images目录，然后图片都保存在这里。</p>
+<p>关键是要在typora上做以下设置：</p>
+<p>在md文件头部的配置项中，添加 <code>typora-root-url: ../</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title:  hexo+typora 插入图片</span><br><span class="line">date: 2019-06-08 10:37:22</span><br><span class="line">tags:</span><br><span class="line">typora-root-url: ../</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>这样引用的图片都以上一级目录即 sourse作为根目录了，此时插入的图片时，只要点击“复制图片到…”并选择一次文件夹，以后每次都会自动保存在 sourse/image目录下，并且本地的显示和服务器上的根目录完全一致，使用体验还是很方便的。</p>
+<p><img src="/images/1559989480817.png" alt="本地路径和服务器路径一致"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://lzlz000.github.io/2019/06/08/hexo-插入图片/" data-id="ckgzbnf9c000ap8l3atbkn1wa" class="article-share-link">Share</a> -->
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-hexo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/07/hello-hexo/" class="article-date">
+  <time datetime="2019-06-07T14:11:24.000Z" itemprop="datePublished">2019-06-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/07/hello-hexo/">hello hexo</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>目前市面上常见的静态博客框架就是 <code>hexo</code> 和 <code>jekyll</code>，由于hexo基于node而jekyll基于ruby, 而node我相对熟悉一些，因此就是用了hexo。</p>
+<hr>
+<p><strong>之所以想搭建一个静态页面，有以下几个原因</strong></p>
+<p>目前我的笔记分布于简书，有道云笔记和git仓库、坚果云等多个地方，普遍采用了markdown格式，我想统一汇总整理，把可以分享的内容发布出来，不分享的hexo也提供了存储的方式。虽然是菜鸟一枚，但有时候也能帮助到正好碰到相同问题的朋友，或者对一些问题谈谈自己的看法。</p>
+<p>在我的印象中，github.io 以前常被墙，最近似乎解除了，这就有了一个非常好的地方存放这些内容。</p>
+<p>国内的博客系统即使是分享一些技术文章，也有可能被和谐。比如我收藏了一些关于VPS搭建的文章就失踪了。</p>
+<h3 id="目前的问题"><a href="#目前的问题" class="headerlink" title="目前的问题"></a>目前的问题</h3><p>我用了hexo的默认主题 landscape，稍微修改了下模板，修改了 banner图片，该图片是来自<a href="https://site.douban.com/163509/" target="_blank" rel="noopener">https://site.douban.com/163509/</a> 页面背景上的像素画，我非常喜欢这张图。未经授权，但是也不是商业用途，我就擅自拿了，如有侵权,请告知我,我会删除。去除了正中间的大字标题，因为我看着不舒服。</p>
+<p>还有一些问题，当前的分享功能都是twitter、fb、google什么的，我还不知道如何添加国内常用的分享方式，以及如何使用评论功能插件。</p>
+<h4 id="迁移问题"><a href="#迁移问题" class="headerlink" title="迁移问题"></a>迁移问题</h4><p>我尝试迁移了一些已有的笔记文件，目前遇到以下问题:</p>
+<ol>
+<li>一些有单行代码的地方会出现格式错误，即便它在typora或者其他支持markdown语法的网站如github、简书是显示正常的</li>
+<li>需要手动添加 yaml front matter</li>
+</ol>
+<p>目前看来，格式问题较多，每个页面要手动检查并修改格式，有外部图片链接的也要手动调整，虽然调整不是很麻烦，但工作量挺大。。。 我可能不会搬运所有的文档了，整理下搬运一些值得分享的东西，而不是琐碎的笔记。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <!-- <a data-url="http://lzlz000.github.io/2019/06/07/hello-hexo/" data-id="ckgzbnf9a0008p8l3yv7zxt8i" class="article-share-link">Share</a> -->
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-nginx配置反向代理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -105,7 +211,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/04/09/nginx配置反向代理/" data-id="ckgwjydz8000mpgl35jbs2cfa" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2019/04/09/nginx配置反向代理/" data-id="ckgzbnf9r000tp8l3ljw9y9kr" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nginx/">nginx</a></li></ul>
@@ -180,7 +286,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="ckgwjye11002opgl3seecfwtx" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2019/03/20/量子密钥分发原理-python实现/" data-id="ckgzbnfb7002lp8l39sjiztao" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/探索与发现/">探索与发现</a></li></ul>
@@ -251,108 +357,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/15/RSA算法/" data-id="ckgwjydyk0002pgl3n0prrbz9" class="article-share-link">Share</a>
+      <!-- <a data-url="http://lzlz000.github.io/2019/03/15/RSA算法/" data-id="ckgzbnf930003p8l3jg3c3utp" class="article-share-link">Share</a> -->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-java正则表达式-环视与贪婪" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/01/java正则表达式-环视与贪婪/" class="article-date">
-  <time datetime="2019-03-01T05:29:42.000Z" itemprop="datePublished">2019-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/java正则表达式-环视与贪婪/">java正则表达式-环视、反向引用、贪婪</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="环视"><a href="#环视" class="headerlink" title="环视"></a>环视</h3><h4 id="什么是环视"><a href="#什么是环视" class="headerlink" title="什么是环视"></a>什么是环视</h4><p> 环视顾名思义就是从四周看。正则表达式一向都是从左向右工作的，但是环视也能从右向左工作。最典型的列子就是给你一个数字如12345678，需要你改成12，345，678这种格式。如果按照我们的思维来，应该是会从右边开始划分吧，每三个数字加一个逗号。环视就能按照我们的思维去解决这样的问题。这里要注意的是环视不匹配任何字符，只是匹配位置而已。作用和^,&amp;相似。环视又分为顺序环视和逆序环视。也就是从左到右工作和从右到左的区别.顺序环视在正则中用(?=)表示，包含括号。逆序用(?&lt;=)</p>
-<h4 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h4><p><strong>(?=Expression)</strong>  顺序肯定环视，表示所在位置右侧能够匹配Expression<br><strong>(?!Expression)</strong>   顺序否定环视，表示所在位置右侧不能匹配Expression<br><strong>(?&lt;=Expression)</strong> 逆序肯定环视，表示所在位置左侧能够匹配Expression<br><strong>(?&lt;!Expression)</strong>  逆序否定环视，表示所在位置左侧不能匹配Expression</p>
-<p><strong>java中的使用方法</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配 前缀为 test的字母</span></span><br><span class="line">String s = <span class="string">"123testabc abc 123testLttt"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"(?&lt;=test)\\w+"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">	System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h3><p>按照()子表达式划分成若干组；每出现一对()就是一个捕获组；引擎会对捕获组进行编号，编号规则是左括号(从左到右出现的顺序，从1开始编号。</p>
-<p><strong>例：</strong></p>
-<p><strong>\1</strong> 代表对第一次匹配 <strong>(\w+)</strong> 的引用</p>
-<p>在使用了括号来包裹表达式后，matcher.groupCount()的值&gt;0，可以通过其获取捕获的值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"123testabc abc 123testLttt"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"(\\w+) \\1"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line">System.out.println(matcher.groupCount());</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group(<span class="number">0</span>));</span><br><span class="line">    System.out.println(matcher.group(<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="贪婪"><a href="#贪婪" class="headerlink" title="贪婪"></a>贪婪</h3><p>java中正则默认为贪婪模式，即尽可能多的匹配多的字符， “趋向于最大长度匹配”</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"&lt;div&gt;.*&lt;/div&gt;"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-
-<p><strong>非贪婪</strong></p>
-<p>使用方法 在需要匹配的串后面加上 <strong>?</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="string">"&lt;div&gt;hello&lt;/div&gt;&lt;div&gt;world&lt;/div&gt;"</span>;</span><br><span class="line">Pattern pattern = Pattern.compile(<span class="string">"&lt;div&gt;.*?&lt;/div&gt;"</span>);</span><br><span class="line">Matcher matcher = pattern.matcher(s);</span><br><span class="line"><span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">    System.out.println(matcher.group());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;hello&lt;/div&gt;</span><br><span class="line">&lt;div&gt;world&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2019/03/01/java正则表达式-环视与贪婪/" data-id="ckgwjydz1000cpgl30zl7jk1w" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-mysql优化（三）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/10/01/mysql优化（三）/" class="article-date">
-  <time datetime="2018-10-01T14:12:12.000Z" itemprop="datePublished">2018-10-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/01/mysql优化（三）/">mysql优化问题（三）sql优化</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://lzlz000.github.io/2018/10/01/mysql优化（三）/" data-id="ckgwjydz3000hpgl3eef25bzh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
 
     </footer>
   </div>
@@ -417,7 +425,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
   </div>
 
@@ -430,23 +438,23 @@
       <ul>
         
           <li>
-            <a href="/2020/10/31/过去的一年(2)/">过去的一年(2)</a>
+            <a href="/2020/11/02/last-year-4/">过去的一年(4) 年轻人患上癌症，除了健康还会失去什么</a>
           </li>
         
           <li>
-            <a href="/2020/10/30/重新开始更新-说说过去的一年/">重新开始更新-说说过去的一年</a>
+            <a href="/2020/11/01/last_year-3/">过去的一年(3) 关于癌症治疗的一些过程和想法</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/31/last_year-2/">过去的一年(2)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/30/last_year-1/">重新开始更新-说说过去的一年</a>
           </li>
         
           <li>
             <a href="/2019/07/16/electron-vue多窗口/">electron-vue多窗口</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/09/electron-vue的实践/">electron+vue的实践</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/02/基于element-ui的页面内面包屑组件/">基于element-ui的页面内面包屑组件</a>
           </li>
         
       </ul>
@@ -472,8 +480,6 @@
     <a href="/" class="mobile-nav-link">主页</a>
   
     <a href="/archives" class="mobile-nav-link">归档</a>
-  
-    <a href="/hello/" class="mobile-nav-link">test</a>
   
     <a href="https://travellings.now.sh/" class="mobile-nav-link">开往</a>
   
