@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      432 字
+      428 字
     </span>
   
 
@@ -229,16 +229,41 @@
             <h1 style="display: none">使用Feign进行应用间通信</h1>
             
             <div class="markdown-body">
-              <h2 id="使用Feign进行应用间通信"><a href="#使用Feign进行应用间通信" class="headerlink" title="使用Feign进行应用间通信"></a>使用Feign进行应用间通信</h2><h5 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-feign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0.M2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+              <h2 id="使用Feign进行应用间通信"><a href="#使用Feign进行应用间通信" class="headerlink" title="使用Feign进行应用间通信"></a>使用Feign进行应用间通信</h2><h5 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h5><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-feign<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.0.0.M2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
 <p><strong>坑</strong><br>我是用了 <strong>Spring Boot 2.0.2.RELEASE</strong>  以及其对应的spring-cloud版本 <strong>Spring-Cloud Finchley.RC2</strong> 即2.0.0.RC2<br>按理说，spring-cloud-starter-feign 应该不再需要指定版本，然而maven的中央仓库中甚至都没有2.0版本的 Feign。spring官方仓库也没有对应版本，因此不指定版本就无法导入依赖了，但是好歹有可兼容的2.0.x版本，所以指定版本 <strong>2.0.0.M2</strong> </p>
 <p>大概是因为Spring Boot 2.0刚发布没几个月，对应的版本还没有发布吧？作为一个菜鸟，就不该作死用2.0版本学习spring cloud，一堆麻烦:(</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/3867641-30328eaf1c0a8a05.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="maven中央仓库"></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/3867641-d9745dbf1964ad6a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="spring官方仓库"></p>
 <h5 id="使用Feign"><a href="#使用Feign" class="headerlink" title="使用Feign"></a>使用Feign</h5><p>Feign 的使用非常简单<br>新建类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> lzlz.demo.springcloud.consumer.client;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.openfeign.FeignClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其实不需要加@Component注解，只是idea无法识别，在注入的地方提示错误</span></span><br><span class="line"><span class="comment">// 虽然不影响编译运行，但是看着不舒服，不在意的可以忽略</span></span><br><span class="line"><span class="meta">@Component</span>  </span><br><span class="line"><span class="meta">@FeignClient(name = &quot;product&quot;)</span> <span class="comment">//对应的应用名</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProductClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/echo&quot;)</span></span><br><span class="line">    <span class="function">String <span class="title">productMsg</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">package</span> lzlz.demo.springcloud.consumer.client;
+
+<span class="hljs-keyword">import</span> org.springframework.cloud.openfeign.FeignClient;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.GetMapping;
+
+<span class="hljs-comment">// 其实不需要加@Component注解，只是idea无法识别，在注入的地方提示错误</span>
+<span class="hljs-comment">// 虽然不影响编译运行，但是看着不舒服，不在意的可以忽略</span>
+<span class="hljs-meta">@Component</span>  
+<span class="hljs-meta">@FeignClient(name = &quot;product&quot;)</span> <span class="hljs-comment">//对应的应用名</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ProductClient</span> </span>&#123;
+    <span class="hljs-meta">@GetMapping(&quot;/echo&quot;)</span>
+    <span class="hljs-function">String <span class="hljs-title">productMsg</span><span class="hljs-params">()</span></span>;
+&#125;</code></pre>
 <p>在需要使用的地方注入此对象，调用对应方法即可：<br><code>String resp = productClient.productMsg();</code></p>
 <p>在FeignClient中 可以完全像Controller那样使用各种 <code>@RequestMapping</code> 注解，用于类和方法上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line">@FeignClient(name &#x3D; &quot;product&quot;)</span><br><span class="line">@RequestMapping(&quot;test&quot;)</span><br><span class="line">public interface ProductClient &#123;</span><br><span class="line">    @GetMapping(&quot;&#x2F;echo&quot;)</span><br><span class="line">    String productMsg();</span><br><span class="line"></span><br><span class="line">    @PostMapping(&quot;&#x2F;echo&quot;)</span><br><span class="line">    String productMsg1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs less"><span class="hljs-variable">@Component</span>
+<span class="hljs-variable">@FeignClient</span>(name = <span class="hljs-string">&quot;product&quot;</span>)
+<span class="hljs-variable">@RequestMapping</span>(<span class="hljs-string">&quot;test&quot;</span>)
+public interface ProductClient &#123;
+    <span class="hljs-variable">@GetMapping</span>(<span class="hljs-string">&quot;/echo&quot;</span>)
+    String productMsg();
+
+    <span class="hljs-variable">@PostMapping</span>(<span class="hljs-string">&quot;/echo&quot;</span>)
+    String productMsg1();
+&#125;</code></pre>
 <p>使用Feign，我们就如同调用本地方法一样使用rest远程调用，体验还是不错滴。</p>
 
             </div>

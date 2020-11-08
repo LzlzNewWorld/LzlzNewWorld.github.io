@@ -230,7 +230,27 @@
             
             <div class="markdown-body">
               <p>先来看看需要实现的效果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 客户端A</span><br><span class="line">&gt; IM.subscribe(&#39;频道1&#39;)</span><br><span class="line">&gt; IM.subscribe(&#39;频道2&#39;)</span><br><span class="line">&lt; undefined</span><br><span class="line">订阅 [频道1] 成功</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 客户端B 发送了消息</span><br><span class="line">&gt; IM.send(&#39;频道1&#39;,&#39;hello world&#39;)</span><br><span class="line">&#x2F;&#x2F; 客户端C 短时间内向 [频道1] 和 [频道2] 发送了多条消息 “频道1message1”-&quot;频道1message10&quot;,“频道2message1”-&quot;频道2message10&quot;</span><br><span class="line">for(...)&#123;IM.send(&#39;频道1&#39;,&#39;....&#39;)&#125;;for(...)&#123;IM.send(&#39;频道2&#39;,&#39;....&#39;)&#125;</span><br><span class="line">发送成功</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; 客户端A收到消息</span><br><span class="line">[&#123;&quot;text&quot;:&quot;hello world&quot;&#125;]</span><br><span class="line">&#x2F;&#x2F; 客户端A收到消息</span><br><span class="line">[&#123;&quot;text&quot;:&quot;频道1message1&quot;&#125;,&#123;&quot;text&quot;:&quot;频道1message2&quot;&#125;, ...... </span><br><span class="line">&#123;&quot;text&quot;:&quot;频道1message10&quot;&#125;,&#123;&quot;text&quot;:&quot;频道2message1&quot;&#125;, ...... </span><br><span class="line">&#123;&quot;text&quot;:&quot;频道2message10&quot;&#125;]</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;取消订阅 频道2</span><br><span class="line">&gt; IM.unsubscribe(&#39;频道2&#39;)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs awk"><span class="hljs-regexp">//</span> 客户端A
+&gt; IM.subscribe(<span class="hljs-string">&#x27;频道1&#x27;</span>)
+&gt; IM.subscribe(<span class="hljs-string">&#x27;频道2&#x27;</span>)
+&lt; undefined
+订阅 [频道<span class="hljs-number">1</span>] 成功
+
+<span class="hljs-regexp">//</span> 客户端B 发送了消息
+&gt; IM.send(<span class="hljs-string">&#x27;频道1&#x27;</span>,<span class="hljs-string">&#x27;hello world&#x27;</span>)
+<span class="hljs-regexp">//</span> 客户端C 短时间内向 [频道<span class="hljs-number">1</span>] 和 [频道<span class="hljs-number">2</span>] 发送了多条消息 “频道<span class="hljs-number">1</span>message1”-<span class="hljs-string">&quot;频道1message10&quot;</span>,“频道<span class="hljs-number">2</span>message1”-<span class="hljs-string">&quot;频道2message10&quot;</span>
+<span class="hljs-keyword">for</span>(...)&#123;IM.send(<span class="hljs-string">&#x27;频道1&#x27;</span>,<span class="hljs-string">&#x27;....&#x27;</span>)&#125;;<span class="hljs-keyword">for</span>(...)&#123;IM.send(<span class="hljs-string">&#x27;频道2&#x27;</span>,<span class="hljs-string">&#x27;....&#x27;</span>)&#125;
+发送成功
+
+<span class="hljs-regexp">//</span> 客户端A收到消息
+[&#123;<span class="hljs-string">&quot;text&quot;</span>:<span class="hljs-string">&quot;hello world&quot;</span>&#125;]
+<span class="hljs-regexp">//</span> 客户端A收到消息
+[&#123;<span class="hljs-string">&quot;text&quot;</span>:<span class="hljs-string">&quot;频道1message1&quot;</span>&#125;,&#123;<span class="hljs-string">&quot;text&quot;</span>:<span class="hljs-string">&quot;频道1message2&quot;</span>&#125;, ...... 
+&#123;<span class="hljs-string">&quot;text&quot;</span>:<span class="hljs-string">&quot;频道1message10&quot;</span>&#125;,&#123;<span class="hljs-string">&quot;text&quot;</span>:<span class="hljs-string">&quot;频道2message1&quot;</span>&#125;, ...... 
+&#123;<span class="hljs-string">&quot;text&quot;</span>:<span class="hljs-string">&quot;频道2message10&quot;</span>&#125;]
+
+<span class="hljs-regexp">//</span>取消订阅 频道<span class="hljs-number">2</span>
+&gt; IM.unsubscribe(<span class="hljs-string">&#x27;频道2&#x27;</span>)</code></pre>
 
 <p>需要实现</p>
 <ol>
@@ -241,7 +261,42 @@
 </ol>
 <hr>
 <p>首先，我们需要使用 <code>org.springframework.web.context.request.async.DeferredResult</code> 来做消息的异步返回。<br>关于<code>DeferredResult</code>的用法，不做详细介绍，可以看看这个简单的例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/test/deferredResult&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DeferredResultController</span> </span>&#123;</span><br><span class="line">    <span class="comment">//DeferredResult存储在队列中，若同时有多个request1接收到时，request2可以把消息发送给所有的request1请求</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;DeferredResult&lt;String&gt;&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;request1&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DeferredResult&lt;String&gt; <span class="title">request1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        DeferredResult&lt;String&gt; result = <span class="keyword">new</span> DeferredResult&lt;&gt;(<span class="number">10000L</span>); <span class="comment">//设置过期时间 10000ms</span></span><br><span class="line">        result.onTimeout(()-&gt;result.setResult(<span class="string">&quot;deferredResult已过期&quot;</span>));</span><br><span class="line">        <span class="keyword">synchronized</span> (queue)&#123;</span><br><span class="line">            queue.add(result);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;request2&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">request2</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (queue)&#123;</span><br><span class="line">            queue.forEach(deferredResult -&gt; &#123;</span><br><span class="line">                deferredResult.setResult(message);</span><br><span class="line">                queue.remove(deferredResult);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;success&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.PostMapping;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestController;
+<span class="hljs-keyword">import</span> org.springframework.web.context.request.async.DeferredResult;
+
+<span class="hljs-keyword">import</span> java.util.LinkedList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-meta">@RestController</span>
+<span class="hljs-meta">@RequestMapping(&quot;/test/deferredResult&quot;)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DeferredResultController</span> </span>&#123;
+    <span class="hljs-comment">//DeferredResult存储在队列中，若同时有多个request1接收到时，request2可以把消息发送给所有的request1请求</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> List&lt;DeferredResult&lt;String&gt;&gt; queue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+
+    <span class="hljs-meta">@RequestMapping(&quot;request1&quot;)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> DeferredResult&lt;String&gt; <span class="hljs-title">request1</span><span class="hljs-params">()</span></span>&#123;
+        DeferredResult&lt;String&gt; result = <span class="hljs-keyword">new</span> DeferredResult&lt;&gt;(<span class="hljs-number">10000L</span>); <span class="hljs-comment">//设置过期时间 10000ms</span>
+        result.onTimeout(()-&gt;result.setResult(<span class="hljs-string">&quot;deferredResult已过期&quot;</span>));
+        <span class="hljs-keyword">synchronized</span> (queue)&#123;
+            queue.add(result);
+        &#125;
+        <span class="hljs-keyword">return</span> result;
+    &#125;
+
+    <span class="hljs-meta">@RequestMapping(&quot;request2&quot;)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">request2</span><span class="hljs-params">(String message)</span></span>&#123;
+        <span class="hljs-keyword">synchronized</span> (queue)&#123;
+            queue.forEach(deferredResult -&gt; &#123;
+                deferredResult.setResult(message);
+                queue.remove(deferredResult);
+            &#125;);
+        &#125;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;success&quot;</span>;
+    &#125;
+
+&#125;</code></pre>
 <ol>
 <li> 向request1 <em>/test/deferredResult/request1</em> 发送请求</li>
 <li> 向request1 <em>/test/deferredResult/request2</em> 发送请求，data为 <em>{“message”:”hello world”}</em> 。此时request1、request2分别返回了值*”hello world”,”success”*</li>
@@ -250,22 +305,336 @@
 <p>这就是通过长轮询接收消息的基本方式：发送请求到服务器，服务器收到请求后保持请求，当收到消息时通过此请求返回消息。</p>
 <hr>
 <p>定义客户端和频道这两个类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;客户端</span><br><span class="line">@Data</span><br><span class="line">public class IMClient&#123;</span><br><span class="line">    String id;</span><br><span class="line">    String name;</span><br><span class="line">    long saveTime;</span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 过期时间 ms，&lt;&#x3D;0即不过期</span><br><span class="line">     *&#x2F;</span><br><span class="line">    int expire;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;频道</span><br><span class="line">@Data</span><br><span class="line">public class Channel &#123;</span><br><span class="line">    String name;</span><br><span class="line">    Set&lt;IMClient&gt; subscriptionSet;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs arduino"><span class="hljs-comment">//客户端</span>
+@Data
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IMClient</span>&#123;</span>
+    <span class="hljs-keyword">String</span> id;
+    <span class="hljs-keyword">String</span> name;
+    <span class="hljs-keyword">long</span> saveTime;
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 过期时间 ms，&lt;=0即不过期</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-keyword">int</span> expire;
+&#125;
+<span class="hljs-comment">//频道</span>
+@Data
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Channel</span> &#123;</span>
+    <span class="hljs-keyword">String</span> name;
+    Set&lt;IMClient&gt; subscriptionSet;
+&#125;</code></pre>
 <p>我们在客户端通过循环调用的方式-收到返回的结果时再次发送请求，来保证服务器一直手握着客户端的请求，而且对于一个客户端至多只有一个请求，节省资源。<br><img src="/images/1240" srcset="/img/loading.gif"></p>
 <p>通过jquery实现的代码如下</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">poll</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $.ajax(&#123;</span><br><span class="line">        url:<span class="string">&quot;/im/poll&quot;</span>,</span><br><span class="line">        type: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">        success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(data));</span><br><span class="line">            <span class="built_in">setTimeout</span>(poll,<span class="number">500</span>);<span class="comment">//给点延时 减少请求的频率</span></span><br><span class="line">        &#125;,</span><br><span class="line">        error: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">            <span class="built_in">setTimeout</span>(poll,<span class="number">5000</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">poll</span>(<span class="hljs-params"></span>)</span>&#123;
+    $.ajax(&#123;
+        url:<span class="hljs-string">&quot;/im/poll&quot;</span>,
+        type: <span class="hljs-string">&quot;POST&quot;</span>,
+        success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>&#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(data));
+            <span class="hljs-built_in">setTimeout</span>(poll,<span class="hljs-number">500</span>);<span class="hljs-comment">//给点延时 减少请求的频率</span>
+        &#125;,
+        error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>&#123;
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(err));
+            <span class="hljs-built_in">setTimeout</span>(poll,<span class="hljs-number">5000</span>);
+        &#125;
+    &#125;);
+&#125;
+</code></pre>
 <p>然而 ，在服务器端返回请求后直到收到客户端下一个请求之前的这段时间，服务器并没有维持着客户端的请求。这段时间内发送给服务器的消息将被丢失，因此我们需要一个消息队列来保存未发送的消息：<img src="/images/12401" srcset="/img/loading.gif">通过在收到消息和收到轮询请求时都调用flush方法，消息可以尽可能即时地发送给客户端 – 当DeferredResult可用时，收到消息立刻返回，当DeferredResult不可用时，在收到轮询请求后立刻返回消息。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.CommonMessage;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IMMessageQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; result;</span><br><span class="line">    <span class="comment">//使用LinkedList作为消息队列</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> LinkedList&lt;CommonMessage&gt; messageQueue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(CommonMessage message)</span></span>&#123;</span><br><span class="line">        messageQueue.add(message);</span><br><span class="line">        flush();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll()&#123;</span><br><span class="line">        result = <span class="keyword">new</span> DeferredResult&lt;&gt;(<span class="number">10000L</span>);</span><br><span class="line">        flush();</span><br><span class="line">        result.onTimeout(()-&gt;result.setResult(<span class="keyword">null</span>));</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * flush()方法会在DeferredResult可用（非空且未被使用）时把消息发送出去，在send和poll时都会执行flush(),</span></span><br><span class="line"><span class="comment"> * 这样无论什么情况下消息最终都会被发送出去</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">flush</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (result!=<span class="keyword">null</span>&amp;&amp;!result.hasResult()&amp;&amp;messageQueue.size()&gt;<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">//这里需要拷贝一份消息，因为此处为异步调用，而在当前线程中，messageQueue的引用随后将被clear()</span></span><br><span class="line">            result.setResult(<span class="keyword">new</span> ArrayList&lt;&gt;(messageQueue));</span><br><span class="line">            messageQueue.clear();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> lzlz000.entity.CommonMessage;
+<span class="hljs-keyword">import</span> org.springframework.web.context.request.async.DeferredResult;
+
+<span class="hljs-keyword">import</span> java.util.ArrayList;
+<span class="hljs-keyword">import</span> java.util.LinkedList;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IMMessageQueue</span> </span>&#123;
+    <span class="hljs-keyword">private</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; result;
+    <span class="hljs-comment">//使用LinkedList作为消息队列</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> LinkedList&lt;CommonMessage&gt; messageQueue = <span class="hljs-keyword">new</span> LinkedList&lt;&gt;();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title">send</span><span class="hljs-params">(CommonMessage message)</span></span>&#123;
+        messageQueue.add(message);
+        flush();
+    &#125;
+    <span class="hljs-keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll()&#123;
+        result = <span class="hljs-keyword">new</span> DeferredResult&lt;&gt;(<span class="hljs-number">10000L</span>);
+        flush();
+        result.onTimeout(()-&gt;result.setResult(<span class="hljs-keyword">null</span>));
+        <span class="hljs-keyword">return</span> result;
+    &#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * flush()方法会在DeferredResult可用（非空且未被使用）时把消息发送出去，在send和poll时都会执行flush(),</span>
+<span class="hljs-comment"> * 这样无论什么情况下消息最终都会被发送出去</span>
+<span class="hljs-comment"> */</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title">flush</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">if</span> (result!=<span class="hljs-keyword">null</span>&amp;&amp;!result.hasResult()&amp;&amp;messageQueue.size()&gt;<span class="hljs-number">0</span>) &#123;
+            <span class="hljs-comment">//这里需要拷贝一份消息，因为此处为异步调用，而在当前线程中，messageQueue的引用随后将被clear()</span>
+            result.setResult(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;(messageQueue));
+            messageQueue.clear();
+        &#125;
+    &#125;
+&#125;</code></pre>
 
 <hr>
 <p>接下来就是要维护频道和客户端了，我通过ClientService 和 ChannelService来实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.im.IMClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpSession;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> expire = <span class="number">600</span> * <span class="number">1000</span>;<span class="comment">//user的过期时间 600s没有活动 频道中的user自动过期</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 过期时间间隔</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 过期时间间隔(ms)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getExpire</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> expire;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取默认过期时间的IMClient </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session httpSession</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IMClient <span class="title">getIMClient</span><span class="params">(HttpSession session)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getIMClient(session,<span class="keyword">this</span>.expire);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取指定过期时间的IMClient </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> session httpSession</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> expire 过期时间，&lt;=0代表不会过期</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> IMClient <span class="title">getIMClient</span><span class="params">(HttpSession session, <span class="keyword">int</span> expire)</span></span>&#123;</span><br><span class="line">        IMClient client =(IMClient)session.getAttribute(<span class="string">&quot;imUser&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(client != <span class="keyword">null</span>&amp;&amp;client.getSaveTime()&lt;= <span class="keyword">new</span> Date().getTime())&#123;<span class="comment">//如果过期 则从session中删除用户</span></span><br><span class="line">            session.removeAttribute(<span class="string">&quot;imUser&quot;</span>);</span><br><span class="line">            client = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (client == <span class="keyword">null</span>) &#123;</span><br><span class="line">            client = <span class="keyword">new</span> IMClient();<span class="comment">//测试时client的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">            client.setId(UUID.randomUUID().toString());</span><br><span class="line">            client.setSaveTime(<span class="keyword">new</span> Date().getTime()+expire);<span class="comment">//设置过期时间</span></span><br><span class="line">            session.setAttribute(<span class="string">&quot;imUser&quot;</span>,client);</span><br><span class="line">        &#125;</span><br><span class="line">        client.setExpire(expire);</span><br><span class="line">        <span class="keyword">return</span> client;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isExpired</span><span class="params">(IMClient client)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> client.getExpire() &gt; <span class="number">0</span> &amp;&amp; client.getSaveTime() &lt;= <span class="keyword">new</span> Date().getTime();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> lzlz000.entity.im.IMClient;
+<span class="hljs-keyword">import</span> org.springframework.stereotype.Service;
+
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpSession;
+<span class="hljs-keyword">import</span> java.util.Date;
+<span class="hljs-keyword">import</span> java.util.UUID;
+
+<span class="hljs-meta">@Service</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClientService</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> expire = <span class="hljs-number">600</span> * <span class="hljs-number">1000</span>;<span class="hljs-comment">//user的过期时间 600s没有活动 频道中的user自动过期</span>
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 过期时间间隔</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 过期时间间隔(ms)</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getExpire</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> expire;
+    &#125;
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 获取默认过期时间的IMClient </span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> session httpSession</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> IMClient <span class="hljs-title">getIMClient</span><span class="hljs-params">(HttpSession session)</span></span>&#123;
+        <span class="hljs-keyword">return</span> getIMClient(session,<span class="hljs-keyword">this</span>.expire);
+    &#125;
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * 获取指定过期时间的IMClient </span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> session httpSession</span>
+<span class="hljs-comment">     * <span class="hljs-doctag">@param</span> expire 过期时间，&lt;=0代表不会过期</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-function"><span class="hljs-keyword">private</span> IMClient <span class="hljs-title">getIMClient</span><span class="hljs-params">(HttpSession session, <span class="hljs-keyword">int</span> expire)</span></span>&#123;
+        IMClient client =(IMClient)session.getAttribute(<span class="hljs-string">&quot;imUser&quot;</span>);
+        <span class="hljs-keyword">if</span>(client != <span class="hljs-keyword">null</span>&amp;&amp;client.getSaveTime()&lt;= <span class="hljs-keyword">new</span> Date().getTime())&#123;<span class="hljs-comment">//如果过期 则从session中删除用户</span>
+            session.removeAttribute(<span class="hljs-string">&quot;imUser&quot;</span>);
+            client = <span class="hljs-keyword">null</span>;
+        &#125;
+        <span class="hljs-keyword">if</span> (client == <span class="hljs-keyword">null</span>) &#123;
+            client = <span class="hljs-keyword">new</span> IMClient();<span class="hljs-comment">//测试时client的作用仅仅是作为map的key所以new一个即可</span>
+            client.setId(UUID.randomUUID().toString());
+            client.setSaveTime(<span class="hljs-keyword">new</span> Date().getTime()+expire);<span class="hljs-comment">//设置过期时间</span>
+            session.setAttribute(<span class="hljs-string">&quot;imUser&quot;</span>,client);
+        &#125;
+        client.setExpire(expire);
+        <span class="hljs-keyword">return</span> client;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isExpired</span><span class="hljs-params">(IMClient client)</span> </span>&#123;
+        <span class="hljs-keyword">return</span> client.getExpire() &gt; <span class="hljs-number">0</span> &amp;&amp; client.getSaveTime() &lt;= <span class="hljs-keyword">new</span> Date().getTime();
+    &#125;
+&#125;</code></pre>
 <p><strong>ChannelService</strong>  实现订阅、取消订阅、发送、接收的方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.im.Channel;</span><br><span class="line"><span class="keyword">import</span> lzlz000.entity.CommonMessage;</span><br><span class="line"><span class="keyword">import</span> lzlz000.entity.im.IMClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ConcurrentHashMap;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChannelService</span> <span class="keyword">implements</span> <span class="title">IChannelService</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ClientService clientService;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//客户端ID与消息队列映射</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String,IMMessageQueue&gt; resultMap = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line">    <span class="comment">//客户端ID与频道的映射</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;String,Channel&gt; channelMap = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ChannelService</span><span class="params">(ClientService imUserService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.clientService = imUserService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(String channelName, IMClient client)</span> </span>&#123;</span><br><span class="line">        Channel channel = channelMap.get(channelName);</span><br><span class="line">        <span class="keyword">if</span> (channel==<span class="keyword">null</span>) &#123;</span><br><span class="line">            channel = <span class="keyword">new</span> Channel(channelName,<span class="keyword">new</span> HashSet&lt;&gt;());</span><br><span class="line">            channelMap.put(channelName,channel);</span><br><span class="line">        &#125;</span><br><span class="line">        channel.getSubscriptionSet().add(client);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unsubscribe</span><span class="params">(String channelName, IMClient client)</span> </span>&#123;</span><br><span class="line">        Channel channel = channelMap.get(channelName);</span><br><span class="line">        <span class="keyword">if</span> (channel==<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Set subscriptionSet = channel.getSubscriptionSet();</span><br><span class="line">        subscriptionSet.remove(client);</span><br><span class="line">        <span class="keyword">if</span>(subscriptionSet.size()==<span class="number">0</span>)&#123;</span><br><span class="line">            channelMap.remove(channelName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unsubscribe</span><span class="params">(IMClient client)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (client != <span class="keyword">null</span>) &#123;</span><br><span class="line">            channelMap.values().forEach(channel -&gt; channel.getSubscriptionSet().remove(client));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">emit</span><span class="params">(String channelName, IMClient sender , CommonMessage data)</span> </span>&#123;</span><br><span class="line">        sender.setSaveTime(<span class="keyword">new</span> Date().getTime() + clientService.getExpire());<span class="comment">//发送消息时候更新savetime</span></span><br><span class="line">        Channel channel = channelMap.get(channelName);</span><br><span class="line">        <span class="keyword">if</span> (channel!=<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//当已达到过期时间 删除此client,并且从resultMap中删除对应的消息</span></span><br><span class="line">            channel.getSubscriptionSet().forEach(imUser -&gt; &#123;</span><br><span class="line">                <span class="keyword">boolean</span> isExpired = clientService.isExpired(imUser);</span><br><span class="line">                <span class="keyword">if</span>(isExpired)&#123;</span><br><span class="line">                    channel.getSubscriptionSet().remove(imUser);</span><br><span class="line">                    resultMap.remove(imUser.getId());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            channel.getSubscriptionSet().forEach(client-&gt; send(client,data));</span><br><span class="line">            <span class="comment">//当channel中没有订阅者，删除此channel</span></span><br><span class="line">            <span class="keyword">if</span>( channel.getSubscriptionSet().size()==<span class="number">0</span>)&#123;</span><br><span class="line">                channelMap.remove(channelName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll(IMClient receiver)&#123;</span><br><span class="line">        IMMessageQueue queue = resultMap.get(receiver.getId());</span><br><span class="line">        <span class="keyword">if</span> (queue==<span class="keyword">null</span>) &#123;</span><br><span class="line">            queue = <span class="keyword">new</span> IMMessageQueue();</span><br><span class="line">            resultMap.put(receiver.getId(),queue);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> queue.poll();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">send</span><span class="params">(IMClient receiver, CommonMessage message)</span></span>&#123;</span><br><span class="line">        IMMessageQueue queue = resultMap.get(receiver.getId());</span><br><span class="line">        <span class="keyword">if</span> (queue != <span class="keyword">null</span>) &#123;</span><br><span class="line">            queue.send(message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> lzlz000.entity.im.Channel;
+<span class="hljs-keyword">import</span> lzlz000.entity.CommonMessage;
+<span class="hljs-keyword">import</span> lzlz000.entity.im.IMClient;
+<span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;
+<span class="hljs-keyword">import</span> org.springframework.stereotype.Service;
+<span class="hljs-keyword">import</span> org.springframework.web.context.request.async.DeferredResult;
+
+<span class="hljs-keyword">import</span> java.util.*;
+<span class="hljs-keyword">import</span> java.util.concurrent.ConcurrentHashMap;
+
+<span class="hljs-meta">@Service</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChannelService</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">IChannelService</span></span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ClientService clientService;
+
+    <span class="hljs-comment">//客户端ID与消息队列映射</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String,IMMessageQueue&gt; resultMap = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();
+    <span class="hljs-comment">//客户端ID与频道的映射</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Map&lt;String,Channel&gt; channelMap = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ChannelService</span><span class="hljs-params">(ClientService imUserService)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.clientService = imUserService;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">subscribe</span><span class="hljs-params">(String channelName, IMClient client)</span> </span>&#123;
+        Channel channel = channelMap.get(channelName);
+        <span class="hljs-keyword">if</span> (channel==<span class="hljs-keyword">null</span>) &#123;
+            channel = <span class="hljs-keyword">new</span> Channel(channelName,<span class="hljs-keyword">new</span> HashSet&lt;&gt;());
+            channelMap.put(channelName,channel);
+        &#125;
+        channel.getSubscriptionSet().add(client);
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribe</span><span class="hljs-params">(String channelName, IMClient client)</span> </span>&#123;
+        Channel channel = channelMap.get(channelName);
+        <span class="hljs-keyword">if</span> (channel==<span class="hljs-keyword">null</span>) &#123;
+            <span class="hljs-keyword">return</span>;
+        &#125;
+        Set subscriptionSet = channel.getSubscriptionSet();
+        subscriptionSet.remove(client);
+        <span class="hljs-keyword">if</span>(subscriptionSet.size()==<span class="hljs-number">0</span>)&#123;
+            channelMap.remove(channelName);
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribe</span><span class="hljs-params">(IMClient client)</span> </span>&#123;
+        <span class="hljs-keyword">if</span> (client != <span class="hljs-keyword">null</span>) &#123;
+            channelMap.values().forEach(channel -&gt; channel.getSubscriptionSet().remove(client));
+        &#125;
+    &#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">emit</span><span class="hljs-params">(String channelName, IMClient sender , CommonMessage data)</span> </span>&#123;
+        sender.setSaveTime(<span class="hljs-keyword">new</span> Date().getTime() + clientService.getExpire());<span class="hljs-comment">//发送消息时候更新savetime</span>
+        Channel channel = channelMap.get(channelName);
+        <span class="hljs-keyword">if</span> (channel!=<span class="hljs-keyword">null</span>) &#123;
+            <span class="hljs-comment">//当已达到过期时间 删除此client,并且从resultMap中删除对应的消息</span>
+            channel.getSubscriptionSet().forEach(imUser -&gt; &#123;
+                <span class="hljs-keyword">boolean</span> isExpired = clientService.isExpired(imUser);
+                <span class="hljs-keyword">if</span>(isExpired)&#123;
+                    channel.getSubscriptionSet().remove(imUser);
+                    resultMap.remove(imUser.getId());
+                &#125;
+            &#125;);
+            channel.getSubscriptionSet().forEach(client-&gt; send(client,data));
+            <span class="hljs-comment">//当channel中没有订阅者，删除此channel</span>
+            <span class="hljs-keyword">if</span>( channel.getSubscriptionSet().size()==<span class="hljs-number">0</span>)&#123;
+                channelMap.remove(channelName);
+            &#125;
+        &#125;
+
+    &#125;
+
+
+    <span class="hljs-keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll(IMClient receiver)&#123;
+        IMMessageQueue queue = resultMap.get(receiver.getId());
+        <span class="hljs-keyword">if</span> (queue==<span class="hljs-keyword">null</span>) &#123;
+            queue = <span class="hljs-keyword">new</span> IMMessageQueue();
+            resultMap.put(receiver.getId(),queue);
+        &#125;
+        <span class="hljs-keyword">return</span> queue.poll();
+    &#125;
+
+
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">send</span><span class="hljs-params">(IMClient receiver, CommonMessage message)</span></span>&#123;
+        IMMessageQueue queue = resultMap.get(receiver.getId());
+        <span class="hljs-keyword">if</span> (queue != <span class="hljs-keyword">null</span>) &#123;
+            queue.send(message);
+        &#125;
+    &#125;
+&#125;
+</code></pre>
 <p>Controller</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lzlz000.entity.im.Message;</span><br><span class="line"><span class="keyword">import</span> lzlz000.service.im.ChannelService;</span><br><span class="line"><span class="keyword">import</span> lzlz000.service.im.ClientService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.context.request.async.DeferredResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 长轮询即时通讯Controller</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;im&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IMController</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ChannelService channelService;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ClientService userService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IMController</span><span class="params">(ChannelService channelService, ClientService userService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.channelService = channelService;</span><br><span class="line">        <span class="keyword">this</span>.userService = userService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//长轮询</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;poll&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll(HttpServletRequest req)&#123;</span><br><span class="line">        <span class="keyword">return</span> channelService.poll(userService.getIMClient(req.getSession()));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//订阅</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;subscribe&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">subscribe</span><span class="params">(HttpServletRequest req,Message channel)</span></span>&#123;</span><br><span class="line">        channelService.subscribe(channel.getChannel(),userService.getIMClient(req.getSession()));<span class="comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;订阅: &quot;</span>+channel.getChannel();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//取消订阅</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;unsubscribe&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">unsubscribe</span><span class="params">(HttpServletRequest req,Message channel)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (channel != <span class="keyword">null</span>&amp;&amp;channel.getChannel()!=<span class="keyword">null</span>) &#123;</span><br><span class="line">            channelService.unsubscribe(channel.getChannel(),userService.getIMClient(req.getSession()));<span class="comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;取消订阅:&quot;</span>+channel.getChannel();</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            channelService.unsubscribe(userService.getIMClient(req.getSession()));<span class="comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;取消订阅全部频道&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 似乎识别不了内部的自定义对象CommonMessage,需要HTTP请求设置contentType: &quot;application/json&quot;,</span></span><br><span class="line">    <span class="comment">// 把json转化为字符串传给data,并且此方法设置@RequestBody</span></span><br><span class="line">    <span class="meta">@PostMapping(&quot;emit&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">emit</span><span class="params">(HttpServletRequest req, <span class="meta">@RequestBody</span> Message msg)</span></span>&#123;</span><br><span class="line">        msg.setSender(userService.getIMClient(req.getSession()));</span><br><span class="line">        channelService.emit(msg.getChannel(),msg.getSender(),msg.getMessage());</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;发送成功&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> lzlz000.entity.im.Message;
+<span class="hljs-keyword">import</span> lzlz000.service.im.ChannelService;
+<span class="hljs-keyword">import</span> lzlz000.service.im.ClientService;
+<span class="hljs-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.*;
+<span class="hljs-keyword">import</span> org.springframework.web.context.request.async.DeferredResult;
+
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * 长轮询即时通讯Controller</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-meta">@RestController</span>
+<span class="hljs-meta">@RequestMapping(&quot;im&quot;)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IMController</span> </span>&#123;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ChannelService channelService;
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ClientService userService;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">IMController</span><span class="hljs-params">(ChannelService channelService, ClientService userService)</span> </span>&#123;
+        <span class="hljs-keyword">this</span>.channelService = channelService;
+        <span class="hljs-keyword">this</span>.userService = userService;
+    &#125;
+
+    <span class="hljs-comment">//长轮询</span>
+    <span class="hljs-meta">@PostMapping(&quot;poll&quot;)</span>
+    <span class="hljs-meta">@ResponseBody</span>
+    <span class="hljs-keyword">public</span> DeferredResult&lt;List&lt;CommonMessage&gt;&gt; poll(HttpServletRequest req)&#123;
+        <span class="hljs-keyword">return</span> channelService.poll(userService.getIMClient(req.getSession()));
+    &#125;
+
+    <span class="hljs-comment">//订阅</span>
+    <span class="hljs-meta">@PostMapping(&quot;subscribe&quot;)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">subscribe</span><span class="hljs-params">(HttpServletRequest req,Message channel)</span></span>&#123;
+        channelService.subscribe(channel.getChannel(),userService.getIMClient(req.getSession()));<span class="hljs-comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;订阅: &quot;</span>+channel.getChannel();
+    &#125;
+    <span class="hljs-comment">//取消订阅</span>
+    <span class="hljs-meta">@PostMapping(&quot;unsubscribe&quot;)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">unsubscribe</span><span class="hljs-params">(HttpServletRequest req,Message channel)</span></span>&#123;
+        <span class="hljs-keyword">if</span> (channel != <span class="hljs-keyword">null</span>&amp;&amp;channel.getChannel()!=<span class="hljs-keyword">null</span>) &#123;
+            channelService.unsubscribe(channel.getChannel(),userService.getIMClient(req.getSession()));<span class="hljs-comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;取消订阅:&quot;</span>+channel.getChannel();
+        &#125;<span class="hljs-keyword">else</span>&#123;
+            channelService.unsubscribe(userService.getIMClient(req.getSession()));<span class="hljs-comment">//测试时User的作用仅仅是作为map的key所以new一个即可</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;取消订阅全部频道&quot;</span>;
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 似乎识别不了内部的自定义对象CommonMessage,需要HTTP请求设置contentType: &quot;application/json&quot;,</span>
+    <span class="hljs-comment">// 把json转化为字符串传给data,并且此方法设置@RequestBody</span>
+    <span class="hljs-meta">@PostMapping(&quot;emit&quot;)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">emit</span><span class="hljs-params">(HttpServletRequest req, <span class="hljs-meta">@RequestBody</span> Message msg)</span></span>&#123;
+        msg.setSender(userService.getIMClient(req.getSession()));
+        channelService.emit(msg.getChannel(),msg.getSender(),msg.getMessage());
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;发送成功&quot;</span>;
+    &#125;
+&#125;</code></pre>
 <p>最后把controller提供的方法在封装在js中</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 长轮询即时通讯</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> IM =(<span class="function"><span class="keyword">function</span>(<span class="params">jQuery</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> $ =jQuery;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        poll : <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url:<span class="string">&quot;/im/poll&quot;</span>,</span><br><span class="line">                type: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">                success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(data));</span><br><span class="line">                    IM.poll();</span><br><span class="line">                &#125;,</span><br><span class="line">                error: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(err));</span><br><span class="line">                    <span class="built_in">setTimeout</span>(IM.poll,<span class="number">2000</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        subscribe : <span class="function"><span class="keyword">function</span>(<span class="params">channel</span>) </span>&#123;</span><br><span class="line">            $.post(<span class="string">&#x27;/im/subscribe&#x27;</span>,&#123;</span><br><span class="line">                channel:channel</span><br><span class="line">            &#125;,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(e);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        unsubscribe : <span class="function"><span class="keyword">function</span> (<span class="params">channelName</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> channel = channelName?&#123;<span class="attr">channel</span>:channelName&#125;:<span class="literal">null</span>;</span><br><span class="line">            $.post(<span class="string">&#x27;/im/unsubscribe&#x27;</span>,channel,<span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(e);</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;,</span><br><span class="line">        send : <span class="function"><span class="keyword">function</span>(<span class="params">channel,text</span>) </span>&#123;</span><br><span class="line">            $.ajax(&#123;</span><br><span class="line">                url:<span class="string">&quot;/im/emit&quot;</span>,</span><br><span class="line">                type: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">                data: <span class="built_in">JSON</span>.stringify(&#123;</span><br><span class="line">                    channel:channel,</span><br><span class="line">                    message:&#123;</span><br><span class="line">                        text:text</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;),</span><br><span class="line">                success: <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(e);</span><br><span class="line">                &#125;,</span><br><span class="line">                dataType: <span class="string">&quot;json&quot;</span>,</span><br><span class="line">                contentType: <span class="string">&quot;application/json&quot;</span></span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;)(jQuery);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * 长轮询即时通讯</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">var</span> IM =(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">jQuery</span>)</span>&#123;
+    <span class="hljs-keyword">var</span> $ =jQuery;
+    <span class="hljs-keyword">return</span> &#123;
+        poll : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;
+            $.ajax(&#123;
+                url:<span class="hljs-string">&quot;/im/poll&quot;</span>,
+                type: <span class="hljs-string">&quot;POST&quot;</span>,
+                success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">data</span>) </span>&#123;
+                    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(data));
+                    IM.poll();
+                &#125;,
+                error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>&#123;
+                    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(err));
+                    <span class="hljs-built_in">setTimeout</span>(IM.poll,<span class="hljs-number">2000</span>);
+                &#125;
+            &#125;);
+        &#125;,
+
+        subscribe : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">channel</span>) </span>&#123;
+            $.post(<span class="hljs-string">&#x27;/im/subscribe&#x27;</span>,&#123;
+                channel:channel
+            &#125;,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>&#123;
+                <span class="hljs-built_in">console</span>.log(e);
+            &#125;)
+        &#125;,
+        unsubscribe : <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">channelName</span>) </span>&#123;
+            <span class="hljs-keyword">var</span> channel = channelName?&#123;<span class="hljs-attr">channel</span>:channelName&#125;:<span class="hljs-literal">null</span>;
+            $.post(<span class="hljs-string">&#x27;/im/unsubscribe&#x27;</span>,channel,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>&#123;
+                <span class="hljs-built_in">console</span>.log(e);
+            &#125;)
+        &#125;,
+        send : <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">channel,text</span>) </span>&#123;
+            $.ajax(&#123;
+                url:<span class="hljs-string">&quot;/im/emit&quot;</span>,
+                type: <span class="hljs-string">&quot;POST&quot;</span>,
+                data: <span class="hljs-built_in">JSON</span>.stringify(&#123;
+                    channel:channel,
+                    message:&#123;
+                        text:text
+                    &#125;
+                &#125;),
+                success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>&#123;
+                    <span class="hljs-built_in">console</span>.log(e);
+                &#125;,
+                dataType: <span class="hljs-string">&quot;json&quot;</span>,
+                contentType: <span class="hljs-string">&quot;application/json&quot;</span>
+            &#125;);
+        &#125;
+    &#125;;
+&#125;)(jQuery);
+</code></pre>
 <p>至此，可实现文章开头所说的效果</p>
 <hr>
 <p>这其实就是一种 <strong>发布订阅模式</strong><br>客户端既是订阅者（Subscriber）又是发布者（Publisher）<br>但是http请求是客户端主动向服务器发送请求获取返回，发布订阅模式是被动的接收被订阅频道的通知。<br>因此我们只能把客户端的请求存储在服务器中（请求存储在<strong>DeferredResult</strong>对象中），当服务器数据发生改变时，通知订阅者（返回请求）。<br><img src="https://upload-images.jianshu.io/upload_images/3867641-ee9130c763f5f948.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"><br>为了保证数据的及时性以及完整性，获取消息–&gt;返回消息–&gt;获取消息 循环执行（即<strong>长轮询</strong>），而服务器对应频道的对应客户端有一个队列保存着未发送的消息，在收到<strong>获取消息</strong>的请求或者<strong>发送消息</strong>的请求时都会尝试<strong>返回消息</strong>。</p>
@@ -279,9 +648,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>
-                    
                       <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>
                     
                       <a class="hover-with-bg" href="/tags/springboot/">springboot</a>
                     

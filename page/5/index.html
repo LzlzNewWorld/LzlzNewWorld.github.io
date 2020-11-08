@@ -189,7 +189,7 @@
             
           
           执行计划使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的。分析你的查询语句或是表结构的性能瓶颈
-1Explain [SQL语句]
+Explain [SQL语句]
 
 详解执行 Explain 语句得到的结果将包含以下列
 
@@ -197,6 +197,7 @@ ID列id列表明了语句间的执行顺序，顺序判断规则如下
 
 id相同：执行顺序由上至下
 id不同：如果是子查询，id的序号会递增，id值越大优先级越高，越先被执行
+
         </a>
       </p>
 
@@ -284,7 +285,9 @@ id不同：如果是子查询，id的序号会递增，id值越大优先级越�
           使用场景：
 做单元测试时，需要依赖一个RPC接口，而该接口并不是测试所关心的地方，可以一个使用mock来返回一个虚假的值而避免复杂化测试过程。
 以此类推，要依赖任何和测试无关并且比较复杂/执行慢/接口在变化or不确定的代码，都可以使用mock
-123456789101112131415161718192021222324252627282930313233343536373839404142// 
+// ApplicationTest是springboot单元测试的启动类，本例通过继承方式加载
+// 设置单元测试的配置文件，通常放在test目录下
+@A
         </a>
       </p>
 
@@ -334,7 +337,9 @@ xs、sm、md、lg、xl 五个尺寸的默认值均为24，意味着，任何一�
 尺寸属性可以设为0，则该el-col不显示
 
 不论尺寸属性设置为多少，若el-col中没有任何内容则该el-col不显示（内部元素为空也不行，如
-1234&lt;el-col&gt;    &lt;div&gt;&lt;&#x2F;div
+&lt;el-col&gt;
+    &lt;div&gt;&lt;/div&gt;
+   
         </a>
       </p>
 
@@ -375,7 +380,10 @@ xs、sm、md、lg、xl 五个尺寸的默认值均为24，意味着，任何一�
           
             
           
-          使用Feign进行应用间通信添加maven依赖12345&lt;dependency&gt;    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-feign&lt;/artifactId&gt;    &lt;version&gt;2.0.0.M2
+          使用Feign进行应用间通信添加maven依赖&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-feign&lt;/artifactId&gt;
+    &lt;version&gt;2.0.0.M2&l
         </a>
       </p>
 

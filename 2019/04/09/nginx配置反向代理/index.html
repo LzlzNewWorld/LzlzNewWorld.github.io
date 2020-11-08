@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      343 字
+      345 字
     </span>
   
 
@@ -229,10 +229,11 @@
             <h1 style="display: none">nginx配置反向代理</h1>
             
             <div class="markdown-body">
-              <h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y nginx</span><br></pre></td></tr></table></figure>
+              <h3 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h3><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> -y nginx</code></pre>
 
 <p>启动Nginx并设置开机自动运行 ：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx.service</span><br><span class="line">systemctl enable nginx.service</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs shell">systemctl start nginx.service
+systemctl enable nginx.service</code></pre>
 
 <p>默认端口80<br>浏览器输入 服务器地址 即可看到 nginx的首页<br>yum 安装的 nginx 配置路径在 <strong>/etc/nginx/nginx.conf</strong> ,可以修改端口号再重启</p>
 <h3 id="域名转发"><a href="#域名转发" class="headerlink" title="域名转发"></a>域名转发</h3><p>在本机上，我事先装了一个 nexus 私服，端口是8081，以此为例子, 我们通过域名转发把 nexus.xx.xx 转发到 xx.xx:8081.</p>
@@ -240,10 +241,23 @@
 <h6 id="配置dns-解析"><a href="#配置dns-解析" class="headerlink" title="配置dns 解析"></a>配置dns 解析</h6><p>然后新建一个DNS解析配置，把子域名 nexus.xx.xx  解析到服务器IP地址，稍等片刻，等待DNS服务器更新解析，我自己的域名使用了 <a target="_blank" rel="noopener" href="https://www.dns.com/">https://www.dns.com/</a> 提供的 DNS服务器<br><img src="/images/12404.png" srcset="/img/loading.gif" alt="image.png"></p>
 <p>浏览器键入 nexus.xx.xx，进入了nginx的首页。此步骤完成</p>
 <h6 id="配置nginx域名转发"><a href="#配置nginx域名转发" class="headerlink" title="配置nginx域名转发"></a>配置nginx域名转发</h6><p>在 nginx.conf的 http 模块中 加入一个 server </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">server</span><br><span class="line">   &#123;</span><br><span class="line">       listen 80;</span><br><span class="line">       server_name nexus.xx.xx;</span><br><span class="line">       location / &#123;</span><br><span class="line">           proxy_redirect off;</span><br><span class="line">           proxy_set_header Host $host;</span><br><span class="line">           proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">           proxy_pass http://127.0.0.1:8081; # 转发地址 可以是 baidu.com 或者任何地址</span><br><span class="line">       &#125;</span><br><span class="line">       access_log logs/nexus.log;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs shell">server
+   &#123;
+       listen 80;
+       server_name nexus.xx.xx;
+       location / &#123;
+           proxy_redirect off;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_pass http://127.0.0.1:8081; # 转发地址 可以是 baidu.com 或者任何地址
+       &#125;
+       access_log logs/nexus.log;
+   &#125;</code></pre>
 
 <p>保存并重启服务器 （我尝试使用nginx -s reload 重新加载配置文件无效，只能重启）</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -s quit</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs shell">nginx -s quit
+nginx</code></pre>
 
 <p>浏览器键入 nexus.xx.xx 咦 404? 没错啦，这是nexus的404 nexus的web 首页在 nexus.xx.xx/nexus </p>
 <p>END</p>

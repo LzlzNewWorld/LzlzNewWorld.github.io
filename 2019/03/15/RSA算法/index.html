@@ -244,12 +244,58 @@
 <li>解密， 计算密文c的d次幂取n的余数，即得到明文m</li>
 </ol>
 <p>整体流程的简易代码 (python3)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 欧几里得算法 （辗转相除法） 求最大公约数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">m, n</span>):</span></span><br><span class="line">    mod = <span class="number">1</span></span><br><span class="line">    <span class="comment"># 将小数放到d1中</span></span><br><span class="line">    <span class="keyword">if</span>(m &lt;= n):</span><br><span class="line">        d1 = m</span><br><span class="line">        d2 = n</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        d1 = n</span><br><span class="line">        d2 = m</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> mod != <span class="number">0</span>:</span><br><span class="line">        mod = d2 % d1</span><br><span class="line">        d2 = d1</span><br><span class="line">        d1 = mod</span><br><span class="line">    <span class="keyword">return</span> d2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 真实情况下应该是很大的素数 通常为512、1024、2048位二进制数,如1024位二进制整数大约为十进制10^308数量级</span></span><br><span class="line"><span class="comment"># 计算得到秘钥然后以一定规则编码成字符串形式，形成常见的秘钥</span></span><br><span class="line">p = <span class="number">41</span></span><br><span class="line">q = <span class="number">43</span></span><br><span class="line">n = p * q</span><br><span class="line"><span class="comment"># 欧拉函数</span></span><br><span class="line">phi = (p<span class="number">-1</span>)*(q<span class="number">-1</span>)</span><br><span class="line"><span class="comment"># 1&lt;e&lt;φ(n)的整数 且和 φ(n)互质</span></span><br><span class="line">publicKey = <span class="number">2</span></span><br><span class="line"><span class="comment"># 检查是否互质 否则+1</span></span><br><span class="line"><span class="keyword">while</span> gcd(phi, publicKey) != <span class="number">1</span>:</span><br><span class="line">    publicKey = publicKey+<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 私钥d: e*d%φ(n)==1</span></span><br><span class="line">privateKey = (phi + <span class="number">1</span>) * publicKey</span><br><span class="line">print(<span class="string">&quot;公钥:&quot;</span>, publicKey,<span class="string">&quot;私钥:&quot;</span>, privateKey,<span class="string">&quot;n:&quot;</span>, n)</span><br><span class="line"><span class="comment"># 存储在计算机里的一切信息都可以认为是一串按一定规则序列化成的数字</span></span><br><span class="line">content = <span class="number">412</span>  <span class="comment"># 密文的值要小于 p * q,否则需要分段加密</span></span><br><span class="line">cipher = <span class="built_in">pow</span>(content, publicKey, n)</span><br><span class="line">print(<span class="string">&quot;密文&quot;</span>, cipher)</span><br><span class="line">content1 = <span class="built_in">pow</span>(cipher, privateKey, n)</span><br><span class="line">print(<span class="string">&quot;明文&quot;</span>, content1)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python"><span class="hljs-comment"># 欧几里得算法 （辗转相除法） 求最大公约数</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gcd</span>(<span class="hljs-params">m, n</span>):</span>
+    mod = <span class="hljs-number">1</span>
+    <span class="hljs-comment"># 将小数放到d1中</span>
+    <span class="hljs-keyword">if</span>(m &lt;= n):
+        d1 = m
+        d2 = n
+    <span class="hljs-keyword">else</span>:
+        d1 = n
+        d2 = m
+
+    <span class="hljs-keyword">while</span> mod != <span class="hljs-number">0</span>:
+        mod = d2 % d1
+        d2 = d1
+        d1 = mod
+    <span class="hljs-keyword">return</span> d2
+
+<span class="hljs-comment"># 真实情况下应该是很大的素数 通常为512、1024、2048位二进制数,如1024位二进制整数大约为十进制10^308数量级</span>
+<span class="hljs-comment"># 计算得到秘钥然后以一定规则编码成字符串形式，形成常见的秘钥</span>
+p = <span class="hljs-number">41</span>
+q = <span class="hljs-number">43</span>
+n = p * q
+<span class="hljs-comment"># 欧拉函数</span>
+phi = (p<span class="hljs-number">-1</span>)*(q<span class="hljs-number">-1</span>)
+<span class="hljs-comment"># 1&lt;e&lt;φ(n)的整数 且和 φ(n)互质</span>
+publicKey = <span class="hljs-number">2</span>
+<span class="hljs-comment"># 检查是否互质 否则+1</span>
+<span class="hljs-keyword">while</span> gcd(phi, publicKey) != <span class="hljs-number">1</span>:
+    publicKey = publicKey+<span class="hljs-number">1</span>
+
+<span class="hljs-comment"># 私钥d: e*d%φ(n)==1</span>
+privateKey = (phi + <span class="hljs-number">1</span>) * publicKey
+print(<span class="hljs-string">&quot;公钥:&quot;</span>, publicKey,<span class="hljs-string">&quot;私钥:&quot;</span>, privateKey,<span class="hljs-string">&quot;n:&quot;</span>, n)
+<span class="hljs-comment"># 存储在计算机里的一切信息都可以认为是一串按一定规则序列化成的数字</span>
+content = <span class="hljs-number">412</span>  <span class="hljs-comment"># 密文的值要小于 p * q,否则需要分段加密</span>
+cipher = <span class="hljs-built_in">pow</span>(content, publicKey, n)
+print(<span class="hljs-string">&quot;密文&quot;</span>, cipher)
+content1 = <span class="hljs-built_in">pow</span>(cipher, privateKey, n)
+print(<span class="hljs-string">&quot;明文&quot;</span>, content1)</code></pre>
 
 <h5 id="幂模运算"><a href="#幂模运算" class="headerlink" title="幂模运算"></a>幂模运算</h5><p>上述代码中 通过 <strong>pow(a, b, c)**获取 a的b次幂取c的模，该函数在python中是一个自带的函数，然而在其他常见语言的自带库（如java、js等）中，pow() 函数/方法 通常没有取模的功能，</strong>千万不可用 pow(a,b)%c代替该运算**。上文的简单例子中，私钥的值已经高达 18491，任何一个大于1整数的18491次幂都已经是个天文数字，在大多数语言中运行时得到的已经不是一个精确的结果，取模的值是错误的。更不要说实际上使用的大素数，经过这样的运算，得到的值大到计算机内存肯定是存不下的。</p>
 <p>如果你不想深入了解该问题，在任何常用语言中，可以轻易找到科学计算库，都带有该算法，如果你还有兴趣，请搜索“蒙哥马利幂模运算”，也很容易理解。</p>
 <h5 id="获取大素数"><a href="#获取大素数" class="headerlink" title="获取大素数"></a>获取大素数</h5><p>我们知道判断一个数是否为素数的方法是这样：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math    </span><br><span class="line">     </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isPrime</span>(<span class="params">n</span>):</span>    </span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:    </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>   </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(math.sqrt(n)) + <span class="number">1</span>):    </span><br><span class="line">    <span class="keyword">if</span> n % i == <span class="number">0</span>:    </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>   </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span>   </span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python"><span class="hljs-keyword">import</span> math    
+     
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">isPrime</span>(<span class="hljs-params">n</span>):</span>    
+    <span class="hljs-keyword">if</span> n &lt;= <span class="hljs-number">1</span>:    
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>   
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-built_in">int</span>(math.sqrt(n)) + <span class="hljs-number">1</span>):    
+    <span class="hljs-keyword">if</span> n % i == <span class="hljs-number">0</span>:    
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>   
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span></code></pre>
 <p>然而我们如果要获取一个大素数，如果把大数一个一个遍历直到找到一个素数其实是很低效的。因此我们通过一些素数的性质或者其规律，通过更有效率的办法筛选出可能符合要求的整数，然后对其进行精确的判断是实际常用的方法。参考下面的链接：<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/293656940/answer/512820832">https://www.zhihu.com/question/293656940/answer/512820832</a></p>
 <h4 id="为什么RSA算法能保证安全？"><a href="#为什么RSA算法能保证安全？" class="headerlink" title="为什么RSA算法能保证安全？"></a>为什么RSA算法能保证安全？</h4><p>公开场合只能获取到公钥对 (n,publicKey)<br>publicKey 和 privateKey 的对应关系为  <em>publicKey = privateKey((p-1)(q-1)+1)</em>,<br>而p,q在算法中已经被销毁了，我们只知道p,q的乘积n，通过n分解质因数找到质数p,q的是一个指数级别复杂度的算法，在实际使用中，p,q都是10的几百次方数量级的大数，计算出p,q对于现代计算机来说可以认为是一个在有限时间内不可解的问题。</p>
 <h4 id="随便写点"><a href="#随便写点" class="headerlink" title="随便写点"></a>随便写点</h4><p>相比技术问题，我更喜欢谈谈技术和技术以外事物的关系，从今天起开始写简明知识系列文章，其内容一般以代码作为载体，以简明的方式，短小的篇幅写下和编程相关的技术问题，也谈谈相关的非技术问题。</p>

@@ -232,30 +232,59 @@
               <p><a href="https://lzlz000.github.io/">个人主页</a></p>
 <h4 id="打开子窗口"><a href="#打开子窗口" class="headerlink" title="打开子窗口"></a>打开子窗口</h4><p>electron使用 vue-cli 模板 simulatedgreg/electron-vue 的开发过程其实和普通vue应用区别不大，普通vue组件可以直接迁移进来，还可以使用node丰富的api。由于我们的应用需要使用多个窗口，vue单页面应用只有一个页面入口，这是我目前的解决方案：</p>
 <p>首先electron的窗口间通讯需要使用ipc，在主进程中使用ipcMain:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ipcMain = <span class="built_in">require</span>(<span class="string">&#x27;electron&#x27;</span>).ipcMain</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-keyword">const</span> ipcMain = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;electron&#x27;</span>).ipcMain</code></pre>
 
 <p>在渲染进程，即组件中使用ipcRenderer</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ipc = <span class="built_in">require</span>(<span class="string">&#x27;electron&#x27;</span>).ipcRenderer</span><br><span class="line">ipc.(event, args);</span><br><span class="line"><span class="comment">// 模板已经把它封装到vue的参数中了,也可以这样使用</span></span><br><span class="line"><span class="built_in">this</span>.$electron.ipcRenderer.send(event, args);</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-keyword">const</span> ipc = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;electron&#x27;</span>).ipcRenderer
+ipc.(event, args);
+<span class="hljs-comment">// 模板已经把它封装到vue的参数中了,也可以这样使用</span>
+<span class="hljs-built_in">this</span>.$electron.ipcRenderer.send(event, args);</code></pre>
 
 
 
 <p>在页面的入口组件上mounted钩子函数中加上,意味着接收主进程传来的router事件并指定路由参数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$electron.ipcRenderer.on(<span class="string">&#x27;router&#x27;</span>,<span class="function">(<span class="params">event,params</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.$router.push(params)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-built_in">this</span>.$electron.ipcRenderer.on(<span class="hljs-string">&#x27;router&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">event,params</span>)=&gt;</span>&#123;
+    <span class="hljs-built_in">this</span>.$router.push(params)
+&#125;)</code></pre>
 
 <p>在主进程脚本中接收事件并创建新窗口</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ipcMain.on(<span class="string">&#x27;new-window&#x27;</span>,<span class="function">(<span class="params">event,router</span>)=&gt;</span>&#123;</span><br><span class="line">   subWindow = <span class="keyword">new</span> BrowserWindow(&#123;</span><br><span class="line">        show: <span class="literal">false</span>,  <span class="comment">// 设置自动显示为false以使用ready-to-show事件回调</span></span><br><span class="line">        parent: mainWindow <span class="comment">// 如果需要设置父窗口</span></span><br><span class="line">    &#125;)	</span><br><span class="line"></span><br><span class="line">    subWindow.on(<span class="string">&#x27;ready-to-show&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        subWindow.show();</span><br><span class="line">        subWindow.send(<span class="string">&#x27;router&#x27;</span>,router); </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js">ipcMain.on(<span class="hljs-string">&#x27;new-window&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">event,router</span>)=&gt;</span>&#123;
+   subWindow = <span class="hljs-keyword">new</span> BrowserWindow(&#123;
+        show: <span class="hljs-literal">false</span>,  <span class="hljs-comment">// 设置自动显示为false以使用ready-to-show事件回调</span>
+        parent: mainWindow <span class="hljs-comment">// 如果需要设置父窗口</span>
+    &#125;)	
+
+    subWindow.on(<span class="hljs-string">&#x27;ready-to-show&#x27;</span>,<span class="hljs-function">()=&gt;</span>&#123;
+        subWindow.show();
+        subWindow.send(<span class="hljs-string">&#x27;router&#x27;</span>,router); 
+    &#125;)
+&#125;)</code></pre>
 
 <p>在主窗口发送事件</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$electron.ipcRenderer.send(<span class="string">&#x27;new-window&#x27;</span>,&#123;</span><br><span class="line">    name:<span class="string">&#x27;entry&#x27;</span>, <span class="comment">// vue-router传递参数时候不能使用path作为路径</span></span><br><span class="line">    params: &#123; <span class="attr">type</span>: channelType.key &#125; <span class="comment">//传递参数</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-built_in">this</span>.$electron.ipcRenderer.send(<span class="hljs-string">&#x27;new-window&#x27;</span>,&#123;
+    name:<span class="hljs-string">&#x27;entry&#x27;</span>, <span class="hljs-comment">// vue-router传递参数时候不能使用path作为路径</span>
+    params: &#123; <span class="hljs-attr">type</span>: channelType.key &#125; <span class="hljs-comment">//传递参数</span>
+&#125;);</code></pre>
 
 <h4 id="窗口间数据交换"><a href="#窗口间数据交换" class="headerlink" title="窗口间数据交换"></a>窗口间数据交换</h4><p>还是进程间通讯问题，根据需求定义好几个事件，首先是子窗口准备好接收信息的事件，</p>
 <p>在子窗口的组件即你路由到的那个指定组件的钩子函数mounted上加上以下代码告诉主进程，子窗口已经初始化完成，注意这不是electron窗口初始化完成而是指定的vue页面初始化完成</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.$electron.ipcRenderer.send(<span class="string">&#x27;sub-ready&#x27;</span>); </span><br><span class="line"><span class="built_in">this</span>.$electron.ipcRenderer.on(<span class="string">&#x27;data-to-sub&#x27;</span>,<span class="function">(<span class="params">event,data</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// 接收到数据</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-built_in">this</span>.$electron.ipcRenderer.send(<span class="hljs-string">&#x27;sub-ready&#x27;</span>); 
+<span class="hljs-built_in">this</span>.$electron.ipcRenderer.on(<span class="hljs-string">&#x27;data-to-sub&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">event,data</span>)=&gt;</span>&#123;
+    <span class="hljs-comment">// 接收到数据</span>
+&#125;)</code></pre>
 
 <p>此时主进程通知主窗口可以向子窗口通讯了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mainWindow.send(&#39;sub-ready&#39;)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs autoit">mainWindow.<span class="hljs-built_in">send</span>(<span class="hljs-string">&#x27;sub-ready&#x27;</span>)</code></pre>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主窗口在合适位置监听：</span></span><br><span class="line"><span class="built_in">this</span>.$electron.ipcRenderer.on(<span class="string">&#x27;sub-ready&#x27;</span>,<span class="function">(<span class="params">event,params</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// 这时候如果需要可以提示用户，或者变量标识可以发送消息了</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送消息的函数</span></span><br><span class="line"><span class="function"><span class="title">sendData</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.$electron.ipcRenderer.send(<span class="string">&#x27;data-to-sub&#x27;</span>,data)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs js"><span class="hljs-comment">// 主窗口在合适位置监听：</span>
+<span class="hljs-built_in">this</span>.$electron.ipcRenderer.on(<span class="hljs-string">&#x27;sub-ready&#x27;</span>,<span class="hljs-function">(<span class="hljs-params">event,params</span>)=&gt;</span>&#123;
+    <span class="hljs-comment">// 这时候如果需要可以提示用户，或者变量标识可以发送消息了</span>
+&#125;)
+
+<span class="hljs-comment">// 发送消息的函数</span>
+<span class="hljs-function"><span class="hljs-title">sendData</span>(<span class="hljs-params">data</span>)</span>&#123;
+    <span class="hljs-built_in">this</span>.$electron.ipcRenderer.send(<span class="hljs-string">&#x27;data-to-sub&#x27;</span>,data)
+&#125;</code></pre>
 
 <h4 id="整体流程"><a href="#整体流程" class="headerlink" title="整体流程"></a>整体流程</h4><ol>
 <li>主窗口-&gt;主进程: 打开子窗口 </li>
@@ -277,9 +306,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/electron/">electron</a>
-                    
                       <a class="hover-with-bg" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+                    
+                      <a class="hover-with-bg" href="/tags/electron/">electron</a>
                     
                   </div>
                 

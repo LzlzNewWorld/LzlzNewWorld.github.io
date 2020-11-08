@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      813 字
+      802 字
     </span>
   
 
@@ -234,13 +234,99 @@
 <p>给定一个数列，长度为N，<br>求这个数列的最长上升（递增）子数列（LIS）的长度.<br>以<br>1, 7, 2, 8, 3, 4<br>为例。<br>这个数列的最长递增子数列是 1 2 3 4，长度为4；<br>次长的长度为3， 包括 1 7 8; 1 2 3 等.</p>
 </blockquote>
 <p>设数组为：arr<br>设  foo(k) 为：以数列中第k项 (为了与java数组逻辑一致，这里的k从0开始计算) 结尾的最长递增子序列的长度<br>则：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo(<span class="number">0</span>) == <span class="number">1</span> </span><br><span class="line">foo(k) == max(arr[k]&gt;arr[<span class="number">0</span>]?foo(<span class="number">0</span>)+<span class="number">1</span>:foo(<span class="number">0</span>),</span><br><span class="line">              arr[k]&gt;arr[<span class="number">1</span>]?foo(<span class="number">1</span>)+<span class="number">1</span>:foo(<span class="number">1</span>) , </span><br><span class="line">              ... ,</span><br><span class="line">              arr[k]&gt;arr[k-<span class="number">1</span>]?foo(k-<span class="number">1</span>)+<span class="number">1</span>:foo(k-<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java">foo(<span class="hljs-number">0</span>) == <span class="hljs-number">1</span> 
+foo(k) == max(arr[k]&gt;arr[<span class="hljs-number">0</span>]?foo(<span class="hljs-number">0</span>)+<span class="hljs-number">1</span>:foo(<span class="hljs-number">0</span>),
+              arr[k]&gt;arr[<span class="hljs-number">1</span>]?foo(<span class="hljs-number">1</span>)+<span class="hljs-number">1</span>:foo(<span class="hljs-number">1</span>) , 
+              ... ,
+              arr[k]&gt;arr[k-<span class="hljs-number">1</span>]?foo(k-<span class="hljs-number">1</span>)+<span class="hljs-number">1</span>:foo(k-<span class="hljs-number">1</span>))</code></pre>
 <p>java代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class LISDemo &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        int[] arr &#x3D; new int[10];</span><br><span class="line">        Random random &#x3D; new Random();</span><br><span class="line">        for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] &#x3D; random.nextInt(100);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;数组&quot;+Arrays.toString(arr));</span><br><span class="line">        long time &#x3D; System.currentTimeMillis();</span><br><span class="line">        System.out.println(&quot;结果: &quot;+foo(arr, arr.length-1));</span><br><span class="line">        System.out.println(&quot;耗时: &quot;+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    private static int foo(int[] arr,int end)&#123;</span><br><span class="line">        if (end&#x3D;&#x3D;0) &#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        int len &#x3D; 0;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; end; i++) &#123;</span><br><span class="line">            int temp &#x3D; foo(arr,i);</span><br><span class="line">            len &#x3D; Math.max(len,arr[end]&gt;arr[i]?temp+1:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        return len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs reasonml">public <span class="hljs-keyword">class</span> LISDemo &#123;
+    public static void main(String<span class="hljs-literal">[]</span> args)&#123;
+        <span class="hljs-built_in">int</span><span class="hljs-literal">[]</span> arr = <span class="hljs-keyword">new</span> <span class="hljs-built_in">int</span><span class="hljs-literal">[<span class="hljs-number">10</span>]</span>;
+        Random random = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Random()</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) &#123;
+            arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = random.next<span class="hljs-constructor">Int(100)</span>;
+        &#125;
+        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;数组&quot;</span>+<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Arrays</span>.</span></span><span class="hljs-keyword">to</span><span class="hljs-constructor">String(<span class="hljs-params">arr</span>)</span>);
+        long time = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>current<span class="hljs-constructor">TimeMillis()</span>;
+        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;结果: &quot;</span>+foo(arr, arr.length-<span class="hljs-number">1</span>));
+        <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>out.println(<span class="hljs-string">&quot;耗时: &quot;</span>+(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">System</span>.</span></span>current<span class="hljs-constructor">TimeMillis()</span>-time));
+    &#125;
+    <span class="hljs-keyword">private</span> static <span class="hljs-built_in">int</span> foo(<span class="hljs-built_in">int</span><span class="hljs-literal">[]</span> arr,<span class="hljs-built_in">int</span> <span class="hljs-keyword">end</span>)&#123;
+        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">end</span>==<span class="hljs-number">0</span>) &#123;
+            return <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-built_in">int</span> len = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">end</span>; i++) &#123;
+            <span class="hljs-built_in">int</span> temp = foo(arr,i);
+            len = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Math</span>.</span></span>max(len,arr<span class="hljs-literal">[<span class="hljs-identifier">end</span>]</span>&gt;arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>?temp+<span class="hljs-number">1</span>:temp);
+        &#125;
+        return len;
+    &#125;
+&#125;</code></pre>
 <p>这段代码能计算出正确的结果，但是存在问题：<br>要计算 foo(n)必须先得到 foo(0)<del>foo(n-1)的值<br>要计算 foo(n-1)必须先得到 foo(0)</del>foo(n-2)的值<br>…<br>以此类推，可以把他画成一颗多叉树，时间复杂度达到O(2^n) </p>
 <p>运行这段代码就会发现 每当数组长度+1 运行耗时大致翻倍，数组长度为几十的时候，运行时间已经无法容忍的长了。</p>
 <p>以foo(3)为例，可以画成下面这棵树<br><img src="/images/1240123.png" srcset="/img/loading.gif"><br>可以发现，相同参数的方法被重复计算了多遍，我们可以建立一个hashmap把参数和对应的值存入其中，当结果已经计算过，就直接从hashmap中取出结果不再计算，修改代码为如下,保留了原来的方法做个对比，执行效率天差地别:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LISDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">31</span>];</span><br><span class="line">        Random random = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">            arr[i] = random.nextInt(<span class="number">100</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;数组&quot;</span>+Arrays.toString(arr));</span><br><span class="line">        LIS lis = <span class="keyword">new</span> LIS(arr);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">&quot;结果1: &quot;</span>+lis.foo());</span><br><span class="line">        System.out.println(<span class="string">&quot;耗时1: &quot;</span>+(System.currentTimeMillis()-time));</span><br><span class="line"></span><br><span class="line">        time = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">&quot;结果2: &quot;</span>+foo(arr, arr.length-<span class="number">1</span>));</span><br><span class="line">        System.out.println(<span class="string">&quot;耗时2: &quot;</span>+(System.currentTimeMillis()-time));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 最长递增子序列 longest increasing subsequence</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LIS</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] arr;</span><br><span class="line">        HashMap&lt;Integer,Integer&gt; values = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        LIS(<span class="keyword">int</span>[]arr)&#123;</span><br><span class="line">            <span class="keyword">this</span>.arr = arr;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</span><br><span class="line">            <span class="keyword">return</span> foo(arr,arr.length-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">            Integer value = values.get(end);</span><br><span class="line">            <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> value;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">                values.put(<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">                len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">            &#125;</span><br><span class="line">            values.put(end,len);</span><br><span class="line">            <span class="keyword">return</span> len;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">foo</span><span class="params">(<span class="keyword">int</span>[] arr,<span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (end==<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; end; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = foo(arr,i);</span><br><span class="line">            len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="number">1</span>:temp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LISDemo</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>&#123;
+        <span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">31</span>];
+        Random random = <span class="hljs-keyword">new</span> Random();
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) &#123;
+            arr[i] = random.nextInt(<span class="hljs-number">100</span>);
+        &#125;
+        System.out.println(<span class="hljs-string">&quot;数组&quot;</span>+Arrays.toString(arr));
+        LIS lis = <span class="hljs-keyword">new</span> LIS(arr);
+
+        <span class="hljs-keyword">long</span> time = System.currentTimeMillis();
+        System.out.println(<span class="hljs-string">&quot;结果1: &quot;</span>+lis.foo());
+        System.out.println(<span class="hljs-string">&quot;耗时1: &quot;</span>+(System.currentTimeMillis()-time));
+
+        time = System.currentTimeMillis();
+        System.out.println(<span class="hljs-string">&quot;结果2: &quot;</span>+foo(arr, arr.length-<span class="hljs-number">1</span>));
+        System.out.println(<span class="hljs-string">&quot;耗时2: &quot;</span>+(System.currentTimeMillis()-time));
+    &#125;
+    <span class="hljs-comment">// 最长递增子序列 longest increasing subsequence</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LIS</span></span>&#123;
+        <span class="hljs-keyword">int</span>[] arr;
+        HashMap&lt;Integer,Integer&gt; values = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+
+        LIS(<span class="hljs-keyword">int</span>[]arr)&#123;
+            <span class="hljs-keyword">this</span>.arr = arr;
+        &#125;
+        <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">()</span></span>&#123;
+            <span class="hljs-keyword">return</span> foo(arr,arr.length-<span class="hljs-number">1</span>);
+        &#125;
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr,<span class="hljs-keyword">int</span> end)</span></span>&#123;
+            Integer value = values.get(end);
+            <span class="hljs-keyword">if</span> (value != <span class="hljs-keyword">null</span>) &#123;
+                <span class="hljs-keyword">return</span> value;
+            &#125;
+            <span class="hljs-keyword">if</span> (end==<span class="hljs-number">0</span>) &#123;
+                values.put(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+            &#125;
+            <span class="hljs-keyword">int</span> len = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; end; i++) &#123;
+                <span class="hljs-keyword">int</span> temp = foo(arr,i);
+                len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="hljs-number">1</span>:temp);
+            &#125;
+            values.put(end,len);
+            <span class="hljs-keyword">return</span> len;
+        &#125;
+
+    &#125;
+    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">foo</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] arr,<span class="hljs-keyword">int</span> end)</span></span>&#123;
+        <span class="hljs-keyword">if</span> (end==<span class="hljs-number">0</span>) &#123;
+            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-keyword">int</span> len = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; end; i++) &#123;
+            <span class="hljs-keyword">int</span> temp = foo(arr,i);
+            len = Math.max(len,arr[end]&gt;arr[i]?temp+<span class="hljs-number">1</span>:temp);
+        &#125;
+        <span class="hljs-keyword">return</span> len;
+    &#125;
+&#125;</code></pre>
 
 
 

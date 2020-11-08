@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      391 字
+      390 字
     </span>
   
 
@@ -232,7 +232,48 @@
               <p>使用场景：</p>
 <p>做单元测试时，需要依赖一个RPC接口，而该接口并不是测试所关心的地方，可以一个使用mock来返回一个虚假的值而避免复杂化测试过程。</p>
 <p>以此类推，要依赖任何和测试无关并且比较复杂/执行慢/接口在变化or不确定的代码，都可以使用mock</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ApplicationTest是springboot单元测试的启动类，本例通过继承方式加载</span></span><br><span class="line"><span class="comment">// 设置单元测试的配置文件，通常放在test目录下</span></span><br><span class="line"><span class="meta">@ActiveProfiles(&quot;mock-test&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RestrictCheckServiceImplTest</span> <span class="keyword">extends</span> <span class="title">ApplicationTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger LOG =</span><br><span class="line">            LoggerFactory.getLogger(RestrictCheckServiceImplTest.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// mock对象</span></span><br><span class="line">    <span class="meta">@Mock</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ArrangeAssistMaintain arrangeAssistMaintain;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// mock注入对象(测试类)</span></span><br><span class="line">    <span class="meta">@InjectMocks</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestrictCheckServiceImpl restrictCheckService;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">mockClassroom</span><span class="params">()</span></span>&#123;</span><br><span class="line">        MockitoAnnotations.initMocks(<span class="keyword">this</span>);</span><br><span class="line">        <span class="comment">// 当调用 getClassroomById(Long id) 方法时，执行mock方法</span></span><br><span class="line">        Mockito.when(arrangeAssistMaintain.getClassroomById(Mockito.anyLong()))</span><br><span class="line">                .thenAnswer((Answer&lt;Classroom&gt;) invocationOnMock -&gt; &#123;</span><br><span class="line">            Long classroomId = invocationOnMock.getArgumentAt(<span class="number">0</span>, Long.class);</span><br><span class="line">            LOG.info(<span class="string">&quot;============ mock 教室 ============&quot;</span>);</span><br><span class="line">            Classroom classroom = <span class="keyword">new</span> Classroom();</span><br><span class="line">            classroom.setId(classroomId);</span><br><span class="line">            classroom.setType(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">            classroom.setName(<span class="string">&quot;mock教室&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> classroom;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getClassroom</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Classroom classroom = restrictCheckService.getClassroom(<span class="number">1</span>);</span><br><span class="line">        System.out.println(ToStringBuilder.reflectionToString(classroom));</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-comment">// ApplicationTest是springboot单元测试的启动类，本例通过继承方式加载</span>
+<span class="hljs-comment">// 设置单元测试的配置文件，通常放在test目录下</span>
+<span class="hljs-meta">@ActiveProfiles(&quot;mock-test&quot;)</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RestrictCheckServiceImplTest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ApplicationTest</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Logger LOG =
+            LoggerFactory.getLogger(RestrictCheckServiceImplTest.class);
+
+    <span class="hljs-comment">// mock对象</span>
+    <span class="hljs-meta">@Mock</span>
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> ArrangeAssistMaintain arrangeAssistMaintain;
+
+    <span class="hljs-comment">// mock注入对象(测试类)</span>
+    <span class="hljs-meta">@InjectMocks</span>
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> RestrictCheckServiceImpl restrictCheckService;
+
+
+    <span class="hljs-meta">@Before</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">mockClassroom</span><span class="hljs-params">()</span></span>&#123;
+        MockitoAnnotations.initMocks(<span class="hljs-keyword">this</span>);
+        <span class="hljs-comment">// 当调用 getClassroomById(Long id) 方法时，执行mock方法</span>
+        Mockito.when(arrangeAssistMaintain.getClassroomById(Mockito.anyLong()))
+                .thenAnswer((Answer&lt;Classroom&gt;) invocationOnMock -&gt; &#123;
+            Long classroomId = invocationOnMock.getArgumentAt(<span class="hljs-number">0</span>, Long.class);
+            LOG.info(<span class="hljs-string">&quot;============ mock 教室 ============&quot;</span>);
+            Classroom classroom = <span class="hljs-keyword">new</span> Classroom();
+            classroom.setId(classroomId);
+            classroom.setType(<span class="hljs-string">&quot;1&quot;</span>);
+            classroom.setName(<span class="hljs-string">&quot;mock教室&quot;</span>);
+            <span class="hljs-keyword">return</span> classroom;
+        &#125;);
+    &#125;
+    <span class="hljs-meta">@Test</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">getClassroom</span><span class="hljs-params">()</span></span>&#123;
+        Classroom classroom = restrictCheckService.getClassroom(<span class="hljs-number">1</span>);
+        System.out.println(ToStringBuilder.reflectionToString(classroom));
+        ...
+        ...
+    &#125;
+&#125;</code></pre>
 
 <p>其中要注意的地方:</p>
 <ol>

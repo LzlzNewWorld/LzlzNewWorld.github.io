@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      575 字
+      572 字
     </span>
   
 
@@ -230,31 +230,88 @@
             
             <div class="markdown-body">
               <h2 id="使用RestTemplate进行应用间通信"><a href="#使用RestTemplate进行应用间通信" class="headerlink" title="使用RestTemplate进行应用间通信"></a>使用RestTemplate进行应用间通信</h2><p>上文中我们已经准备好了 Eureka Server，在测试环境中，就不需要多个Eureka了，启动一个应用即可，为了方便我们打包运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar .\target\eureka-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs apache"><span class="hljs-attribute">java</span> -jar .\target\eureka-<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">1</span>-SNAPSHOT.jar</code></pre>
 
 
 <p><img src="https://upload-images.jianshu.io/upload_images/3867641-ae7dbf9d401a1954.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"></p>
 <p>我们再创建两个 Spring Boot 项目，分别为product，consumer 并修改配置文件注册到 Eureka 中</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs yml"><span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">client:</span>
+    <span class="hljs-attr">service-url:</span>
+      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka/</span></code></pre>
 <p>记得在启动类添加注解 <code>@EnableEurekaClient</code></p>
 <h6 id="product项目中"><a href="#product项目中" class="headerlink" title="product项目中"></a>product项目中</h6><p>添加controller</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;echo&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">echoeMessage</span><span class="params">(HttpServletRequest request)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;this is server &quot;</span>+ request.getServerName()+<span class="string">&quot;:&quot;</span>+request.getServerPort();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.GetMapping;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.annotation.RestController;
+
+<span class="hljs-keyword">import</span> javax.servlet.http.HttpServletRequest;
+
+<span class="hljs-meta">@RestController</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ServerController</span> </span>&#123;
+    <span class="hljs-meta">@GetMapping(&quot;echo&quot;)</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">echoeMessage</span><span class="hljs-params">(HttpServletRequest request)</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;this is server &quot;</span>+ request.getServerName()+<span class="hljs-string">&quot;:&quot;</span>+request.getServerPort();
+    &#125;
+&#125;</code></pre>
 <h6 id="consumer-项目中"><a href="#consumer-项目中" class="headerlink" title="consumer 项目中"></a>consumer 项目中</h6><p>添加config类，其中<code>@LoadBalanced</code>注解帮助提供一个负载均衡的RestTemplate Bean</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RestTemplateConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@LoadBalanced</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs java"><span class="hljs-keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalanced;
+<span class="hljs-keyword">import</span> org.springframework.context.annotation.Bean;
+<span class="hljs-keyword">import</span> org.springframework.context.annotation.Configuration;
+<span class="hljs-keyword">import</span> org.springframework.web.client.RestTemplate;
+
+<span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RestTemplateConfig</span> </span>&#123;
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-meta">@LoadBalanced</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title">restTemplate</span><span class="hljs-params">()</span></span>&#123;
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> RestTemplate();
+    &#125;
+&#125;</code></pre>
 <p>添加 controller，其中 restTemplate直接在url中用在Eureka中注册的应用名代替地址和端口,在product项目中，我们配置的应用名</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">product</span></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs yml"><span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">application:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">product</span></code></pre>
 <p>代码调用（应用名不区分大小写）<br><code>restTemplate.getForObject(&quot;http://product/echo&quot;,String.class);</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line">import org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@Slf4j</span><br><span class="line">public class ClientController &#123;</span><br><span class="line"></span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public ClientController(RestTemplate restTemplate) &#123;</span><br><span class="line">        this.restTemplate &#x3D; restTemplate;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @GetMapping(&quot;&#x2F;product-msg&quot;)</span><br><span class="line">    public String getProductMsg()&#123;</span><br><span class="line">        String resp &#x3D; restTemplate.getForObject(&quot;http:&#x2F;&#x2F;product&#x2F;echo&quot;,String.class);</span><br><span class="line">        log.info(&quot;response&#x3D;&#123;&#125;&quot;,resp);</span><br><span class="line">        return resp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs kotlin"><span class="hljs-keyword">import</span> lombok.extern.slf4j.Slf4j;
+<span class="hljs-keyword">import</span> org.springframework.beans.factory.<span class="hljs-keyword">annotation</span>.Autowired;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.<span class="hljs-keyword">annotation</span>.GetMapping;
+<span class="hljs-keyword">import</span> org.springframework.web.bind.<span class="hljs-keyword">annotation</span>.RestController;
+<span class="hljs-keyword">import</span> org.springframework.web.client.RestTemplate;
+
+<span class="hljs-meta">@RestController</span>
+<span class="hljs-meta">@Slf4j</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClientController</span> </span>&#123;
+
+    <span class="hljs-keyword">private</span> RestTemplate restTemplate;
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">public</span> ClientController(RestTemplate restTemplate) &#123;
+        <span class="hljs-keyword">this</span>.restTemplate = restTemplate;
+    &#125;
+
+    <span class="hljs-meta">@GetMapping(<span class="hljs-meta-string">&quot;/product-msg&quot;</span>)</span>
+    <span class="hljs-keyword">public</span> String getProductMsg()&#123;
+        String resp = restTemplate.getForObject(<span class="hljs-string">&quot;http://product/echo&quot;</span>,String.<span class="hljs-keyword">class</span>);
+        log.info(<span class="hljs-string">&quot;response=&#123;&#125;&quot;</span>,resp);
+        <span class="hljs-keyword">return</span> resp;
+    &#125;
+&#125;</code></pre>
 <p>通过-Dserver.port=xxxx设置不同的端口，启动多个product实例，idea中：<img src="https://upload-images.jianshu.io/upload_images/3867641-05f910499d165abd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"></p>
 <p>或者打包执行 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar xxxxx.jar --server.port&#x3D;xxxx </span><br></pre></td></tr></table></figure>
+<pre><code class="hljs mipsasm"><span class="hljs-keyword">java </span>-<span class="hljs-keyword">jar </span>xxxxx.<span class="hljs-keyword">jar </span>--server.port=xxxx</code></pre>
 
 <p>我们启动两个实例，使用8080和8081端口</p>
 <p>启动consumer，反复请求地址 <a target="_blank" rel="noopener" href="http://localhost:8180/product-msg">http://localhost:8180/product-msg</a><br>将会得到不同的返回：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this is server 192.168.1.107:8081</span><br><span class="line">this is server 192.168.1.107:8080</span><br><span class="line">this is server 192.168.1.107:8081</span><br><span class="line">this is server 192.168.1.107:8080</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs routeros">this is<span class="hljs-built_in"> server </span>192.168.1.107:8081
+this is<span class="hljs-built_in"> server </span>192.168.1.107:8080
+this is<span class="hljs-built_in"> server </span>192.168.1.107:8081
+this is<span class="hljs-built_in"> server </span>192.168.1.107:8080</code></pre>
 
 <p>可以发现，请求在两个服务器间轮换执行<br>我们可以在client的配置文件中配置负载均衡的规则，我们把负载均衡规则改为 随机</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#应用名</span></span><br><span class="line"><span class="attr">PRODUCT:</span></span><br><span class="line">  <span class="attr">ribbon:</span></span><br><span class="line">    <span class="attr">NFLoadBalancerRuleClassName:</span> <span class="string">com.netflix.loadbalancer.RandomRule</span></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs yml"><span class="hljs-comment">#应用名</span>
+<span class="hljs-attr">PRODUCT:</span>
+  <span class="hljs-attr">ribbon:</span>
+    <span class="hljs-attr">NFLoadBalancerRuleClassName:</span> <span class="hljs-string">com.netflix.loadbalancer.RandomRule</span></code></pre>
 <p>所有规则均在 com.netflix.loadbalancer包下并实现 com.netflix.loadbalancer.IRule接口，默认使用 com.netflix.loadbalancer.RoundRobinRule</p>
 
             </div>

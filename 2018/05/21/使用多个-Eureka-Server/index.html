@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      473 字
+      482 字
     </span>
   
 
@@ -230,10 +230,65 @@
             
             <div class="markdown-body">
               <h2 id="使用多个-Eureka"><a href="#使用多个-Eureka" class="headerlink" title="使用多个 Eureka"></a>使用多个 Eureka</h2><p>通过不同的配置文件 application.yml 启动多个实例来实现</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8762/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Server 2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">enable-self-preservation:</span> <span class="literal">false</span> </span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka/</span> <span class="comment">#两个server相互注册</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span> </span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs yml"><span class="hljs-comment">#Server 1</span>
+<span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span>
+<span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">server:</span>
+    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">false</span> 
+  <span class="hljs-attr">client:</span>
+    <span class="hljs-attr">service-url:</span>
+      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8762/eureka/</span> <span class="hljs-comment">#两个server相互注册</span>
+    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">false</span> 
+<span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">application:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-demo</span></code></pre>
+<pre><code class="hljs yml"><span class="hljs-comment">#Server 2</span>
+<span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8762</span>
+<span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">server:</span>
+    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">false</span> 
+  <span class="hljs-attr">client:</span>
+    <span class="hljs-attr">service-url:</span>
+      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka/</span> <span class="hljs-comment">#两个server相互注册</span>
+    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">false</span> 
+<span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">application:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-demo</span></code></pre>
 <p>这样 在 idea 或者 Eclipse 中我们需要启动一个实例，然后修改配置再启动一个实例，有点乱。<br>可以把 application.yml 定义为下面的形式：</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无参数启动</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">eureka-demo</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">enable-self-preservation:</span> <span class="literal">false</span> <span class="comment">#防止由于eureka的机制导致 client 被错误显示在线 在开发环境使用</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server1</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">server1</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8762/eureka/</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="comment"># 启动参数 --spring.profiles.active=server2</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">server2</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8762</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line"><span class="string">​</span>    <span class="attr">service-url:</span></span><br><span class="line"><span class="string">​</span>      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka/</span></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs yml"><span class="hljs-comment"># 无参数启动</span>
+<span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">application:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-demo</span>
+<span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span>
+<span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">server:</span>
+    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">false</span> <span class="hljs-comment">#防止由于eureka的机制导致 client 被错误显示在线 在开发环境使用</span>
+  <span class="hljs-attr">client:</span>
+    <span class="hljs-attr">service-url:</span>
+      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka/</span>
+<span class="hljs-meta">---</span>
+<span class="hljs-comment"># 启动参数 --spring.profiles.active=server1</span>
+<span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">profiles:</span> <span class="hljs-string">server1</span>
+<span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span>
+<span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">client:</span>
+<span class="hljs-string">​</span>    <span class="hljs-attr">service-url:</span>
+      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8762/eureka/</span>
+<span class="hljs-meta">---</span>
+<span class="hljs-comment"># 启动参数 --spring.profiles.active=server2</span>
+<span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">profiles:</span> <span class="hljs-string">server2</span>
+<span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8762</span>
+<span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">client:</span>
+<span class="hljs-string">​</span>    <span class="hljs-attr">service-url:</span>
+<span class="hljs-string">​</span>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka/</span></code></pre>
 <p>运行方式</p>
 <ol>
 <li>在idea中运行<br>新建2个运行配置 server1 server2，按图片所示分别添加参数<br>​<code>--spring.profiles.active=server1</code><br>​<code>--spring.profiles.active=server2</code><br><img src="https://upload-images.jianshu.io/upload_images/3867641-311c2582738563e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"></li>
@@ -241,7 +296,8 @@
 </ol>
 <p>我们同时运行刚才创建的 Client，注意我们只把 Client 注册到了<code>http://localhost:8761/eureka/</code> 也就是server1中<br>此时，localhost:8761,localhost:8762的Eureka Server 均显示如下，即只在server1中注册的Client也被注册到了server2<img src="https://upload-images.jianshu.io/upload_images/3867641-b9e6e0ebca02eea4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"></p>
 <p>虽然，Client被自动注册到了server2，但是如果server1不启动，server2无法得到Client的注册（Client在server2注册后，server1变成不可用并不影响）。所以我们在Client中做修改,配置2个defaultZone<br>​```yml<br>eureka:<br>  client:<br>​    service-url:<br>​      defaultZone: <a target="_blank" rel="noopener" href="http://localhost:8761/eureka/,http://localhost:8762/eureka/">http://localhost:8761/eureka/,http://localhost:8762/eureka/</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">当有3个Eureka Server时，以此类推，三个Server相互配置另外2个地址，Client 配置 3个地址</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs angelscript">当有<span class="hljs-number">3</span>个Eureka Server时，以此类推，三个Server相互配置另外<span class="hljs-number">2</span>个地址，Client 配置 <span class="hljs-number">3</span>个地址
+</code></pre>
             </div>
             <hr>
             <div>

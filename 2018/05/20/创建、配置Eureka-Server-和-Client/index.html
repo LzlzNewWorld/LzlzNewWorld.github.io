@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      696 字
+      690 字
     </span>
   
 
@@ -233,18 +233,59 @@
 <h5 id="通过-idea-创建Eureka-server项目"><a href="#通过-idea-创建Eureka-server项目" class="headerlink" title="通过 idea 创建Eureka server项目"></a>通过 idea 创建Eureka server项目</h5><p>New Project-&gt; Spring Initalizr<br>next 修改group 和 artifact<br>next 我使用的是2.0.2版本的SpringBoot 注意在选择依赖时 勾选 Web 和 Eureka Server<br><img src="https://upload-images.jianshu.io/upload_images/3867641-9a7c8bf374c7217f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"><br>一路确定 完成创建。</p>
 <h5 id="配置启动项目"><a href="#配置启动项目" class="headerlink" title="配置启动项目"></a>配置启动项目</h5><p>首先就有一个坑，在墙内我们喜欢用阿里云的maven仓库，<br>与 <em>SpringBoot</em>  <code>2.0.2.RELEASE</code>版本对应的 <em>Spring Cloud</em> 版本是<code>Finchley.RC2</code>，通过<em>Spring Initalizr_创建的项目会自动选择合适的版本。<br>但是阿里云仓库里似乎没有这个版本的 _Spring Cloud</em> ，导致 <em>Eureka</em> 相关的包都找不到。</p>
 <p>哎，我也是搞了好久才发现是这个问题，以前都以为阿里云maven仓库应该是完整的。后来我发现这个锅也不能让阿里仓库背，maven中央仓库的版本甚至比阿里仓库还低，在pom中手动添加spring官方仓库，里面有所需版本 <code>Finchley.RC2</code>。菜鸟学习技术需谨慎啊，盲目使用最新版本，给自己带来不必要的麻烦。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;repositories&gt;</span><br><span class="line">    &lt;repository&gt;</span><br><span class="line">        &lt;id&gt;spring-milestones&lt;&#x2F;id&gt;</span><br><span class="line">        &lt;name&gt;Spring Milestones&lt;&#x2F;name&gt;</span><br><span class="line">        &lt;url&gt;https:&#x2F;&#x2F;repo.spring.io&#x2F;milestone&lt;&#x2F;url&gt;</span><br><span class="line">        &lt;snapshots&gt;</span><br><span class="line">            &lt;enabled&gt;false&lt;&#x2F;enabled&gt;</span><br><span class="line">        &lt;&#x2F;snapshots&gt;</span><br><span class="line">    &lt;&#x2F;repository&gt;</span><br><span class="line">&lt;&#x2F;repositories&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">repositories</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">repository</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>spring-milestones<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>Spring Milestones<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>https://repo.spring.io/milestone<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">snapshots</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">enabled</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">enabled</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">snapshots</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">repository</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">repositories</span>&gt;</span></code></pre>
 
 <p>使用 application.yml 的配置</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8761</span> <span class="comment"># 8761是eureka server的默认端口</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">server:</span></span><br><span class="line">    <span class="attr">enable-self-preservation:</span> <span class="literal">false</span> <span class="comment">#防止由于Eureka的机制导致Client被错误显示在线 仅在开发环境使用</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka/</span> <span class="comment">#这便是此eureka server的应用注册地址</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span> <span class="comment">#不显示对server应用的注册</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">eureka-demo</span></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs yml"><span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8761</span> <span class="hljs-comment"># 8761是eureka server的默认端口</span>
+<span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">server:</span>
+    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">false</span> <span class="hljs-comment">#防止由于Eureka的机制导致Client被错误显示在线 仅在开发环境使用</span>
+  <span class="hljs-attr">client:</span>
+    <span class="hljs-attr">service-url:</span>
+      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka/</span> <span class="hljs-comment">#这便是此eureka server的应用注册地址</span>
+    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">false</span> <span class="hljs-comment">#不显示对server应用的注册</span>
+<span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">application:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">eureka-demo</span></code></pre>
 <p>记得在springboot 启动类上加上注解<code>@EnableEurekaServer</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package lzlz.demo.springcloud.eureka;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaServer</span><br><span class="line">public class EurekaApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(EurekaApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs typescript">package lzlz.demo.springcloud.eureka;
+
+<span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;
+<span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;
+<span class="hljs-keyword">import</span> org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
+
+<span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-meta">@EnableEurekaServer</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EurekaApplication</span> </span>&#123;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-function"><span class="hljs-title">main</span>(<span class="hljs-params"><span class="hljs-built_in">String</span>[] args</span>)</span> &#123;
+        SpringApplication.run(EurekaApplication.class, args);
+    &#125;
+&#125;</code></pre>
 <p>现在就可以启动啦，红色的警告部分就是配置<code>enable-self-preservation: false</code>造成的<br><img src="https://upload-images.jianshu.io/upload_images/3867641-247ff9a28424023f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="image.png"></p>
 <p>也可以通过 <code>mvn clean package</code> 把此项目编译成jar包方便使用，jar包在 target目录下。</p>
 <h5 id="创建-配置Eureka-Client项目"><a href="#创建-配置Eureka-Client项目" class="headerlink" title="创建 配置Eureka Client项目"></a>创建 配置Eureka Client项目</h5><p>New Project-&gt; Spring Initalizr<br>next 修改group 和 artifact<br>next 我使用的是2.0.2版本的SpringBoot 选择 Web 和 Eureka Discovery 依赖<br><img src="https://upload-images.jianshu.io/upload_images/3867641-6ea44056d7fa4fee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"></p>
 <p>一路确定 完成创建。</p>
 <p>使用 application.yml 的配置</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8081</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka/</span> <span class="comment">#注册到刚才那台Eureka Server地址</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">client-0</span></span><br></pre></td></tr></table></figure>
+<pre><code class="hljs yml"><span class="hljs-attr">server:</span>
+  <span class="hljs-attr">port:</span> <span class="hljs-number">8081</span>
+<span class="hljs-attr">eureka:</span>
+  <span class="hljs-attr">client:</span>
+    <span class="hljs-attr">service-url:</span>
+      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:8761/eureka/</span> <span class="hljs-comment">#注册到刚才那台Eureka Server地址</span>
+<span class="hljs-attr">spring:</span>
+  <span class="hljs-attr">application:</span>
+    <span class="hljs-attr">name:</span> <span class="hljs-string">client-0</span></code></pre>
 <p>记得在 <em>SpringBoot</em> 启动类上加上注解<code>@EnableDiscoveryClient</code></p>
 <h6 id="运行Server-和-Client"><a href="#运行Server-和-Client" class="headerlink" title="运行Server 和 Client"></a>运行Server 和 Client</h6><p>可以看到名为 <em>client-0</em> 的应用已经注册到 <em>Eureka</em> 中<br><img src="https://upload-images.jianshu.io/upload_images/3867641-485fb1c48cf134f0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif"></p>
 <p>注意 Eureka 服务端和客户端的连接有心跳检测的机制，因此客户端连接或者断开连接都可能不是即时反应的。</p>

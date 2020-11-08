@@ -189,12 +189,12 @@
             
           
           使用RestTemplate进行应用间通信上文中我们已经准备好了 Eureka Server，在测试环境中，就不需要多个Eureka了，启动一个应用即可，为了方便我们打包运行
-1java -jar .\target\eureka-0.0.1-SNAPSHOT.jar
+java -jar .\target\eureka-0.0.1-SNAPSHOT.jar
 
 
 
 我们再创建两个 Spring Boot 项目，分别为product，consumer 并修改配置文件注册到 Eureka 中
-
+e
         </a>
       </p>
 
@@ -238,7 +238,15 @@
             
           
           使用多个 Eureka通过不同的配置文件 application.yml 启动多个实例来实现
-12345678910111213#Server 1server:  port: 8761eureka:  server:    enable-self-preservation: false   client:    service-url:      defaultZone: http://local
+#Server 1
+server:
+  port: 8761
+eureka:
+  server:
+    enable-self-preservation: false 
+  client:
+    service-url:
+      defaultZone: http://localhost:8762
         </a>
       </p>
 
@@ -326,7 +334,15 @@
             
           
           先来看看需要实现的效果
-123456789101112131415161718192021&#x2F;&#x2F; 客户端A&gt; IM.subscribe(&#39;频道1&#39;)&gt; IM.subscribe(&#39;频道2&#39;)&lt; undefined订阅 [频道1] 成功&#x2F;&#x2F; 客户端B 发送了消息&gt; IM.send(&#39;频道1&#39;
+// 客户端A
+&gt; IM.subscribe(&#x27;频道1&#x27;)
+&gt; IM.subscribe(&#x27;频道2&#x27;)
+&lt; undefined
+订阅 [频道1] 成功
+
+// 客户端B 发送了消息
+&gt; IM.send(&#x27;频道1&#x27;,&#x27;hello world&#x27;)
+// 客户端C 短时间内向 
         </a>
       </p>
 
@@ -344,9 +360,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>
-            
               <a href="/tags/java/">java</a>
+            
+              <a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>
             
               <a href="/tags/springboot/">springboot</a>
             

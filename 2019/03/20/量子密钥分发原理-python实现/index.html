@@ -233,37 +233,221 @@
 <p><img src="/images/12402.png" srcset="/img/loading.gif" alt="本文内容"> <img src="/images/124.png" srcset="/img/loading.gif" alt="量子通讯"></p>
 <h4 id="观测对测量结果的影响"><a href="#观测对测量结果的影响" class="headerlink" title="观测对测量结果的影响"></a>观测对测量结果的影响</h4><p>观测对测量结果产生影响的这种思想，真的对我的世界观产生了极大的挑战，世间万物居然遵循着这样的规律运行，让人感觉十分奇妙。</p>
 <p>一个宏观对象，假设他有a,b,c 3个属性，该属性在对象生成时就确定，值可以为0或者1。就如同你生来就是男生/女生 不可修改，当然现在可以变性，但是实际上你的基因并不会改变，仅仅是“形似”罢了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.__a = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        self.__b = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        self.__c = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_a</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.__a</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_b</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.__b</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_c</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.__b</span><br><span class="line"></span><br><span class="line">o = Object()</span><br><span class="line">print(<span class="string">&quot;a:&quot;</span>+<span class="built_in">str</span>(o.get_a())+<span class="string">&quot; b:&quot;</span>+<span class="built_in">str</span>(o.get_b())+<span class="string">&quot; c:&quot;</span>+<span class="built_in">str</span>(o.get_c()))</span><br><span class="line">print(<span class="string">&quot;b:&quot;</span>+<span class="built_in">str</span>(o.get_b())+<span class="string">&quot; a:&quot;</span>+<span class="built_in">str</span>(o.get_a()))</span><br><span class="line">print(<span class="string">&quot;c:&quot;</span>+<span class="built_in">str</span>(o.get_a())+<span class="string">&quot; b:&quot;</span>+<span class="built_in">str</span>(o.get_b()))</span><br><span class="line">print(<span class="string">&quot;a:&quot;</span>+<span class="built_in">str</span>(o.get_a())+<span class="string">&quot; c:&quot;</span>+<span class="built_in">str</span>(o.get_b()))</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python"><span class="hljs-keyword">import</span> random
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Object</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span>
+        self.__a = random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+        self.__b = random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+        self.__c = random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_a</span>(<span class="hljs-params">self</span>):</span>
+        <span class="hljs-keyword">return</span> self.__a
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_b</span>(<span class="hljs-params">self</span>):</span>
+        <span class="hljs-keyword">return</span> self.__b
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_c</span>(<span class="hljs-params">self</span>):</span>
+        <span class="hljs-keyword">return</span> self.__b
+
+o = Object()
+print(<span class="hljs-string">&quot;a:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_a())+<span class="hljs-string">&quot; b:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_b())+<span class="hljs-string">&quot; c:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_c()))
+print(<span class="hljs-string">&quot;b:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_b())+<span class="hljs-string">&quot; a:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_a()))
+print(<span class="hljs-string">&quot;c:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_a())+<span class="hljs-string">&quot; b:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_b()))
+print(<span class="hljs-string">&quot;a:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_a())+<span class="hljs-string">&quot; c:&quot;</span>+<span class="hljs-built_in">str</span>(o.get_b()))</code></pre>
 
 <p>显而易见，对象生成后它的属性便是一个确定的值，该结果不会因为你的测量顺序而改变。比如你是一个汉族男性，不会因为先检查你的性别还是先检查你的民族而有所差别，在人类没有发现量子世界的性质之前，世间万物皆为如此。可能的运行结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a:1 b:0 c:0</span><br><span class="line">b:0 a:1</span><br><span class="line">c:0 b:0</span><br><span class="line">a:1 c:0</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs shell">a:1 b:0 c:0
+b:0 a:1
+c:0 b:0
+a:1 c:0</code></pre>
 
 <p><strong>量子的观测不对异性</strong><br>对量子的不同特征进行测量，观测的顺序会影响测量的结果，这种性质被称为 “量子的观测不对异性” 。嗯，一个充满哲♂学气息的性质，可见量子是个gay，观测只对同性。<br>注意，该结果不是随机的，而是“叠加的”，因为当你的测量顺序一定时得到的结果是确定的。在两个属性（a,b）的情况下，一个量子的观测方式有[a,b],[b,a]两种，因此其a,b属性应该是两种状态的叠加。以此类推我们用代码来描述一个拥有a,b,c 3个属性的“量子对象”。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">            self.__children = &#123;&#125;</span><br><span class="line">            self.__val = random.randint(<span class="number">0</span>,<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">set_child</span>(<span class="params">self, name, child</span>):</span></span><br><span class="line">            self.__children[name]=child</span><br><span class="line">            <span class="keyword">return</span> child <span class="comment"># 方便连续调用简化代码</span></span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get_child</span>(<span class="params">self, name</span>):</span></span><br><span class="line">            <span class="keyword">return</span> self.__children[name]</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">get_val</span>(<span class="params">self</span>):</span></span><br><span class="line">            <span class="keyword">return</span> self.__val</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Quantum</span>:</span></span><br><span class="line">    <span class="comment">#关于叠加态 我们可以用树结构来维护</span></span><br><span class="line">    <span class="comment">#一个3个属性的量子，可表示为,</span></span><br><span class="line">    <span class="comment">#     root</span></span><br><span class="line">    <span class="comment">#   /   |   \</span></span><br><span class="line">    <span class="comment">#  a    b    c</span></span><br><span class="line">    <span class="comment">#  /\   /\   /\</span></span><br><span class="line">    <span class="comment"># b  c a  c a  b </span></span><br><span class="line">    <span class="comment"># |  | |  | |  |</span></span><br><span class="line">    <span class="comment"># c  b c  a b  a</span></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测量方式，队列，如果新的测量属性和队列中最后一个值不一致则加入队列，</span></span><br><span class="line">    <span class="comment"># 如果队列长度大于（属性数-1）则头部数据出列，，为了便于理解，假设有abc三个属性</span></span><br><span class="line">    <span class="comment"># 测量属性 队列值</span></span><br><span class="line">    <span class="comment"># a       [a]</span></span><br><span class="line">    <span class="comment"># b       [a,b]  </span></span><br><span class="line">    <span class="comment"># c       [b,c]  </span></span><br><span class="line">    <span class="comment"># c       [b,c]   和最后一次测量一样 不发生改变</span></span><br><span class="line">    <span class="comment"># a       [c,a]  </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.route = []</span><br><span class="line">        root = TreeNode()</span><br><span class="line">        self.root = root</span><br><span class="line">        root.set_child(<span class="string">&#x27;a&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;b&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;c&#x27;</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">&#x27;a&#x27;</span>).set_child(<span class="string">&#x27;c&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;b&#x27;</span>,TreeNode())</span><br><span class="line">        root.set_child(<span class="string">&#x27;b&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;a&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;c&#x27;</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">&#x27;b&#x27;</span>).set_child(<span class="string">&#x27;c&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;a&#x27;</span>,TreeNode())</span><br><span class="line">        root.set_child(<span class="string">&#x27;c&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;a&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;b&#x27;</span>,TreeNode())</span><br><span class="line">        root.get_child(<span class="string">&#x27;c&#x27;</span>).set_child(<span class="string">&#x27;b&#x27;</span>,TreeNode()).set_child(<span class="string">&#x27;a&#x27;</span>,TreeNode())</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__get</span>(<span class="params">self, name</span>):</span></span><br><span class="line">        length = <span class="built_in">len</span>(self.route)</span><br><span class="line">        <span class="keyword">if</span> (length == <span class="number">0</span> <span class="keyword">or</span> self.route[<span class="number">-1</span>]!=name):</span><br><span class="line">            self.route.append(name)</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">len</span>(self.route) &gt;<span class="number">2</span>):</span><br><span class="line">                self.route.pop(<span class="number">0</span>)</span><br><span class="line">        node = self.root</span><br><span class="line">        <span class="keyword">for</span> name <span class="keyword">in</span> self.route:</span><br><span class="line">            node = node.get_child(name)</span><br><span class="line">        <span class="keyword">return</span> node.get_val()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_a</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_b</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_c</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.__get(<span class="string">&#x27;c&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TreeNode</span>:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span>
+            self.__children = &#123;&#125;
+            self.__val = random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)
+        
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">set_child</span>(<span class="hljs-params">self, name, child</span>):</span>
+            self.__children[name]=child
+            <span class="hljs-keyword">return</span> child <span class="hljs-comment"># 方便连续调用简化代码</span>
+        
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_child</span>(<span class="hljs-params">self, name</span>):</span>
+            <span class="hljs-keyword">return</span> self.__children[name]
+        
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_val</span>(<span class="hljs-params">self</span>):</span>
+            <span class="hljs-keyword">return</span> self.__val
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Quantum</span>:</span>
+    <span class="hljs-comment">#关于叠加态 我们可以用树结构来维护</span>
+    <span class="hljs-comment">#一个3个属性的量子，可表示为,</span>
+    <span class="hljs-comment">#     root</span>
+    <span class="hljs-comment">#   /   |   \</span>
+    <span class="hljs-comment">#  a    b    c</span>
+    <span class="hljs-comment">#  /\   /\   /\</span>
+    <span class="hljs-comment"># b  c a  c a  b </span>
+    <span class="hljs-comment"># |  | |  | |  |</span>
+    <span class="hljs-comment"># c  b c  a b  a</span>
+    
+
+    <span class="hljs-comment"># 测量方式，队列，如果新的测量属性和队列中最后一个值不一致则加入队列，</span>
+    <span class="hljs-comment"># 如果队列长度大于（属性数-1）则头部数据出列，，为了便于理解，假设有abc三个属性</span>
+    <span class="hljs-comment"># 测量属性 队列值</span>
+    <span class="hljs-comment"># a       [a]</span>
+    <span class="hljs-comment"># b       [a,b]  </span>
+    <span class="hljs-comment"># c       [b,c]  </span>
+    <span class="hljs-comment"># c       [b,c]   和最后一次测量一样 不发生改变</span>
+    <span class="hljs-comment"># a       [c,a]  </span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span>
+        self.route = []
+        root = TreeNode()
+        self.root = root
+        root.set_child(<span class="hljs-string">&#x27;a&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;b&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;c&#x27;</span>,TreeNode())
+        root.get_child(<span class="hljs-string">&#x27;a&#x27;</span>).set_child(<span class="hljs-string">&#x27;c&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;b&#x27;</span>,TreeNode())
+        root.set_child(<span class="hljs-string">&#x27;b&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;a&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;c&#x27;</span>,TreeNode())
+        root.get_child(<span class="hljs-string">&#x27;b&#x27;</span>).set_child(<span class="hljs-string">&#x27;c&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;a&#x27;</span>,TreeNode())
+        root.set_child(<span class="hljs-string">&#x27;c&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;a&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;b&#x27;</span>,TreeNode())
+        root.get_child(<span class="hljs-string">&#x27;c&#x27;</span>).set_child(<span class="hljs-string">&#x27;b&#x27;</span>,TreeNode()).set_child(<span class="hljs-string">&#x27;a&#x27;</span>,TreeNode())
+    
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__get</span>(<span class="hljs-params">self, name</span>):</span>
+        length = <span class="hljs-built_in">len</span>(self.route)
+        <span class="hljs-keyword">if</span> (length == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> self.route[<span class="hljs-number">-1</span>]!=name):
+            self.route.append(name)
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">len</span>(self.route) &gt;<span class="hljs-number">2</span>):
+                self.route.pop(<span class="hljs-number">0</span>)
+        node = self.root
+        <span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> self.route:
+            node = node.get_child(name)
+        <span class="hljs-keyword">return</span> node.get_val()
+
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_a</span>(<span class="hljs-params">self</span>):</span>
+        <span class="hljs-keyword">return</span> self.__get(<span class="hljs-string">&#x27;a&#x27;</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_b</span>(<span class="hljs-params">self</span>):</span>
+        <span class="hljs-keyword">return</span> self.__get(<span class="hljs-string">&#x27;b&#x27;</span>)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_c</span>(<span class="hljs-params">self</span>):</span>
+        <span class="hljs-keyword">return</span> self.__get(<span class="hljs-string">&#x27;c&#x27;</span>)</code></pre>
 
 <p>好了，我们已经通过代码实现了“观测对测量结果产生影响”的效果。每一次get属性值，就是对对象的一次观测，不同观测顺序下，变量会返回不同的值。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创造一个量子并对他的属性反复观测</span></span><br><span class="line">q = Quantum()</span><br><span class="line">print(<span class="string">&#x27;a&#x27;</span>,q.get_a())</span><br><span class="line">print(<span class="string">&#x27;b&#x27;</span>,q.get_a())</span><br><span class="line">print(<span class="string">&#x27;a&#x27;</span>,q.get_b())</span><br><span class="line">print(<span class="string">&#x27;c&#x27;</span>,q.get_c())</span><br><span class="line">print(<span class="string">&#x27;a&#x27;</span>,q.get_a())</span><br><span class="line">print(<span class="string">&#x27;b&#x27;</span>,q.get_a())</span><br><span class="line">print(<span class="string">&#x27;a&#x27;</span>,q.get_a())</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python"><span class="hljs-comment"># 创造一个量子并对他的属性反复观测</span>
+q = Quantum()
+print(<span class="hljs-string">&#x27;a&#x27;</span>,q.get_a())
+print(<span class="hljs-string">&#x27;b&#x27;</span>,q.get_a())
+print(<span class="hljs-string">&#x27;a&#x27;</span>,q.get_b())
+print(<span class="hljs-string">&#x27;c&#x27;</span>,q.get_c())
+print(<span class="hljs-string">&#x27;a&#x27;</span>,q.get_a())
+print(<span class="hljs-string">&#x27;b&#x27;</span>,q.get_a())
+print(<span class="hljs-string">&#x27;a&#x27;</span>,q.get_a())</code></pre>
 
 <p>可能的运行结果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a 0</span><br><span class="line">b 0</span><br><span class="line">a 1</span><br><span class="line">c 1</span><br><span class="line">a 0</span><br><span class="line">b 0</span><br><span class="line">a 0</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs shell">a 0
+b 0
+a 1
+c 1
+a 0
+b 0
+a 0</code></pre>
 
 <h4 id="量子秘钥分发"><a href="#量子秘钥分发" class="headerlink" title="量子秘钥分发"></a>量子秘钥分发</h4><p>通过量子的物理性质，保证了秘钥分发时的绝对安全<br>用代码来模拟该过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">from quantum import Quantum</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Observer:</span><br><span class="line">    length &#x3D; 20</span><br><span class="line"></span><br><span class="line">    def __init__(self, name):</span><br><span class="line">        self.name &#x3D; name</span><br><span class="line">        self.q_list &#x3D; []  # 量子集合</span><br><span class="line"></span><br><span class="line">    # 初始化量子集合</span><br><span class="line">    def init_quantum(self):</span><br><span class="line">        for i in range(Observer.length):</span><br><span class="line">            self.q_list.append(Quantum())</span><br><span class="line"></span><br><span class="line">    # 观测</span><br><span class="line">    def observe(self):</span><br><span class="line">        def __observe(quantum):</span><br><span class="line">            ran &#x3D; random.randint(0, 2)</span><br><span class="line">            #最常见的光量子就有“线偏振”和“圆偏振”两种属性</span><br><span class="line">            # 只使用a,b两个属性 来模拟这种情况</span><br><span class="line">            if (ran &#x3D;&#x3D; 0):</span><br><span class="line">                return (&#39;a&#39;, q.get_a())</span><br><span class="line">            else:</span><br><span class="line">                return (&#39;b&#39;, q.get_b())</span><br><span class="line">        self.path &#x3D; []</span><br><span class="line">        self.result &#x3D; []</span><br><span class="line">        for q in self.q_list:</span><br><span class="line">            result &#x3D; __observe(q)</span><br><span class="line">            self.path.append(result[0])</span><br><span class="line">            self.result.append(result[1])</span><br><span class="line">        print(self.name,&#39;观测方式：&#39;, self.path)</span><br><span class="line">        print(self.name,&#39;观测结果：&#39;, self.result)</span><br><span class="line">    </span><br><span class="line">    # 从另一个观测者获取量子序列</span><br><span class="line">    def get_quantum(self, another):</span><br><span class="line">        self.q_list&#x3D;another.q_list</span><br><span class="line">    </span><br><span class="line">    # 从另一个观测者获取观测方式</span><br><span class="line">    def get_path(self, another):</span><br><span class="line">        self.key &#x3D; []</span><br><span class="line">        for i in range(Observer.length):</span><br><span class="line">            if (another.path[i] &#x3D;&#x3D; self.path[i]):</span><br><span class="line">                self.key.append(self.result[i])</span><br><span class="line">        print(self.name,&#39;秘钥：&#39;, self.key)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs ruby">from quantum import Quantum
+import random
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Observer</span>:</span>
+    length = <span class="hljs-number">20</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, name)</span></span><span class="hljs-symbol">:</span>
+        <span class="hljs-keyword">self</span>.name = name
+        <span class="hljs-keyword">self</span>.q_list = []  <span class="hljs-comment"># 量子集合</span>
+
+    <span class="hljs-comment"># 初始化量子集合</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">init_quantum</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span><span class="hljs-symbol">:</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(Observer.length)<span class="hljs-symbol">:</span>
+            <span class="hljs-keyword">self</span>.q_list.append(Quantum())
+
+    <span class="hljs-comment"># 观测</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">observe</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span><span class="hljs-symbol">:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__observe</span><span class="hljs-params">(quantum)</span></span><span class="hljs-symbol">:</span>
+            ran = random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>)
+            <span class="hljs-comment">#最常见的光量子就有“线偏振”和“圆偏振”两种属性</span>
+            <span class="hljs-comment"># 只使用a,b两个属性 来模拟这种情况</span>
+            <span class="hljs-keyword">if</span> (ran == <span class="hljs-number">0</span>)<span class="hljs-symbol">:</span>
+                <span class="hljs-keyword">return</span> (<span class="hljs-string">&#x27;a&#x27;</span>, q.get_a())
+            <span class="hljs-symbol">else:</span>
+                <span class="hljs-keyword">return</span> (<span class="hljs-string">&#x27;b&#x27;</span>, q.get_b())
+        <span class="hljs-keyword">self</span>.path = []
+        <span class="hljs-keyword">self</span>.result = []
+        <span class="hljs-keyword">for</span> q <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.<span class="hljs-symbol">q_list:</span>
+            result = __observe(q)
+            <span class="hljs-keyword">self</span>.path.append(result[<span class="hljs-number">0</span>])
+            <span class="hljs-keyword">self</span>.result.append(result[<span class="hljs-number">1</span>])
+        print(<span class="hljs-keyword">self</span>.name,<span class="hljs-string">&#x27;观测方式：&#x27;</span>, <span class="hljs-keyword">self</span>.path)
+        print(<span class="hljs-keyword">self</span>.name,<span class="hljs-string">&#x27;观测结果：&#x27;</span>, <span class="hljs-keyword">self</span>.result)
+    
+    <span class="hljs-comment"># 从另一个观测者获取量子序列</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_quantum</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, another)</span></span><span class="hljs-symbol">:</span>
+        <span class="hljs-keyword">self</span>.q_list=another.q_list
+    
+    <span class="hljs-comment"># 从另一个观测者获取观测方式</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_path</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, another)</span></span><span class="hljs-symbol">:</span>
+        <span class="hljs-keyword">self</span>.key = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(Observer.length)<span class="hljs-symbol">:</span>
+            <span class="hljs-keyword">if</span> (another.path[i] == <span class="hljs-keyword">self</span>.path[i])<span class="hljs-symbol">:</span>
+                <span class="hljs-keyword">self</span>.key.append(<span class="hljs-keyword">self</span>.result[i])
+        print(<span class="hljs-keyword">self</span>.name,<span class="hljs-string">&#x27;秘钥：&#x27;</span>, <span class="hljs-keyword">self</span>.key)</code></pre>
 
 <p>观测和秘钥传输</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sender &#x3D; Observer(&#39;发送者&#39;)</span><br><span class="line">sender.init_quantum() # 初始化量子序列</span><br><span class="line">sender.observe() # 对量子序列进行观测</span><br><span class="line"></span><br><span class="line">reciver &#x3D; Observer(&#39;接收者&#39;)</span><br><span class="line">reciver.get_quantum(sender) # 发送者把量子传输给接收者</span><br><span class="line">reciver.observe() # 接收者对其观测</span><br><span class="line"></span><br><span class="line"># 双方交换观察方式</span><br><span class="line">sender.get_path(reciver)</span><br><span class="line">reciver.get_path(sender)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs reasonml">sender = <span class="hljs-constructor">Observer(&#x27;发送者&#x27;)</span>
+sender.init<span class="hljs-constructor">_quantum()</span> # 初始化量子序列
+sender.observe<span class="hljs-literal">()</span> # 对量子序列进行观测
+
+reciver = <span class="hljs-constructor">Observer(&#x27;接收者&#x27;)</span>
+reciver.get<span class="hljs-constructor">_quantum(<span class="hljs-params">sender</span>)</span> # 发送者把量子传输给接收者
+reciver.observe<span class="hljs-literal">()</span> # 接收者对其观测
+
+# 双方交换观察方式
+sender.get<span class="hljs-constructor">_path(<span class="hljs-params">reciver</span>)</span>
+reciver.get<span class="hljs-constructor">_path(<span class="hljs-params">sender</span>)</span></code></pre>
 
 <p>可以得到这样的运行结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">发送者 观测方式： [&#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;]</span><br><span class="line">发送者 观测结果： [0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1]</span><br><span class="line">接收者 观测方式： [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;]</span><br><span class="line">接收者 观测结果： [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0]</span><br><span class="line">发送者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]</span><br><span class="line">接收者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs shell">发送者 观测方式： [&#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;]
+发送者 观测结果： [0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1]
+接收者 观测方式： [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;]
+接收者 观测结果： [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0]
+发送者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]
+接收者 秘钥： [0, 0, 1, 1, 0, 1, 0, 0, 1, 1]</code></pre>
 
 <h4 id="如何保证安全"><a href="#如何保证安全" class="headerlink" title="如何保证安全"></a>如何保证安全</h4><p>在模拟的代码中，“量子的观测不对异性” 通过存储观测方式 path 在Quantum对象中实现。这是我们在宏观世界来模拟这种现象的一种实现手段，实际上这是一种基本物理性质，观测者不可能从量子上得到之前对它观测的方式。</p>
 <p><strong>量子不可克隆</strong><br>要保证安全还需要量子的另一个特性“量子不可克隆”。就是说，世间没有两个相同的量子，你不可能通过一个已得到的量子获得完全相同的另一个量子。没有这个原理，窃听者完全可以复制一个量子对它进行观测并把原来的量子传送给接收者。</p>
 <p><strong>窃听过程</strong><br>知道上述两个物理性质后，如果有人试图监听，便是只能中截获了发送者传输的量子，并观测其值，然后再把它发送给接收者。然而此时所有人都不知道发送者的观测方式。窃听者也只能按自己的想法随意观测其属性。但没有关系，你对量子的观测便改变了量子的状态，当接收者获取到量子时，即便和发送者用同样的方式观测，也有可能得到不同的结果，当这个序列数量非常大的时候,这是必然发生的，结果就是得到了和发送者不一样的秘钥，这样窃听便被发现了。</p>
 <p>模拟上述过程：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">sender = Observer(<span class="string">&#x27;发送者&#x27;</span>)</span><br><span class="line">sender.init_quantum() <span class="comment"># 初始化量子序列</span></span><br><span class="line">sender.observe() <span class="comment"># 对量子序列进行观测</span></span><br><span class="line"></span><br><span class="line">interceptor = Observer(<span class="string">&#x27;窃听者&#x27;</span>)</span><br><span class="line">interceptor.get_quantum(sender) <span class="comment"># 截取信息</span></span><br><span class="line">interceptor.observe() <span class="comment"># 观测</span></span><br><span class="line"></span><br><span class="line">reciver = Observer(<span class="string">&#x27;接收者&#x27;</span>)</span><br><span class="line">reciver.get_quantum(interceptor) <span class="comment"># 发送者把量子传输给接收者</span></span><br><span class="line">reciver.observe() <span class="comment"># 接收者对其观测</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 双方交换观察方式</span></span><br><span class="line">sender.get_path(reciver)</span><br><span class="line">reciver.get_path(sender)</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python">sender = Observer(<span class="hljs-string">&#x27;发送者&#x27;</span>)
+sender.init_quantum() <span class="hljs-comment"># 初始化量子序列</span>
+sender.observe() <span class="hljs-comment"># 对量子序列进行观测</span>
+
+interceptor = Observer(<span class="hljs-string">&#x27;窃听者&#x27;</span>)
+interceptor.get_quantum(sender) <span class="hljs-comment"># 截取信息</span>
+interceptor.observe() <span class="hljs-comment"># 观测</span>
+
+reciver = Observer(<span class="hljs-string">&#x27;接收者&#x27;</span>)
+reciver.get_quantum(interceptor) <span class="hljs-comment"># 发送者把量子传输给接收者</span>
+reciver.observe() <span class="hljs-comment"># 接收者对其观测</span>
+
+<span class="hljs-comment"># 双方交换观察方式</span>
+sender.get_path(reciver)
+reciver.get_path(sender)</code></pre>
 
 <p>运行结果：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">发送者 观测方式： [&#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;]</span><br><span class="line">发送者 观测结果： [1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1]</span><br><span class="line">窃听者 观测方式： [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;]</span><br><span class="line">窃听者 观测结果： [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]</span><br><span class="line">接收者 观测方式： [&#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;]</span><br><span class="line">接收者 观测结果： [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0]</span><br><span class="line">发送者 秘钥： [1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1]</span><br><span class="line">接收者 秘钥： [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0]</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs shell">发送者 观测方式： [&#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;]
+发送者 观测结果： [1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1]
+窃听者 观测方式： [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;]
+窃听者 观测结果： [0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0]
+接收者 观测方式： [&#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;b&#x27;, &#x27;a&#x27;, &#x27;b&#x27;, &#x27;a&#x27;]
+接收者 观测结果： [0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0]
+发送者 秘钥： [1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1]
+接收者 秘钥： [1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0]</code></pre>
 
 <p>代码请参考<br><a target="_blank" rel="noopener" href="https://github.com/lzlz000/simple-clear-knowledge/tree/master/%5Bpython%5D%E9%87%8F%E5%AD%90%E9%80%9A%E8%AE%AF">https://github.com/lzlz000/simple-clear-knowledge/tree/master/%5Bpython%5D%E9%87%8F%E5%AD%90%E9%80%9A%E8%AE%AF</a></p>
 

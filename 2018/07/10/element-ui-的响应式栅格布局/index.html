@@ -186,7 +186,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      458 字
+      406 字
     </span>
   
 
@@ -196,7 +196,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      7
+      6
        分钟
     </span>
   
@@ -236,18 +236,36 @@
 <li><p>尺寸属性可以设为0，则该el-col不显示</p>
 </li>
 <li><p>不论尺寸属性设置为多少，若el-col中没有任何内容则该el-col不显示（内部元素为空也不行，如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col&gt;</span><br><span class="line">    &lt;div&gt;&lt;&#x2F;div&gt;</span><br><span class="line">    &lt;span&gt;&lt;&#x2F;span&gt;</span><br><span class="line">&lt;&#x2F;el-col&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-row&gt;</span><br><span class="line">    &lt;el-col :xs&#x3D;&quot;12&quot; :sm&#x3D;&quot;9&quot; :md&#x3D;&quot;6&quot; :lg&#x3D;&quot;0&quot; :xl&#x3D;&quot;0&quot;&gt;123&lt;&#x2F;el-col&gt;</span><br><span class="line">    &lt;el-col :xs&#x3D;&quot;12&quot; :sm&#x3D;&quot;15&quot; :md&#x3D;&quot;18&quot; :lg&#x3D;&quot;21&quot; :xl&#x3D;&quot;24&quot;&gt;456&lt;&#x2F;el-col&gt;</span><br><span class="line">&lt;&#x2F;el-row&gt;</span><br></pre></td></tr></table></figure></li>
+<pre><code class="hljs apache"><span class="hljs-section">&lt;el-col&gt;</span>
+    <span class="hljs-section">&lt;div&gt;</span><span class="hljs-section">&lt;/div&gt;</span>
+    <span class="hljs-section">&lt;span&gt;</span><span class="hljs-section">&lt;/span&gt;</span>
+<span class="hljs-section">&lt;/el-col&gt;</span></code></pre>
+<pre><code class="hljs vim"><span class="hljs-symbol">&lt;el-row&gt;</span>
+    &lt;<span class="hljs-keyword">el</span>-<span class="hljs-keyword">col</span> :xs=<span class="hljs-string">&quot;12&quot;</span> :<span class="hljs-keyword">sm</span>=<span class="hljs-string">&quot;9&quot;</span> :md=<span class="hljs-string">&quot;6&quot;</span> :<span class="hljs-keyword">lg</span>=<span class="hljs-string">&quot;0&quot;</span> :xl=<span class="hljs-string">&quot;0&quot;</span>&gt;<span class="hljs-number">123</span>&lt;/<span class="hljs-keyword">el</span>-<span class="hljs-keyword">col</span>&gt;
+    &lt;<span class="hljs-keyword">el</span>-<span class="hljs-keyword">col</span> :xs=<span class="hljs-string">&quot;12&quot;</span> :<span class="hljs-keyword">sm</span>=<span class="hljs-string">&quot;15&quot;</span> :md=<span class="hljs-string">&quot;18&quot;</span> :<span class="hljs-keyword">lg</span>=<span class="hljs-string">&quot;21&quot;</span> :xl=<span class="hljs-string">&quot;24&quot;</span>&gt;<span class="hljs-number">456</span>&lt;/<span class="hljs-keyword">el</span>-<span class="hljs-keyword">col</span>&gt;
+&lt;/<span class="hljs-keyword">el</span>-row&gt;</code></pre></li>
 <li><p>offset 属性是没有响应式的，可以通过加入一个带一个空格的el-col解决： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;el-col :xs&#x3D;&quot;0&quot; :sm&#x3D;&quot;1&quot; :md&#x3D;&quot;2&quot; :lg&#x3D;&quot;3&quot; :xl&#x3D;&quot;3&quot;&gt;&amp;nbsp;&lt;&#x2F;el-col&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs elixir">&lt;el-col <span class="hljs-symbol">:xs=<span class="hljs-string">&quot;0&quot;</span></span> <span class="hljs-symbol">:sm=<span class="hljs-string">&quot;1&quot;</span></span> <span class="hljs-symbol">:md=<span class="hljs-string">&quot;2&quot;</span></span> <span class="hljs-symbol">:lg=<span class="hljs-string">&quot;3&quot;</span></span> <span class="hljs-symbol">:xl=<span class="hljs-string">&quot;3&quot;</span>&gt;&amp;nbsp</span>;&lt;<span class="hljs-regexp">/el-col&gt;</span></code></pre>
 
 
 </li>
 </ul>
 <p>可以把固定的响应式布局作为组件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Vue.component(&#39;my-container&#39;,&#123;</span><br><span class="line">    template:&#96;</span><br><span class="line">    &lt;el-row&gt;</span><br><span class="line">        &lt;el-col :xs&#x3D;&quot;0&quot; :sm&#x3D;&quot;1&quot; :md&#x3D;&quot;2&quot; :lg&#x3D;&quot;3&quot; :xl&#x3D;&quot;4&quot;&gt;&amp;nbsp;&lt;&#x2F;el-col&gt;</span><br><span class="line">        &lt;el-col :xs&#x3D;&quot;24&quot; :sm&#x3D;&quot;22&quot; :md&#x3D;&quot;20&quot; :lg&#x3D;&quot;18&quot; :xl&#x3D;&quot;18&quot;&gt;</span><br><span class="line">            &lt;slot&gt;&lt;&#x2F;slot&gt;</span><br><span class="line">        &lt;&#x2F;el-col&gt;</span><br><span class="line">        &lt;el-col :xs&#x3D;&quot;0&quot; :sm&#x3D;&quot;1&quot; :md&#x3D;&quot;2&quot; :lg&#x3D;&quot;3&quot; :xl&#x3D;&quot;4&quot;&gt;&amp;nbsp;&lt;&#x2F;el-col&gt;</span><br><span class="line">    &lt;&#x2F;el-row&gt;</span><br><span class="line">    &#96;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs xquery">Vue.component(<span class="hljs-string">&#x27;my-container&#x27;</span>,&#123;
+    template:`
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-row</span>&gt;</span></span>
+<span class="xml">        </span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-col</span> <span class="hljs-attr">:xs</span>=<span class="hljs-string">&quot;0&quot;</span> <span class="hljs-attr">:sm</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">:md</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">:lg</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">:xl</span>=<span class="hljs-string">&quot;4&quot;</span>&gt;</span><span class="hljs-symbol">&amp;nbsp;</span><span class="hljs-tag">&lt;/<span class="hljs-name">el-col</span>&gt;</span></span>
+<span class="xml">        </span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-col</span> <span class="hljs-attr">:xs</span>=<span class="hljs-string">&quot;24&quot;</span> <span class="hljs-attr">:sm</span>=<span class="hljs-string">&quot;22&quot;</span> <span class="hljs-attr">:md</span>=<span class="hljs-string">&quot;20&quot;</span> <span class="hljs-attr">:lg</span>=<span class="hljs-string">&quot;18&quot;</span> <span class="hljs-attr">:xl</span>=<span class="hljs-string">&quot;18&quot;</span>&gt;</span></span>
+<span class="xml">            </span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">slot</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">slot</span>&gt;</span></span>
+<span class="xml">        <span class="hljs-tag">&lt;/<span class="hljs-name">el-col</span>&gt;</span></span>
+<span class="xml">        </span><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">el-col</span> <span class="hljs-attr">:xs</span>=<span class="hljs-string">&quot;0&quot;</span> <span class="hljs-attr">:sm</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">:md</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">:lg</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">:xl</span>=<span class="hljs-string">&quot;4&quot;</span>&gt;</span><span class="hljs-symbol">&amp;nbsp;</span><span class="hljs-tag">&lt;/<span class="hljs-name">el-col</span>&gt;</span></span>
+<span class="xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">el-row</span>&gt;</span></span>
+    `
+&#125;);</code></pre>
 <p>就可以愉快的使用了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;my-container&gt;</span><br><span class="line">    &lt;div style&#x3D;&quot;background: red&quot;&gt;内容&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;my-container&gt;&#96;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs applescript">&lt;<span class="hljs-keyword">my</span>-container&gt;
+    &lt;<span class="hljs-keyword">div</span> style=<span class="hljs-string">&quot;background: red&quot;</span>&gt;内容&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">my</span>-container&gt;`</code></pre>
 
             </div>
             <hr>
