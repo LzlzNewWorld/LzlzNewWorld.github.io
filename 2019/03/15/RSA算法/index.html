@@ -1,0 +1,460 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="lzlz000">
+  <meta name="keywords" content="">
+  <title>RSA算法原理 - lzlz000</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lzlz000.github.io","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>lzlz000</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/lzlz000">
+                <i class="iconfont icon-github-fill"></i>
+                
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="mailto:lzlz0x000@gmail.com">
+                <i class="iconfont icon-mail"></i>
+                
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="RSA算法原理">
+              
+                RSA算法原理
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-03-15 00:00" pubdate>
+        2019年3月15日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">RSA算法原理</h1>
+            
+            <div class="markdown-body">
+              <h4 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h4><ol>
+<li>随意选择两个大的素数  p q</li>
+<li><code>n = p * q</code></li>
+<li><code>φ(n) = (p-1)(q-1)</code>  (欧拉函数)</li>
+<li>公钥e: 满足 <code>1&lt;e&lt;φ(n)</code>的整数 且和 φ(n)互质</li>
+<li>私钥d: 满足 <code>e*d mod φ(n)==1</code></li>
+<li>销毁p, q</li>
+<li>公开发布 n和公钥 e</li>
+</ol>
+<p>加密解密：</p>
+<ol>
+<li>加密，明文m (m应为小于n的整数)，m的e次幂取n的余数，得到值c即为密文<br>$c = m^e mod(n)$</li>
+<li>解密， 计算密文c的d次幂取n的余数，即得到明文m</li>
+</ol>
+<p>整体流程的简易代码 (python3)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 欧几里得算法 （辗转相除法） 求最大公约数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gcd</span>(<span class="params">m, n</span>):</span></span><br><span class="line">    mod = <span class="number">1</span></span><br><span class="line">    <span class="comment"># 将小数放到d1中</span></span><br><span class="line">    <span class="keyword">if</span>(m &lt;= n):</span><br><span class="line">        d1 = m</span><br><span class="line">        d2 = n</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        d1 = n</span><br><span class="line">        d2 = m</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> mod != <span class="number">0</span>:</span><br><span class="line">        mod = d2 % d1</span><br><span class="line">        d2 = d1</span><br><span class="line">        d1 = mod</span><br><span class="line">    <span class="keyword">return</span> d2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 真实情况下应该是很大的素数 通常为512、1024、2048位二进制数,如1024位二进制整数大约为十进制10^308数量级</span></span><br><span class="line"><span class="comment"># 计算得到秘钥然后以一定规则编码成字符串形式，形成常见的秘钥</span></span><br><span class="line">p = <span class="number">41</span></span><br><span class="line">q = <span class="number">43</span></span><br><span class="line">n = p * q</span><br><span class="line"><span class="comment"># 欧拉函数</span></span><br><span class="line">phi = (p<span class="number">-1</span>)*(q<span class="number">-1</span>)</span><br><span class="line"><span class="comment"># 1&lt;e&lt;φ(n)的整数 且和 φ(n)互质</span></span><br><span class="line">publicKey = <span class="number">2</span></span><br><span class="line"><span class="comment"># 检查是否互质 否则+1</span></span><br><span class="line"><span class="keyword">while</span> gcd(phi, publicKey) != <span class="number">1</span>:</span><br><span class="line">    publicKey = publicKey+<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 私钥d: e*d%φ(n)==1</span></span><br><span class="line">privateKey = (phi + <span class="number">1</span>) * publicKey</span><br><span class="line">print(<span class="string">&quot;公钥:&quot;</span>, publicKey,<span class="string">&quot;私钥:&quot;</span>, privateKey,<span class="string">&quot;n:&quot;</span>, n)</span><br><span class="line"><span class="comment"># 存储在计算机里的一切信息都可以认为是一串按一定规则序列化成的数字</span></span><br><span class="line">content = <span class="number">412</span>  <span class="comment"># 密文的值要小于 p * q,否则需要分段加密</span></span><br><span class="line">cipher = <span class="built_in">pow</span>(content, publicKey, n)</span><br><span class="line">print(<span class="string">&quot;密文&quot;</span>, cipher)</span><br><span class="line">content1 = <span class="built_in">pow</span>(cipher, privateKey, n)</span><br><span class="line">print(<span class="string">&quot;明文&quot;</span>, content1)</span><br></pre></td></tr></table></figure>
+
+<h5 id="幂模运算"><a href="#幂模运算" class="headerlink" title="幂模运算"></a>幂模运算</h5><p>上述代码中 通过 <strong>pow(a, b, c)**获取 a的b次幂取c的模，该函数在python中是一个自带的函数，然而在其他常见语言的自带库（如java、js等）中，pow() 函数/方法 通常没有取模的功能，</strong>千万不可用 pow(a,b)%c代替该运算**。上文的简单例子中，私钥的值已经高达 18491，任何一个大于1整数的18491次幂都已经是个天文数字，在大多数语言中运行时得到的已经不是一个精确的结果，取模的值是错误的。更不要说实际上使用的大素数，经过这样的运算，得到的值大到计算机内存肯定是存不下的。</p>
+<p>如果你不想深入了解该问题，在任何常用语言中，可以轻易找到科学计算库，都带有该算法，如果你还有兴趣，请搜索“蒙哥马利幂模运算”，也很容易理解。</p>
+<h5 id="获取大素数"><a href="#获取大素数" class="headerlink" title="获取大素数"></a>获取大素数</h5><p>我们知道判断一个数是否为素数的方法是这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math    </span><br><span class="line">     </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isPrime</span>(<span class="params">n</span>):</span>    </span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">1</span>:    </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>   </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(math.sqrt(n)) + <span class="number">1</span>):    </span><br><span class="line">    <span class="keyword">if</span> n % i == <span class="number">0</span>:    </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span>   </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span>   </span><br></pre></td></tr></table></figure>
+<p>然而我们如果要获取一个大素数，如果把大数一个一个遍历直到找到一个素数其实是很低效的。因此我们通过一些素数的性质或者其规律，通过更有效率的办法筛选出可能符合要求的整数，然后对其进行精确的判断是实际常用的方法。参考下面的链接：<br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/293656940/answer/512820832">https://www.zhihu.com/question/293656940/answer/512820832</a></p>
+<h4 id="为什么RSA算法能保证安全？"><a href="#为什么RSA算法能保证安全？" class="headerlink" title="为什么RSA算法能保证安全？"></a>为什么RSA算法能保证安全？</h4><p>公开场合只能获取到公钥对 (n,publicKey)<br>publicKey 和 privateKey 的对应关系为  <em>publicKey = privateKey((p-1)(q-1)+1)</em>,<br>而p,q在算法中已经被销毁了，我们只知道p,q的乘积n，通过n分解质因数找到质数p,q的是一个指数级别复杂度的算法，在实际使用中，p,q都是10的几百次方数量级的大数，计算出p,q对于现代计算机来说可以认为是一个在有限时间内不可解的问题。</p>
+<h4 id="随便写点"><a href="#随便写点" class="headerlink" title="随便写点"></a>随便写点</h4><p>相比技术问题，我更喜欢谈谈技术和技术以外事物的关系，从今天起开始写简明知识系列文章，其内容一般以代码作为载体，以简明的方式，短小的篇幅写下和编程相关的技术问题，也谈谈相关的非技术问题。</p>
+<p>RSA算法被认为是世界上最重要的算法之一。二战时期，科技强如德国，密码都可以被盟军破译。然而现在个人就可以对信息做到理论级别不可破解的方式加密，2016年“苹果fbi事件”就是如此。因此双向加密算法被用在了了生活中的方方面面，从https到你的银行账户，无处不在。</p>
+<blockquote>
+<p>联邦调查局将CNET引向联邦调查局长詹姆斯·科米（James Comey）的言论，科米谈到美国如何始终平衡隐私与公共安全，以及加密技术如何破坏了这种平衡。“强加密的逻辑意味着所有人的生命，包括执法，都将很快受到强加密的影响。”他说。“在我看来，根据我们的历史和我们的价值观，绝对的隐私以及那些认为政府应该把手从人民手机上拿开的想法没有任何意义。”</p>
+</blockquote>
+<p>拿不到私钥，即使强如国家暴力也无法获取你加密的任何信息，打破了强弱力量之间的平衡，让个人通过技术获取了可以对抗强权的小小手段。</p>
+<p>量子计算机的发展让在有限时间内破解私钥在未来变得有可能实现，因此情报部门如今会截获并保存他们认为有可能有价值的密文信息和公钥对，在破解私钥实现后便可得到其信息。然而每天世界上通讯中的加密数据海量，数据价值的时效性也有限，因此RSA算法保证信息的安全性在目前还是没有问题滴 : ）</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/03/20/%E9%87%8F%E5%AD%90%E5%AF%86%E9%92%A5%E5%88%86%E5%8F%91%E5%8E%9F%E7%90%86-python%E5%AE%9E%E7%8E%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">量子密钥分发是如何实现的</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/01/java%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E7%8E%AF%E8%A7%86%E4%B8%8E%E8%B4%AA%E5%A9%AA/">
+                        <span class="hidden-mobile">java正则表达式-环视、反向引用、贪婪</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/lzlz000" target="_blank"><span><i class="iconfont icon-github-fill"></i></span></a> &nbsp;&nbsp; <a href="mailto:lzlz0x000@gmail.com" target="_blank"><span><i class="iconfont icon-mail"></i></span></a> &nbsp;&nbsp; <a href="https://travellings.now.sh/" target="blank" title="开往-友链接力"><img src="https://travellings.now.sh/assets/logo.gif" srcset="/img/loading.gif" alt="开往-友链接力" width="120"></a> <br> <span style="font-size:12px;">  Powered by <a href="https://hexo.io" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Hexo</span></a>  &  <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Fluid</span></a> </span> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,518 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="lzlz000">
+  <meta name="keywords" content="">
+  <title>使用树莓派 - lzlz000</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lzlz000.github.io","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>lzlz000</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/lzlz000">
+                <i class="iconfont icon-github-fill"></i>
+                
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="mailto:lzlz0x000@gmail.com">
+                <i class="iconfont icon-mail"></i>
+                
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="使用树莓派">
+              
+                使用树莓派
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-08 23:05" pubdate>
+        2020年11月8日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用树莓派</h1>
+            
+            <div class="markdown-body">
+              <p>阿里云腾讯云薅羊毛的廉价主机，性能有点烂，我有时在服务器上多部署了一些平时用的工具，就卡的不行。为了和朋友联机，我在阿里云1G2M的云服务器上部署了一个泰拉瑞亚的服务器，结果卡的大家都动不了。云服务商提供的高性能主机价格太高，薅羊毛也只有一次，因此我就想搞一台性能尚可的微型主机，同时还有一定可玩性就更好了。树莓派就是最好的选择了。</p>
+<h3 id="系统选择"><a href="#系统选择" class="headerlink" title="系统选择"></a>系统选择</h3><p>我的树莓派型号是4B，4GB，淘宝购买，不注明的话商家会给你预装系统，建议安装，减少麻烦。基于linux debian的官方系统Raspbian一般有三种版本lite（无图形化界面），桌面版，桌面版含常用软件。不建议第三个，里面包含了太多无用的东西，如果你用的是16g sb卡空间会捉襟见肘。而一般店家都会默认装第三个系统，建议提前沟通安装版本。当然为树莓派定制的系统镜像还有很多，Ubuntu、Arch Linux ARM等等。还有一些为硬件用途定制的系统，我并不太了解。</p>
+<h3 id="连接wifi"><a href="#连接wifi" class="headerlink" title="连接wifi"></a>连接wifi</h3><p>通常购买树莓派不会购买屏幕，通过SSH或者VNC连接主机。那第一次上网该如何连接？</p>
+<ol>
+<li>条件：有线网络，拥有路由器管理权限。 最简单的方式，直接插上就好了，在路由器管理上面找到 Raspberrypi 查看ip即可，默认账号密码与系统镜像有关，官方系统Raspbian 默认帐号：Username: pi Password: raspberry</li>
+<li>无上述条件，在电脑上编辑烧录系统的SD卡。编辑其中的 <code>/boot/wpa_supplicant.conf</code> 文件。详细请看 <a target="_blank" rel="noopener" href="https://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html">https://shumeipai.nxez.com/2017/09/13/raspberry-pi-network-configuration-before-boot.html</a></li>
+</ol>
+<p>登录系统后编辑wifi账号密码的方式</p>
+<pre><code class="hljs shell">sudo raspi-config</code></pre>
+
+<p>选择 network options-&gt;wireless LAN 然后依次输入账号密码完成</p>
+<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><p>使用的Raspbian镜像自带的一些软件功能有问题。</p>
+<h4 id="vim-键盘功能异常"><a href="#vim-键盘功能异常" class="headerlink" title="vim 键盘功能异常"></a>vim 键盘功能异常</h4><p>vim中键盘上部分按键无法使用（好像是树莓派键盘和标准键盘不同，所特别修改的）。可以卸载重装vim</p>
+<pre><code class="hljs shell">sudo apt-get remove vim-common
+sudo apt-get install vim</code></pre>
+
+<p>然而<br>apt-get报错：</p>
+<pre><code class="hljs less"><span class="hljs-attribute">dpkg</span>: 无法恢复的致命错误，中止:
+ 软件包 <span class="hljs-attribute">libssh-gcrypt-4</span>:armhf 的文件名列表文件缺少最后结尾的换行符</code></pre>
+
+<p>解决方法：</p>
+<pre><code class="hljs shell">cd /var/lib/dpkg/info
+ls libssh-gcrypt* 
+ls libssh-gcrypt* 
+<span class="hljs-meta">#</span><span class="bash">删除报错文件 并重装该模块</span>
+sudo rm libssh-gcrypt*
+sudo apt-get reinstall libssh-gcrypt-4</code></pre>
+
+<h4 id="SD卡容量异常"><a href="#SD卡容量异常" class="headerlink" title="SD卡容量异常"></a>SD卡容量异常</h4><pre><code class="hljs ebnf"><span class="hljs-attribute">df -h</span></code></pre>
+
+<p>发现16G SD卡可用空间只有7G，不是无良商家的假冒伪劣产品，是树莓派默认隐藏了一部分空间（我不懂为啥要这么做）</p>
+<p>解决方法：</p>
+<pre><code class="hljs shell">sudo raspi-config</code></pre>
+
+<p>依次选择 -&gt;Advanced Options -&gt;Expand Filesystem</p>
+<h4 id="卸载不必要的软件"><a href="#卸载不必要的软件" class="headerlink" title="卸载不必要的软件"></a>卸载不必要的软件</h4><p>系统中可能有一些不需要的软件，尤其是安装了图形化界面版本系统的。</p>
+<pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 搜索已安装软件 </span>
+dpkg -l| grep Xxx
+<span class="hljs-meta">#</span><span class="bash"> 根据搜索到的软件，选择删除</span>
+sudo apt remove xxx
+sudo apt-get autoremove --purge</code></pre>
+
+<h3 id="自启动服务"><a href="#自启动服务" class="headerlink" title="自启动服务"></a>自启动服务</h3><p>通常我们使用树莓派这类主机，都会要跑一些常年在线的服务：web服务器，游戏服务器等等。</p>
+<pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 新建一个文件</span>
+touch my.service</code></pre>
+
+<p>编辑文件</p>
+<pre><code class="hljs routeros">[Unit]
+<span class="hljs-attribute">Description</span>=My<span class="hljs-built_in"> service </span># 服务介绍
+<span class="hljs-attribute">After</span>=network.target
+
+[Service]
+<span class="hljs-attribute">ExecStart</span>=/usr/bin/java -jar /home/pi/services/my-server-0.0.1.jar --server.<span class="hljs-attribute">port</span>=9000 # 要运行的程序，注意使用绝对路径
+<span class="hljs-comment"># 服务要使用的目录，注意如果程序内配置使用的目录和不再这个路境内，会无法编辑。如服务器配置日志输出路径为/log，那按下方设置/data/my-server将无法输出日志</span>
+<span class="hljs-attribute">WorkingDirectory</span>=/data/my-server
+
+[Install]
+<span class="hljs-attribute">WantedBy</span>=multi-user.target</code></pre>
+
+<pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 把配置好的脚本复制到systemctl的目录</span>
+sudo cp my.service /etc/systemd/system/my.service
+<span class="hljs-meta">#</span><span class="bash"> 重新加载</span>
+sudo systemctl daemon-reload 
+sudo systemctl start myscript.service # 尝试启动
+sudo systemctl status myscript.service  # 查看服务状态，可以看到服务输出的日志，方便排查问题
+
+sudo systemctl enable myscript.service  # 开机时自动运行</code></pre>
+
+<p>注意，有时候后台运行的程序使用会使用nohup xxxx &amp;的方式启动，千万不要自systemctl的ExecStart脚本汇总使用nohup，会导致启动失败。本来每个service就维护着一个独立的进程，nohup没有意义了。</p>
+<h3 id="samba共享文件"><a href="#samba共享文件" class="headerlink" title="samba共享文件"></a>samba共享文件</h3><p>使用samba服务局域网共享文件</p>
+<pre><code class="hljs shell">sudo apt-get install samba samba-client</code></pre>
+
+<p>配置smb.conf文件 <code>/etc/samba/smb.conf </code>，尾部添加</p>
+<pre><code class="hljs applescript">[<span class="hljs-literal">pi</span>]
+workgroup = <span class="hljs-literal">pi</span> <span class="hljs-comment">#名字随意起</span>
+security = <span class="hljs-literal">pi</span>
+netbios <span class="hljs-built_in">name</span> = <span class="hljs-literal">pi</span>
+comment = <span class="hljs-literal">pi</span> home
+path = /media/<span class="hljs-literal">pi</span>/mnt <span class="hljs-comment"># 我的外接移动硬盘的挂载位置</span>
+browsable = yes
+writeable = yes
+<span class="hljs-built_in">read</span> only = no</code></pre>
+
+<h4 id="samba读写速度慢"><a href="#samba读写速度慢" class="headerlink" title="samba读写速度慢"></a>samba读写速度慢</h4><p>在局域网传输速率文档在2m左右，且响应速度慢如，直接打开samba共享的电影，跳转到指定位置可能会卡顿。</p>
+<p>解决方法（不完善，待研究）</p>
+<p>编辑 <code>/etc/samba/smb.conf </code>，[global] 下添加参数:</p>
+<pre><code class="hljs arduino"><span class="hljs-built_in">min</span> receivefile <span class="hljs-built_in">size</span> = <span class="hljs-number">16384</span>
+<span class="hljs-built_in">write</span> cache <span class="hljs-built_in">size</span> = <span class="hljs-number">262144</span></code></pre>
+
+<p>重启服务，响应速度已经完全正常了，看电影不卡了，速度提升到 5-6mb/s+，仍旧不理想，也许和路由器性能、网络环境、树莓派本身性能、操作系统、usb接口的带宽等等因素有关，未能进一步找到原因。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/09/%E5%B0%86%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BF%9E%E6%8E%A5%E5%88%B0%E5%85%AC%E7%BD%91/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">将树莓派连接到公网</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/11/04/update_hexo/">
+                        <span class="hidden-mobile">升级hexo</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/lzlz000" target="_blank"><span><i class="iconfont icon-github-fill"></i></span></a> &nbsp;&nbsp; <a href="mailto:lzlz0x000@gmail.com" target="_blank"><span><i class="iconfont icon-mail"></i></span></a> &nbsp;&nbsp; <a href="https://travellings.now.sh/" target="blank" title="开往-友链接力"><img src="https://travellings.now.sh/assets/logo.gif" srcset="/img/loading.gif" alt="开往-友链接力" width="120"></a> <br> <span style="font-size:12px;">  Powered by <a href="https://hexo.io" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Hexo</span></a>  &  <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Fluid</span></a> </span> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

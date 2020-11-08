@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="lzlz000">
+  <meta name="keywords" content="">
+  <title>mybatis批量插入方式的比较 - lzlz000</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lzlz000.github.io","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>lzlz000</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/lzlz000">
+                <i class="iconfont icon-github-fill"></i>
+                
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="mailto:lzlz0x000@gmail.com">
+                <i class="iconfont icon-mail"></i>
+                
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="mybatis批量插入方式的比较">
+              
+                mybatis批量插入方式的比较
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-02-12 00:00" pubdate>
+        2018年2月12日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">mybatis批量插入方式的比较</h1>
+            
+            <div class="markdown-body">
+              <p>数据库使用的是sqlserver，JDK版本1.8，运行在SpringBoot环境下。</p>
+<ul>
+<li><p>注意若使用mysql请确保：</p>
+<p>MySql的JDBC连接的url中要加rewriteBatchedStatements参数，并保证5.1.13以上版本的驱动，才能实现高性能的批量插入。</p>
+<p>例如： String connectionUrl=”jdbc:mysql://192.168.1.100:3306/test?rewriteBatchedStatements=true” ; </p>
+</li>
+</ul>
+<p>对比3种可用的方式</p>
+<ol>
+<li>反复执行单条插入语句 </li>
+<li>xml拼接sql </li>
+<li>批处理执行</li>
+</ol>
+<p>先说结论：少量插入请使用反复插入单条数据，方便。数量较多请使用批处理方式。（可以考虑以有需求的插入数据量20条左右为界吧，在我的测试和数据库环境下耗时都是百毫秒级的，方便最重要）。<strong>无论何时都不用xml拼接sql的方式</strong>。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p><strong>拼接SQL的xml</strong><br><em>newId()是sqlserver生成UUID的函数，与本文内容无关</em></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">&quot;insertByBatch&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;java.util.List&quot;</span>&gt;</span></span><br><span class="line">    INSERT INTO tb_item VALUES</span><br><span class="line">    <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">&quot;list&quot;</span> <span class="attr">item</span>=<span class="string">&quot;item&quot;</span> <span class="attr">index</span>=<span class="string">&quot;index&quot;</span> <span class="attr">separator</span>=<span class="string">&quot;,&quot;</span>&gt;</span></span><br><span class="line">        (newId(),#&#123;item.uniqueCode&#125;,#&#123;item.projectId&#125;,#&#123;item.name&#125;,#&#123;item.type&#125;,#&#123;item.packageUnique&#125;,</span><br><span class="line">        #&#123;item.isPackage&#125;,#&#123;item.factoryId&#125;,#&#123;item.projectName&#125;,#&#123;item.spec&#125;,#&#123;item.length&#125;,#&#123;item.weight&#125;,</span><br><span class="line">        #&#123;item.material&#125;,#&#123;item.setupPosition&#125;,#&#123;item.areaPosition&#125;,#&#123;item.bottomHeight&#125;,#&#123;item.topHeight&#125;,</span><br><span class="line">        #&#123;item.serialNumber&#125;,#&#123;item.createTime&#125;<span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">insert</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Mapper接口</strong><br><em>Mapper<Item> 是 mybatis插件tk.Mapper 的接口，与本文内容关系不大</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ItemMapper</span> <span class="keyword">extends</span> <span class="title">Mapper</span>&lt;<span class="title">Item</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">insertByBatch</span><span class="params">(List&lt;Item&gt; itemList)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Service类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ItemService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ItemMapper itemMapper;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SqlSessionFactory sqlSessionFactory;</span><br><span class="line">    <span class="comment">//批处理</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(List&lt;Item&gt; itemList)</span> </span>&#123;</span><br><span class="line">        SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH,<span class="keyword">false</span>);</span><br><span class="line">        ItemMapper mapper = session.getMapper(ItemMapper.class);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; itemList.size(); i++) &#123;</span><br><span class="line">            mapper.insertSelective(itemList.get(i));</span><br><span class="line">            <span class="keyword">if</span>(i%<span class="number">1000</span>==<span class="number">999</span>)&#123;<span class="comment">//每1000条提交一次防止内存溢出</span></span><br><span class="line">                session.commit();</span><br><span class="line">                session.clearCache();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        session.commit();</span><br><span class="line">        session.clearCache();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//拼接sql</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add1</span><span class="params">(List&lt;Item&gt; itemList)</span> </span>&#123;</span><br><span class="line">        itemList.insertByBatch(itemMapper::insertSelective);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//循环插入</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add2</span><span class="params">(List&lt;Item&gt; itemList)</span> </span>&#123;</span><br><span class="line">        itemList.forEach(itemMapper::insertSelective);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>测试类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ApplicationBoot.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ItemServiceTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    ItemService itemService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;Item&gt; itemList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="comment">//生成测试List</span></span><br><span class="line">    <span class="meta">@Before</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createList</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String json =<span class="string">&quot;&#123;\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;areaPosition\&quot;: \&quot;TEST\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;bottomHeight\&quot;: 5,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;factoryId\&quot;: \&quot;0\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;length\&quot;: 233.233,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;material\&quot;: \&quot;Q345B\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;name\&quot;: \&quot;TEST\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;package\&quot;: false,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;packageUnique\&quot;: \&quot;45f8a0ba0bf048839df85f32ebe5bb81\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;projectId\&quot;: \&quot;094b5eb5e0384bb1aaa822880a428b6d\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;projectName\&quot;: \&quot;项目_TEST1\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;serialNumber\&quot;: \&quot;1/2\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;setupPosition\&quot;: \&quot;1B柱\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;spec\&quot;: \&quot;200X200X200\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;topHeight\&quot;: 10,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;type\&quot;: \&quot;Steel\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;uniqueCode\&quot;: \&quot;12344312\&quot;,\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;        \&quot;weight\&quot;: 100\n&quot;</span> +</span><br><span class="line">                <span class="string">&quot;    &#125;&quot;</span>;</span><br><span class="line">        Item test1 = JSON.parseObject(json,Item.class);</span><br><span class="line">        test1.setCreateTime(<span class="keyword">new</span> Date());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;<span class="comment">//测试会修改此数量</span></span><br><span class="line">            itemList.add(test1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">     <span class="comment">//批处理</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tesInsert</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        itemService.add(itemList);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//拼接字符串</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsert1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        itemService.add1(itemList);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//循环插入</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testInsert2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        itemService.add2(itemList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="测试结果："><a href="#测试结果：" class="headerlink" title="测试结果："></a>测试结果：</h4><p>10条 25条数据插入经多次测试，波动性较大，但基本都在百毫秒级别</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>50条</th>
+<th>100条</th>
+<th>500条</th>
+<th>1000条</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>批处理</td>
+<td>159ms</td>
+<td>208ms</td>
+<td>305ms</td>
+<td>432ms</td>
+</tr>
+<tr>
+<td>xml拼接sql</td>
+<td>208ms</td>
+<td>232ms</td>
+<td>报错</td>
+<td>报错</td>
+</tr>
+<tr>
+<td>反复单条插入</td>
+<td>1013ms</td>
+<td>2266ms</td>
+<td>8141ms</td>
+<td>18861ms</td>
+</tr>
+</tbody></table>
+<p>其中 拼接sql方式在插入500条和1000条时报错（似乎是因为sql语句过长，此条跟数据库类型有关，但是数据库应该都有单条语句长度限制）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.microsoft.sqlserver.jdbc.SQLServerException: 传入的表格格式数据流(TDS)远程过程调用(RPC)协议流不正确。此 RPC 请求中提供了过多的参数。最多应为 2100</span><br></pre></td></tr></table></figure>
+
+<p>可以发现 </p>
+<ul>
+<li>循环插入的时间复杂度是 O(n),并且常数C很大</li>
+<li>拼接SQL插入的时间复杂度（应该）是 O(logn),但是成功完成次数不多，不确定</li>
+<li>批处理的效率的时间复杂度是 O(logn),并且常数C也比较小</li>
+</ul>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p><strong>循环插入单条数据</strong>虽然效率极低，但是代码量极少，在使用tk.Mapper的插件情况下，仅需代码,：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add1</span><span class="params">(List&lt;Item&gt; itemList)</span> </span>&#123;</span><br><span class="line">    itemList.forEach(itemMapper::insertSelective);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，在需求插入数据数量不多的情况下肯定用它了。</p>
+<p><strong>xml拼接sql</strong>是最不推荐的方式，使用时有大段的xml和sql语句要写，很容易出错，工作效率很低。更关键点是，虽然效率尚可，但是真正需要效率的时候你挂了，要你何用？</p>
+<p><strong>批处理执行</strong>是有大数据量插入时推荐的做法，使用起来也比较方便。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/java/">java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/mybatis/">mybatis</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/03/10/%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98-Java/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">最长递增子序列问题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/lzlz000" target="_blank"><span><i class="iconfont icon-github-fill"></i></span></a> &nbsp;&nbsp; <a href="mailto:lzlz0x000@gmail.com" target="_blank"><span><i class="iconfont icon-mail"></i></span></a> &nbsp;&nbsp; <a href="https://travellings.now.sh/" target="blank" title="开往-友链接力"><img src="https://travellings.now.sh/assets/logo.gif" srcset="/img/loading.gif" alt="开往-友链接力" width="120"></a> <br> <span style="font-size:12px;">  Powered by <a href="https://hexo.io" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Hexo</span></a>  &  <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Fluid</span></a> </span> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

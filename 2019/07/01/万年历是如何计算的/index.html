@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;dark&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon.ico">
+  <link rel="icon" type="image/png" href="/favicon.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="lzlz000">
+  <meta name="keywords" content="">
+  <title>万年历是如何计算的，python实现 - lzlz000</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.1.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"lzlz000.github.io","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>lzlz000</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/lzlz000">
+                <i class="iconfont icon-github-fill"></i>
+                
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="mailto:lzlz0x000@gmail.com">
+                <i class="iconfont icon-mail"></i>
+                
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="万年历是如何计算的，python实现">
+              
+                万年历是如何计算的，python实现
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-07-01 14:17" pubdate>
+        2019年7月1日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">万年历是如何计算的，python实现</h1>
+            
+            <div class="markdown-body">
+              <p><a href="https://lzlz000.github.io/">lzlz000的个人主页</a></p>
+<p>网上能搜到不少万年历的代码，但是这应该是最详细的万年历介绍，有对天文历法、农历转换原理的的详细介绍</p>
+<p>一份万年历应该包含的内容有公历公元纪年、日期、星期；农历干支纪年、日期、二十四节气。本文主要写的是以一个给定的公历日期来查询星期，农历日期，至于节日，完全可以根据给定的公历农历日期、星期查表获得，比较简单不再描述, 例如这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 公历节日字典</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&#x27;1001&#x27;</span>: <span class="string">&#x27;国庆节&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;0501&#x27;</span>: <span class="string">&#x27;劳动节&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 农历节日字典 需要注意的是除夕的判断，由于农历12月有可能有29或者30天，需要判断处理</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&#x27;0101&#x27;</span>: <span class="string">&#x27;春节&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;0815&#x27;</span>: <span class="string">&#x27;重阳节&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 公历月份星期节日 520即 5月第2个星期日</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&#x27;520&#x27;</span> : <span class="string">&#x27;母亲节&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;1021&#x27;</span> : <span class="string">&#x27;10月第2个星期1 不好意思今天没有节日&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>至于宜忌，(・∀・(・∀・(・∀・*)，我觉得我写的是一篇科普向的文章，封建迷信就算了吧，据我所知，程序对这种内容八成是随机生成的，或者爬黄历网站的数据，然而还有人相信，权当自我安慰吧。</p>
+<h3 id="公历"><a href="#公历" class="headerlink" title="公历"></a>公历</h3><p>公历是一种太阳历，即以地球绕日公转为基础制定的历法。以地球自转一周为一天，一年有365.2422天（回归年，历法基本以回归年为基准，回归年以太阳直射地球的纬度的回归周期计算，恒星年（以地球在公转轨道的位置回归周期计算）和回归年有小的差别，因为地球自转轴是在摆动的）。</p>
+<h4 id="闰年"><a href="#闰年" class="headerlink" title="闰年"></a>闰年</h4><p>为了弥补自传和公转的插值，保证每一年的同一天太阳直射地球的纬度大致相同（否则会出不同年的同一天所在的季节一直在变化），就产生了闰年，其规则为每400年有97个闰年，四年一闰，百年不闰，四百年再闰。用代码来表达:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 判断公元纪年是否为闰年</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_leap_year</span>(<span class="params">year:<span class="built_in">int</span></span>):</span></span><br><span class="line">    <span class="keyword">if</span> year % <span class="number">4</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> year % <span class="number">100</span> == <span class="number">0</span> <span class="keyword">and</span> year % <span class="number">400</span> == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">elif</span> year % <span class="number">100</span> != <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="星期"><a href="#星期" class="headerlink" title="星期"></a>星期</h4><p><strong>蔡勒（Zeller）公式</strong> 是一个计算星期的公式，是一个简化星期的计算的技巧，给出一个日期，就能用这个公式推算出是星期几。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">zeller</span>(<span class="params">year: <span class="built_in">int</span>, month: <span class="built_in">int</span>, day: <span class="built_in">int</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    蔡勒公式,计算指定年月日是星期几的算法</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    :param year:  年</span></span><br><span class="line"><span class="string">    :param month: 月</span></span><br><span class="line"><span class="string">    :param day:   日</span></span><br><span class="line"><span class="string">    :return: 0-星期日，1-星期一，2-星期二，3-星期三，4-星期四，5-星期五，6-星期六</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 在蔡勒公式中，某年的1、2月要看作上一年的13、14月来计算，比如2019年1月1日要看作2018年的13月1日来计算</span></span><br><span class="line">    <span class="keyword">if</span> month &lt; <span class="number">3</span>:</span><br><span class="line">        m = month + <span class="number">12</span></span><br><span class="line">        year = year - <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        m = month</span><br><span class="line">    <span class="comment"># 公元前1年和公元元年(1年)相邻，没有0年</span></span><br><span class="line">    <span class="keyword">if</span> year == <span class="number">0</span>:</span><br><span class="line">        year = <span class="number">-1</span></span><br><span class="line">    y = year % <span class="number">100</span>  <span class="comment"># 取年的后两位</span></span><br><span class="line">    <span class="comment"># 世纪 取已经经过的世纪，即20xx取20而不是21世纪</span></span><br><span class="line">    c = (year - y) / <span class="number">100</span></span><br><span class="line">    <span class="comment"># 注意，如果年份是公元前的年份且非整百数的话，c应该等于所在世纪的编号，如公元前253年，是公元前3世纪</span></span><br><span class="line">    <span class="keyword">if</span> c &lt; <span class="number">0</span> <span class="keyword">and</span> y != <span class="number">0</span>:</span><br><span class="line">        c -= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> (y + <span class="built_in">int</span>(y / <span class="number">4</span>) + <span class="built_in">int</span>(c / <span class="number">4</span>) - <span class="number">2</span> * c + <span class="built_in">int</span>(<span class="number">26</span> * (m + <span class="number">1</span>) / <span class="number">10</span>) + day - <span class="number">1</span>) % <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="农历"><a href="#农历" class="headerlink" title="农历"></a>农历</h3><p>农历是混合历，日期记录以月亮历为基础，月球绕地公转周期约29.53059日，因此农历有大小月之分，大月30天小月29天。</p>
+<h4 id="农历日期"><a href="#农历日期" class="headerlink" title="农历日期"></a>农历日期</h4><p>农历实际上没有非常强的规律性，它的定义是依赖天文观测值推算的，因此通常存储当前前后一百多年的观测/推算值作为农历数据，因此，所谓万年历是假的，大多数只能查询1900-2049这段时间的农历日期。</p>
+<p>个人认为，这其实就是中国传统天文历法的缺陷性，观测只是手段，甚至无法用规律性的公式来表达历法，只能查表，没有追求对天体规律的研究，而把天象当作凶吉之兆，真是非常可惜的。要知道，西方文明对于天体运动的精确观测和规律的研究对牛顿提出万有引力定律和力学定律产生了直接的影响（再说牛顿被苹果砸想出万有引力定律的拖出去枪毙五分钟），从此我们知道了天上的星星和地上的人遵循着同样的运行规则。我们的文明智慧是不差的，点错了科技树实在是可惜啊。</p>
+<p>当前日期和初始日期的间隔来得到具体是农历年月日以及是否为闰月</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="comment"># from datetime import timedelta</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1900-2049年的农历数据表,5个16进制数，共20bit</span></span><br><span class="line"><span class="comment"># - 前4位，在这一年是润年时才有意义，它代表这年润月的大小月，为1则润大月，为0则润小月。</span></span><br><span class="line"><span class="comment"># - 中间12位，即4bit，每位代表一个月，为1则为大月，为0则为小月。</span></span><br><span class="line"><span class="comment"># - 最后4位，即8，代表这一年的润月月份，为0则不润。首4位要与末4位搭配使用</span></span><br><span class="line">lunar_info = [<span class="number">0x04bd8</span>, <span class="number">0x04ae0</span>, <span class="number">0x0a570</span>, <span class="number">0x054d5</span>, <span class="number">0x0d260</span>, <span class="number">0x0d950</span>, <span class="number">0x16554</span>, <span class="number">0x056a0</span>, <span class="number">0x09ad0</span>, <span class="number">0x055d2</span>,</span><br><span class="line">              <span class="number">0x04ae0</span>, <span class="number">0x0a5b6</span>, <span class="number">0x0a4d0</span>, <span class="number">0x0d250</span>, <span class="number">0x1d255</span>, <span class="number">0x0b540</span>, <span class="number">0x0d6a0</span>, <span class="number">0x0ada2</span>, <span class="number">0x095b0</span>, <span class="number">0x14977</span>,</span><br><span class="line">              <span class="number">0x04970</span>, <span class="number">0x0a4b0</span>, <span class="number">0x0b4b5</span>, <span class="number">0x06a50</span>, <span class="number">0x06d40</span>, <span class="number">0x1ab54</span>, <span class="number">0x02b60</span>, <span class="number">0x09570</span>, <span class="number">0x052f2</span>, <span class="number">0x04970</span>,</span><br><span class="line">              <span class="number">0x06566</span>, <span class="number">0x0d4a0</span>, <span class="number">0x0ea50</span>, <span class="number">0x06e95</span>, <span class="number">0x05ad0</span>, <span class="number">0x02b60</span>, <span class="number">0x186e3</span>, <span class="number">0x092e0</span>, <span class="number">0x1c8d7</span>, <span class="number">0x0c950</span>,</span><br><span class="line">              <span class="number">0x0d4a0</span>, <span class="number">0x1d8a6</span>, <span class="number">0x0b550</span>, <span class="number">0x056a0</span>, <span class="number">0x1a5b4</span>, <span class="number">0x025d0</span>, <span class="number">0x092d0</span>, <span class="number">0x0d2b2</span>, <span class="number">0x0a950</span>, <span class="number">0x0b557</span>,</span><br><span class="line">              <span class="number">0x06ca0</span>, <span class="number">0x0b550</span>, <span class="number">0x15355</span>, <span class="number">0x04da0</span>, <span class="number">0x0a5d0</span>, <span class="number">0x14573</span>, <span class="number">0x052d0</span>, <span class="number">0x0a9a8</span>, <span class="number">0x0e950</span>, <span class="number">0x06aa0</span>,</span><br><span class="line">              <span class="number">0x0aea6</span>, <span class="number">0x0ab50</span>, <span class="number">0x04b60</span>, <span class="number">0x0aae4</span>, <span class="number">0x0a570</span>, <span class="number">0x05260</span>, <span class="number">0x0f263</span>, <span class="number">0x0d950</span>, <span class="number">0x05b57</span>, <span class="number">0x056a0</span>,</span><br><span class="line">              <span class="number">0x096d0</span>, <span class="number">0x04dd5</span>, <span class="number">0x04ad0</span>, <span class="number">0x0a4d0</span>, <span class="number">0x0d4d4</span>, <span class="number">0x0d250</span>, <span class="number">0x0d558</span>, <span class="number">0x0b540</span>, <span class="number">0x0b5a0</span>, <span class="number">0x195a6</span>,</span><br><span class="line">              <span class="number">0x095b0</span>, <span class="number">0x049b0</span>, <span class="number">0x0a974</span>, <span class="number">0x0a4b0</span>, <span class="number">0x0b27a</span>, <span class="number">0x06a50</span>, <span class="number">0x06d40</span>, <span class="number">0x0af46</span>, <span class="number">0x0ab60</span>, <span class="number">0x09570</span>,</span><br><span class="line">              <span class="number">0x04af5</span>, <span class="number">0x04970</span>, <span class="number">0x064b0</span>, <span class="number">0x074a3</span>, <span class="number">0x0ea50</span>, <span class="number">0x06b58</span>, <span class="number">0x055c0</span>, <span class="number">0x0ab60</span>, <span class="number">0x096d5</span>, <span class="number">0x092e0</span>,</span><br><span class="line">              <span class="number">0x0c960</span>, <span class="number">0x0d954</span>, <span class="number">0x0d4a0</span>, <span class="number">0x0da50</span>, <span class="number">0x07552</span>, <span class="number">0x056a0</span>, <span class="number">0x0abb7</span>, <span class="number">0x025d0</span>, <span class="number">0x092d0</span>, <span class="number">0x0cab5</span>,</span><br><span class="line">              <span class="number">0x0a950</span>, <span class="number">0x0b4a0</span>, <span class="number">0x0baa4</span>, <span class="number">0x0ad50</span>, <span class="number">0x055d9</span>, <span class="number">0x04ba0</span>, <span class="number">0x0a5b0</span>, <span class="number">0x15176</span>, <span class="number">0x052b0</span>, <span class="number">0x0a930</span>,</span><br><span class="line">              <span class="number">0x07954</span>, <span class="number">0x06aa0</span>, <span class="number">0x0ad50</span>, <span class="number">0x05b52</span>, <span class="number">0x04b60</span>, <span class="number">0x0a6e6</span>, <span class="number">0x0a4e0</span>, <span class="number">0x0d260</span>, <span class="number">0x0ea65</span>, <span class="number">0x0d530</span>,</span><br><span class="line">              <span class="number">0x05aa0</span>, <span class="number">0x076a3</span>, <span class="number">0x096d0</span>, <span class="number">0x04bd7</span>, <span class="number">0x04ad0</span>, <span class="number">0x0a4d0</span>, <span class="number">0x1d0b6</span>, <span class="number">0x0d250</span>, <span class="number">0x0d520</span>, <span class="number">0x0dd45</span>,</span><br><span class="line">              <span class="number">0x0b5a0</span>, <span class="number">0x056d0</span>, <span class="number">0x055b2</span>, <span class="number">0x049b0</span>, <span class="number">0x0a577</span>, <span class="number">0x0a4b0</span>, <span class="number">0x0aa50</span>, <span class="number">0x1b255</span>, <span class="number">0x06d20</span>, <span class="number">0x0ada0</span>]</span><br><span class="line">gan = [<span class="string">&quot;甲&quot;</span>, <span class="string">&quot;乙&quot;</span>, <span class="string">&quot;丙&quot;</span>, <span class="string">&quot;丁&quot;</span>, <span class="string">&quot;戊&quot;</span>, <span class="string">&quot;己&quot;</span>, <span class="string">&quot;庚&quot;</span>, <span class="string">&quot;辛&quot;</span>, <span class="string">&quot;壬&quot;</span>, <span class="string">&quot;癸&quot;</span>]</span><br><span class="line">zhi = [<span class="string">&quot;子&quot;</span>, <span class="string">&quot;丑&quot;</span>, <span class="string">&quot;寅&quot;</span>, <span class="string">&quot;卯&quot;</span>, <span class="string">&quot;辰&quot;</span>, <span class="string">&quot;巳&quot;</span>, <span class="string">&quot;午&quot;</span>, <span class="string">&quot;未&quot;</span>, <span class="string">&quot;申&quot;</span>, <span class="string">&quot;酉&quot;</span>, <span class="string">&quot;戌&quot;</span>, <span class="string">&quot;亥&quot;</span>]</span><br><span class="line">mon_str = [<span class="string">&#x27;正&#x27;</span>, <span class="string">&#x27;二&#x27;</span>, <span class="string">&#x27;三&#x27;</span>, <span class="string">&#x27;四&#x27;</span>, <span class="string">&#x27;五&#x27;</span>, <span class="string">&#x27;六&#x27;</span>, <span class="string">&#x27;七&#x27;</span>, <span class="string">&#x27;八&#x27;</span>, <span class="string">&#x27;九&#x27;</span>, <span class="string">&#x27;十&#x27;</span>, <span class="string">&#x27;十一&#x27;</span>, <span class="string">&#x27;腊&#x27;</span>]</span><br><span class="line">day_str1 = [<span class="string">&#x27;初&#x27;</span>, <span class="string">&#x27;十&#x27;</span>, <span class="string">&#x27;廿&#x27;</span>]</span><br><span class="line">day_str2 = [<span class="string">&#x27;一&#x27;</span>, <span class="string">&#x27;二&#x27;</span>, <span class="string">&#x27;三&#x27;</span>, <span class="string">&#x27;四&#x27;</span>, <span class="string">&#x27;五&#x27;</span>, <span class="string">&#x27;六&#x27;</span>, <span class="string">&#x27;七&#x27;</span>, <span class="string">&#x27;八&#x27;</span>, <span class="string">&#x27;九&#x27;</span>, <span class="string">&#x27;十&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始条件：1900年1月31日为农历正月初一</span></span><br><span class="line">first_lunar_day = datetime(<span class="number">1900</span>, <span class="number">1</span>, <span class="number">31</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取一个农历年有多少天</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sum_days</span>(<span class="params">offset</span>):</span></span><br><span class="line">    info = lunar_info[offset]</span><br><span class="line">    <span class="comment"># 获取月份信息</span></span><br><span class="line">    month_info = (info &amp; <span class="number">0x0ffff</span>) &gt;&gt; <span class="number">4</span></span><br><span class="line">    big_month_count = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 循环计数有多少位二进制1，原理如下：</span></span><br><span class="line">    <span class="comment"># (2)10101 - 1 = (2)10100,  </span></span><br><span class="line">    <span class="comment"># (2)10101 &amp; (2)10100 = (2)10100</span></span><br><span class="line">    <span class="comment"># (2)10100 - 1 = (2)10011</span></span><br><span class="line">    <span class="comment"># (2)10100 &amp; (2)10011 = (2)10000</span></span><br><span class="line">    <span class="comment"># 所有二进制值-1得到的结果有这样的特点：最后一位1变成0,最后一位1之后的0都变成1，其他不变</span></span><br><span class="line">    <span class="comment"># 这样取 &amp; 运算会得到把最后一位1置为0的效果，循环次数便为1的数量</span></span><br><span class="line">    <span class="keyword">while</span> month_info != <span class="number">0</span>:</span><br><span class="line">        month_info = month_info &amp; (month_info - <span class="number">1</span>)</span><br><span class="line">        big_month_count += <span class="number">1</span></span><br><span class="line">    days = <span class="number">29</span> * <span class="number">12</span> + big_month_count</span><br><span class="line">    <span class="comment"># 如果有闰月</span></span><br><span class="line">    <span class="keyword">if</span> (info &amp; <span class="number">0x0000f</span>) &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 闰月是否为大月</span></span><br><span class="line">        <span class="keyword">if</span> (info &amp; <span class="number">0x10000</span>) &gt; <span class="number">0</span>:</span><br><span class="line">            days += <span class="number">30</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            days += <span class="number">29</span></span><br><span class="line">    <span class="keyword">return</span> days</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">month_str</span>(<span class="params">month</span>):</span></span><br><span class="line">    <span class="keyword">return</span> mon_str[month - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">day_str</span>(<span class="params">day</span>):</span></span><br><span class="line">    <span class="keyword">if</span> day == <span class="number">10</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;初十&quot;</span></span><br><span class="line">    <span class="keyword">if</span> day == <span class="number">20</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;二十&quot;</span></span><br><span class="line">    <span class="keyword">if</span> day == <span class="number">30</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;三十&quot;</span></span><br><span class="line">    <span class="keyword">return</span> day_str1[<span class="built_in">int</span>(day / <span class="number">10</span>)] + day_str2[day % <span class="number">10</span> - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ganzhi_year</span>(<span class="params">year</span>):</span></span><br><span class="line">    offset = year - <span class="number">1864</span>  <span class="comment"># 1864是一个甲子年</span></span><br><span class="line">    <span class="keyword">return</span> gan[offset % <span class="number">10</span>] + zhi[offset % <span class="number">12</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取在指定年之前有多少天</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">lunar_str</span>(<span class="params">year, month, day</span>):</span></span><br><span class="line">    interval_days = (datetime(year, month, day) - first_lunar_day).days + <span class="number">1</span></span><br><span class="line">    <span class="comment"># print(&#x27;interval_days&#x27;, interval_days)</span></span><br><span class="line">    sum_day = <span class="number">0</span></span><br><span class="line">    year_offset = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        temp = sum_day + sum_days(year_offset)</span><br><span class="line">        <span class="keyword">if</span> temp &gt;= interval_days:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        year_offset += <span class="number">1</span></span><br><span class="line">        sum_day = temp</span><br><span class="line">    info = lunar_info[year_offset]  <span class="comment"># 所在年的信息</span></span><br><span class="line">    rest_days = interval_days - sum_day  <span class="comment"># 还剩下多少天没有计算</span></span><br><span class="line">    month = <span class="number">0</span></span><br><span class="line">    month_info = (info &amp; <span class="number">0x0ffff</span>) &gt;&gt; <span class="number">4</span></span><br><span class="line">    leap_month = info &amp; <span class="number">0x0000ff</span></span><br><span class="line">    has_leap_month = leap_month &gt; <span class="number">0</span></span><br><span class="line">    leap_month -= <span class="number">1</span></span><br><span class="line">    days = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">12</span>):</span><br><span class="line">        temp = days</span><br><span class="line">        <span class="comment"># 判断是否为大月</span></span><br><span class="line">        temp += <span class="number">30</span> <span class="keyword">if</span> (<span class="number">0x800</span> &gt;&gt; i) &amp; month_info &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="number">29</span></span><br><span class="line">        <span class="keyword">if</span> temp &gt;= rest_days:</span><br><span class="line">            month = i + <span class="number">1</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        days = temp</span><br><span class="line">        <span class="keyword">if</span> has_leap_month <span class="keyword">and</span> i == leap_month:</span><br><span class="line">            temp += <span class="number">30</span> <span class="keyword">if</span> (info &amp; <span class="number">0x10000</span>) &gt; <span class="number">0</span> <span class="keyword">else</span> <span class="number">29</span>  <span class="comment"># 闰月是大月还是小月</span></span><br><span class="line">        <span class="keyword">if</span> temp &gt;= rest_days:</span><br><span class="line">            month = <span class="string">&quot;闰&quot;</span> + <span class="built_in">str</span>(i + <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        days = temp</span><br><span class="line">    day = rest_days - days</span><br><span class="line">    <span class="comment"># 注意农历和下一年公历重叠的情况</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#123;0&#125;年 &#123;1&#125;月&#123;2&#125;&#x27;</span>.<span class="built_in">format</span>(ganzhi_year(<span class="number">1900</span> + year_offset),  month_str(month),  day_str(day))</span><br><span class="line"></span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">2</span>, <span class="number">5</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">3</span>, <span class="number">6</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">4</span>, <span class="number">5</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">5</span>, <span class="number">4</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">6</span>, <span class="number">2</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">7</span>, <span class="number">2</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">10</span>, <span class="number">26</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">10</span>, <span class="number">27</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">11</span>, <span class="number">25</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">11</span>, <span class="number">26</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">12</span>, <span class="number">25</span>))</span><br><span class="line">print(lunar_str(<span class="number">2000</span>, <span class="number">12</span>, <span class="number">26</span>))</span><br><span class="line">print(lunar_str(<span class="number">2001</span>, <span class="number">1</span>, <span class="number">23</span>))</span><br><span class="line">print(lunar_str(<span class="number">2001</span>, <span class="number">1</span>, <span class="number">24</span>))</span><br><span class="line">print(lunar_str(<span class="number">2019</span>, <span class="number">7</span>, <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">庚辰年 正月初一</span><br><span class="line">庚辰年 二月初一</span><br><span class="line">庚辰年 三月初一</span><br><span class="line">庚辰年 四月初一</span><br><span class="line">庚辰年 五月初一</span><br><span class="line">庚辰年 六月初一</span><br><span class="line">庚辰年 九月廿九</span><br><span class="line">庚辰年 十月初一</span><br><span class="line">庚辰年 十月三十</span><br><span class="line">庚辰年 十一月初一</span><br><span class="line">庚辰年 十一月三十</span><br><span class="line">庚辰年 腊月初一</span><br><span class="line">庚辰年 腊月廿九</span><br><span class="line">辛巳年 正月初一</span><br><span class="line">己亥年 五月三十</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="二十四节气"><a href="#二十四节气" class="headerlink" title="二十四节气"></a>二十四节气</h4><p>24节气是太阳历，其定义以地球在绕日轨道上的位置为基准，冬至即太阳照射到地球南回归线上的时刻，夏至为北回归线，春分秋分就是太阳直射赤道的时刻，所以二十四节气的是有精确的时刻，这个时刻所在的那一天便是节气的日期。由于地球日和公转回归年的差异，这个日期会在一两天内摇摆。</p>
+<p>节气的定法有两种。古代历法采用的称为”恒气”，即按时间把一年等分为24份，每一节气平均得15天有余，所以又称”平气”。现代农历采用的称为”定气”，即按地球在轨道上的位置为标准，一周360°，两节气之间相隔15°。由于地球的公转轨道其实是椭圆，冬至时地球位于近日点附近，运动速度较快，因而太阳在黄道上移动15°的时间不到15天。夏至前后的情况正好相反，太阳在黄道上移动较慢，一个节气达16天之多。采用定气时可以保证春、秋两分必然在昼夜平分的那两天，可以更好的体现节气对季节的区分作用。</p>
+<p>定义24个节气与第一个节气所相差的时间长度（分钟），然后以一个确定的时刻作为标准，上面已经说过一个公转回归年为365.2422天即 525948.768分钟，由于节气均不在元旦日期附近，即使由于闰年相差一两天也不会跨年，直接以年份和基准节气时间（本例中的1900年1月6日 2:05:00AM）的间隔*525948.768 数加上当前节气时间间隔数便是本年24节气的时间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">solarTerm = [<span class="string">&quot;小寒&quot;</span>, <span class="string">&quot;大寒&quot;</span>, <span class="string">&quot;立春&quot;</span>, <span class="string">&quot;雨水&quot;</span>, <span class="string">&quot;惊蛰&quot;</span>, <span class="string">&quot;春分&quot;</span>, <span class="string">&quot;清明&quot;</span>, <span class="string">&quot;谷雨&quot;</span>, <span class="string">&quot;立夏&quot;</span>, <span class="string">&quot;小满&quot;</span>, <span class="string">&quot;芒种&quot;</span>, <span class="string">&quot;夏至&quot;</span>, <span class="string">&quot;小暑&quot;</span>, <span class="string">&quot;大暑&quot;</span>, <span class="string">&quot;立秋&quot;</span>, <span class="string">&quot;处暑&quot;</span>, <span class="string">&quot;白露&quot;</span>, <span class="string">&quot;秋分&quot;</span>, <span class="string">&quot;寒露&quot;</span>, <span class="string">&quot;霜降&quot;</span>, <span class="string">&quot;立冬&quot;</span>, <span class="string">&quot;小雪&quot;</span>, <span class="string">&quot;大雪&quot;</span>, <span class="string">&quot;冬至&quot;</span>]</span><br><span class="line">sTermInfo = [<span class="number">0</span>, <span class="number">21208</span>, <span class="number">42467</span>, <span class="number">63836</span>, <span class="number">85337</span>, <span class="number">107014</span>, <span class="number">128867</span>, <span class="number">150921</span>, <span class="number">173149</span>, <span class="number">195551</span>, <span class="number">218072</span>, <span class="number">240693</span>, <span class="number">263343</span>, <span class="number">285989</span>, <span class="number">308563</span>, <span class="number">331033</span>, <span class="number">353350</span>, <span class="number">375494</span>, <span class="number">397447</span>, <span class="number">419210</span>, <span class="number">440795</span>, <span class="number">462224</span>, <span class="number">483532</span>, <span class="number">504758</span>]</span><br><span class="line"><span class="comment"># 1900年小寒</span></span><br><span class="line">solarTermBase = datetime(<span class="number">1900</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">57</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solar_term_of_year</span>(<span class="params">year</span>):</span></span><br><span class="line">    year_min = <span class="number">525948.768</span></span><br><span class="line">    base_year = <span class="number">1900</span></span><br><span class="line">    <span class="comment"># 指定年的小寒节气</span></span><br><span class="line">    first_term_of_year = solarTermBase + timedelta(minutes=(year - base_year) * year_min)</span><br><span class="line">    <span class="keyword">for</span> index,minutes <span class="keyword">in</span> <span class="built_in">enumerate</span>(sTermInfo):</span><br><span class="line">        term = first_term_of_year + timedelta(minutes=minutes)</span><br><span class="line">        <span class="comment"># print(term.strftime( &#x27;%Y-%m-%d %H:%M:%S&#x27;)+solarTerm[index])</span></span><br><span class="line">        print(term.strftime( <span class="string">&#x27;%Y-%m-%d&#x27;</span>)+solarTerm[index])</span><br><span class="line">      </span><br><span class="line">solar_term_of_year(<span class="number">2018</span>)</span><br></pre></td></tr></table></figure>
+
+<p>注意，sTermInfo数据的不准确，计算出来的值和现在查询到的2019年精确值是有误差，如果刚好在0点附近就会产生日期不对的情况，我还没找到一个准确的数据可以使用，但是作为原理的介绍没有问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">2018-01-05小寒</span><br><span class="line">2018-01-20大寒</span><br><span class="line">2018-02-04立春</span><br><span class="line">2018-02-18雨水</span><br><span class="line">2018-03-05惊蛰</span><br><span class="line">2018-03-20春分</span><br><span class="line">2018-04-05清明</span><br><span class="line">2018-04-20谷雨</span><br><span class="line">2018-05-05立夏</span><br><span class="line">2018-05-21小满</span><br><span class="line">2018-06-06芒种</span><br><span class="line">2018-06-21夏至</span><br><span class="line">2018-07-07小暑</span><br><span class="line">2018-07-23大暑</span><br><span class="line">2018-08-07立秋</span><br><span class="line">2018-08-23处暑</span><br><span class="line">2018-09-08白露</span><br><span class="line">2018-09-23秋分</span><br><span class="line">2018-10-08寒露</span><br><span class="line">2018-10-23霜降</span><br><span class="line">2018-11-07立冬</span><br><span class="line">2018-11-22小雪</span><br><span class="line">2018-12-07大雪</span><br><span class="line">2018-12-22冬至</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                    
+                      <a class="hover-with-bg" href="/tags/python/">python</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%8F%91%E7%8E%B0/">探索与发现</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/07/02/%E5%9F%BA%E4%BA%8Eelement-ui%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%86%85%E9%9D%A2%E5%8C%85%E5%B1%91%E7%BB%84%E4%BB%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">基于element-ui的页面内面包屑组件</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/06/25/mysql%E7%9A%84Ferderated%E5%BC%95%E6%93%8E/">
+                        <span class="hidden-mobile">mysql的Ferderated引擎</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/lzlz000" target="_blank"><span><i class="iconfont icon-github-fill"></i></span></a> &nbsp;&nbsp; <a href="mailto:lzlz0x000@gmail.com" target="_blank"><span><i class="iconfont icon-mail"></i></span></a> &nbsp;&nbsp; <a href="https://travellings.now.sh/" target="blank" title="开往-友链接力"><img src="https://travellings.now.sh/assets/logo.gif" srcset="/img/loading.gif" alt="开往-友链接力" width="120"></a> <br> <span style="font-size:12px;">  Powered by <a href="https://hexo.io" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Hexo</span></a>  &  <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener" style="color:#30a9de"><span>Fluid</span></a> </span> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":200})
+    NProgress.start()
+    document.addEventListener('DOMContentLoaded', function() {
+      window.NProgress && window.NProgress.inc();
+    })
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.5.3/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.12.0/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
