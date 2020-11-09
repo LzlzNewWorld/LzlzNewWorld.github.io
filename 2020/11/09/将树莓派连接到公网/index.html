@@ -55,11 +55,12 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"lzlz000.github.io","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"blog.lzlz.site","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="lzlz000" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -120,21 +121,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/lzlz000">
-                <i class="iconfont icon-github-fill"></i>
-                
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="mailto:lzlz0x000@gmail.com">
-                <i class="iconfont icon-mail"></i>
-                
+              <a class="nav-link" href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+                RSS
               </a>
             </li>
           
@@ -186,7 +175,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.3k 字
+      1.4k 字
     </span>
   
 
@@ -196,7 +185,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      13
+      14
        分钟
     </span>
   
@@ -230,21 +219,21 @@
             
             <div class="markdown-body">
               <h3 id="连接公网"><a href="#连接公网" class="headerlink" title="连接公网"></a>连接公网</h3><p>要想把运行在本地的树莓派连接到公网访问，通常有两种方式。</p>
-<h3 id="公网IP-DDNS"><a href="#公网IP-DDNS" class="headerlink" title="公网IP+DDNS"></a>公网IP+DDNS</h3><p>公网IP需要你的宽带运营商提供，这个IP仍然是动态的，即每次连接宽带，公网IP都会变化。如果需要一个稳定的入口则需要搭配域名和DDNS使用。</p>
+<h3 id="公网IP-DDNS"><a href="#公网IP-DDNS" class="headerlink" title="公网IP+DDNS"></a>公网IP+DDNS</h3><p>首先要确认你的网络是通过宽带直连互联网，没有复杂的局域网环境，且拥有直连互联网的路由器/pc的权限。公网IP需要你的宽带运营商提供，这个IP仍然是动态的，即每次连接宽带，公网IP都会变化。如果需要一个稳定的入口则需要搭配域名和DDNS使用。</p>
 <h4 id="索要ip"><a href="#索要ip" class="headerlink" title="索要ip"></a>索要ip</h4><p>宽带上网时，公网能看到的宽带运营商的IP地址（直接百度搜索“ip”即可查到自己的公网IP），是无法直接访问到你的计算机或者路由器的。可以理解为，公网IP和本地宽带入口之间还有一层路由信息，通过公网IP，外网的连接无法寻找到你的计算机。需要运营商给你的宽带一些特殊的配置。</p>
-<p>电信宽带索要成功概率较大，不过不同地区也不太一样，比如我就要不到。但是我听一些朋友说，这也是有技巧的，不要直说，可以说家里安装监控，需要把网络改成<strong>桥接模式</strong>。</p>
+<p>电信宽带索要成功概率较大，不过不同地区也不太一样，比如我就要不到。但是我听一些朋友说，这也是有技巧的，不要直说，可以说_“家里安装监控，需要把网络改成桥接模式”_。</p>
 <h4 id="DDNS"><a href="#DDNS" class="headerlink" title="DDNS"></a>DDNS</h4><p>外网可以访问到本地计算机了，但是想要从外网访问必须要记住经常变动的IP地址，十分不便。</p>
 <p>DNS解析就是把 xxx.com这样的网址解析到 123.234.123.234这样的IP地址，更方便使用。DDNS即动态DNS，就是定时修改xxx.com所解析的地址，这样就不需要记住变更的IP了。</p>
 <p> 一般路由器都有这种功能，我使用过TP-LINK和小米路由器，在路由器管理界面都有DDNS的设置方式。还是建议使用TPLINK，tplink有官方提供的免费DDNS服务，小米只能设置网上第三方提供的服务，这些服务可能要注册额外账号，也可能要收费。</p>
 <p>TPLINK为例，创建新域名后，你就会得到一个 这样的域名 xxx.tpddns.cn，你可以把它映射到树莓派的内网IP上，通过xxx.tpddns.cn域名访问到路由器的流量都会被发送到树莓派上，树莓派上的服务就可以在公网访问了。</p>
 <h3 id="内网穿透"><a href="#内网穿透" class="headerlink" title="内网穿透"></a>内网穿透</h3><p>公网IP+DDNS是最好的解决方案，但是宽带公网IP有时候很难获取。内网穿透也是一种解决方案。</p>
 <h4 id="服务提供商"><a href="#服务提供商" class="headerlink" title="服务提供商"></a>服务提供商</h4><p>花生壳应该是国内最著名的内网穿透服务的提供商了，如果你需要稳定的外网访问，可以考虑，不过既然都是玩树莓派了，一般不是这样的需求。花生壳免费版限制较多，收费版性价比不高。</p>
-<p>国外的 <a target="_blank" rel="noopener" href="https://ngrok.com/">ngrok</a> 不错，推荐使用它的免费版，收费版不推荐，容易被墙，费用稍贵于国内服务，最重要的是不支持微信支付宝付款。免费版不支持自定义域名，且ngrok提供的域名会定期更换，不太方便。</p>
-<p>国内推荐 <a target="_blank" rel="noopener" href="https://www.ngrok.cc/">sunny-ngrok</a> 和 <a target="_blank" rel="noopener" href="https://www.natfrp.com/">sakura frp</a>。国内不推荐免费版，一来收费很便宜，一般1个通道10元一个月，有时候搞活动还会打折。而来国内的白嫖党太多了，免费服务器用户太多很不稳定。</p>
-<p>注意内网穿透很多都是一个通道一个计费的，如果你需要一个ssh和一个web服务那就要两个隧道，以此类推，如果追求稳定，就不建议免费版。 所以公网IP+DDNS的方式还是最好的。</p>
+<p>国外的 <a target="_blank" rel="noopener" href="https://ngrok.com/">ngrok</a> 不错，推荐使用它的免费版，收费版不推荐，容易被墙，费用稍贵于国内服务（但一个收费账号可以同时使用多个通道），最重要的是不支持微信支付宝付款。免费版不支持自定义域名，且ngrok提供的域名会定期更换，不太方便。</p>
+<p>国内推荐 <a target="_blank" rel="noopener" href="https://www.ngrok.cc/">sunny-ngrok</a> 和 <a target="_blank" rel="noopener" href="https://www.natfrp.com/">sakura frp</a>。国内不推荐免费版，首先收费很便宜，一般1个通道&lt;=10元一个月，有时候搞活动还会打折。同时国内的白嫖党太多了，免费服务器用户太多很不稳定。</p>
+<p>注意内网穿透很多都是按通道计费的，如你需要一个ssh和一个web服务那就要两个隧道，以此类推。如果追求稳定，就不建议免费版。 所以公网IP+DDNS的方式还是最好的。</p>
 <h4 id="自己搭建服务"><a href="#自己搭建服务" class="headerlink" title="自己搭建服务"></a>自己搭建服务</h4><p>如果你有云服务器，可以自己搭建ngrok或者frp服务，自行搜索教程。由于云服务器通常价格较高，可以买低配服务器搭建内网穿透连接运行在本地的主机。如果是搭建云存储类的，建议流量付费，固定带宽速度太慢，可以考虑外网VPS，更加划算，还可以用于某些科学用途。如果是游戏服务器之类的，建议固定带宽，使用国内服务商延时低。</p>
 <h3 id="注册域名"><a href="#注册域名" class="headerlink" title="注册域名"></a>注册域名</h3><p>最后建议注册一个域名，当然这不是必须的。内网穿透或者DDNS提供的域名，通常不可选择。想要更加方便灵活，就可以自己注册域名。配置DNS CNAME类型，把自定义的域名记录到例如上述的xxx.tpddns.cn，这样就可以通过自己的网址来访问自己的服务了。</p>
-<p> 可选国内阿里云腾讯云，或者国外，国内需要备案，速度较慢，国外容易被封不稳定，部分国外域名提供商不支持国内付款方式，还是推荐国内的。域名费用通常不贵，一年价格特别便宜（相当于促销吧），比如.top .site 等后缀的域名一年费用甚至小于10元，一次性注册时间长单价会高一些，5年性价比较高，便宜的域名5年价格在100元多一点，相当划算。</p>
+<p> 可选国内如阿里云腾讯云，或者国外，国内需要备案，比较慢且麻烦，国外容易被封不稳定。部分国外域名提供商不支持国内付款方式，还是推荐国内的。域名费用通常不贵，一年价格特别便宜（相当于促销吧），比如.top .site 等后缀的域名一年费用甚至小于10元，尝鲜建议注册一年。如果要注册更长时间，建议一次性5年性价比较高，便宜的域名5年价格在100元多一点，相当划算。</p>
 
             </div>
             <hr>
@@ -270,7 +259,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/11/08/%E6%A0%91%E8%8E%93%E6%B4%BE/">
+                      <a href="/2020/11/08/%E4%BD%BF%E7%94%A8%E6%A0%91%E8%8E%93%E6%B4%BE/">
                         <span class="hidden-mobile">使用树莓派</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>

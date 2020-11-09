@@ -55,11 +55,12 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"lzlz000.github.io","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+    var CONFIG = {"hostname":"blog.lzlz.site","root":"/","version":"1.8.5","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"copy_btn":true,"image_zoom":{"enable":true},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.2.0"></head>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="lzlz000" type="application/atom+xml">
+</head>
 
 
 <body>
@@ -120,21 +121,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" target="_blank" rel="noopener" href="https://github.com/lzlz000">
-                <i class="iconfont icon-github-fill"></i>
-                
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="mailto:lzlz0x000@gmail.com">
-                <i class="iconfont icon-mail"></i>
-                
+              <a class="nav-link" href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+                RSS
               </a>
             </li>
           
@@ -229,7 +218,7 @@
             <h1 style="display: none">基于element-ui的页面内面包屑组件</h1>
             
             <div class="markdown-body">
-              <p><a href="https://lzlz000.github.io/">lzlz000的个人主页</a></p>
+              <p><a target="_blank" rel="noopener" href="https://lzlz000.github.io/">lzlz000的个人主页</a></p>
 <p>elment-ui提供了面包屑组件 <strong>el-breadcrumb</strong> 然而他要配合url跳转路由使用，在项目中需要用到页面内的面包屑，因此我写了一个组件 <strong>inner-breadcrumb</strong>(源码在文章底部)</p>
 <p>inner-breadcrumb 包装了 el-breadcrumb 显示效果基本相同，不同的是，不再跳转页面，而是提供一个v-model控制当前的path值，并且提供了动态路径显示的功能（样式只是因为我们的需求如此，这个可以很容易更改）<br>原版样式<br><img src="/images/5d037c361553b.png" srcset="/img/loading.gif"><br>本组件样式<br><img src="/images/5d037bd441e48.png" srcset="/img/loading.gif"></p>
 <h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><table>
