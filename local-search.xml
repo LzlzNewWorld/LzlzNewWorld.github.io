@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>python判断重复音乐</title>
+    <link href="/2020/11/13/%E5%88%A4%E6%96%AD%E9%9F%B3%E4%B9%90%E9%87%8D%E5%A4%8D/"/>
+    <url>/2020/11/13/%E5%88%A4%E6%96%AD%E9%9F%B3%E4%B9%90%E9%87%8D%E5%A4%8D/</url>
+    
+    <content type="html"><![CDATA[<p>需要安装库eyed3</p><pre><code class="hljs shell">pip install eyed3</code></pre><h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>遍历文件，用eyed3解析音乐信息，通过音乐的长度来判断是否重复，长度是这样的数据： <em>333.91380609797875</em>，对于不同的音乐来说是很难重复的，可以把它当做一个hash函数来使用了，而且相比于真正的hash函数，如同时下载了一个低清和高清版本，他仍然可以找到重复音乐</p><pre><code class="hljs python"><span class="hljs-keyword">import</span> eyed3<span class="hljs-keyword">import</span> os<span class="hljs-keyword">import</span> re<span class="hljs-comment"># 把不用遍历的文件和目录放在这</span>ignore_list = [<span class="hljs-string">&#x27;script.py&#x27;</span>, <span class="hljs-string">&#x27;其他&#x27;</span>]count_music_by_length = &#123;&#125;repeat_list_maybe = []except_list = []<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">loadMusic</span>(<span class="hljs-params">file_name</span>):</span>  audiofile = eyed3.load(file_name)  <span class="hljs-keyword">if</span> audiofile <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:    <span class="hljs-comment"># 根据歌曲长度大致判断是否重复，注意不要用int, 长度是有很多小数位的，保存为整数会有很多歌曲重复</span>    music_length = <span class="hljs-built_in">str</span>(audiofile.info.time_secs)    music_list = count_music_by_length.setdefault(music_length, [])    music_list.append(file_name)    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">len</span>(music_list) &gt; <span class="hljs-number">1</span>):      repeat_list_maybe.append(<span class="hljs-string">&quot; &quot;</span>.join(music_list))    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>  <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">walkFile</span>(<span class="hljs-params">path</span>):</span>  <span class="hljs-keyword">for</span> root, dirs, files <span class="hljs-keyword">in</span> os.walk(path):    dirname = os.path.basename(root)    <span class="hljs-keyword">if</span> (dirname <span class="hljs-keyword">in</span> ignore_list):      <span class="hljs-keyword">continue</span>    print(<span class="hljs-string">&quot;\n-----当前目录&quot;</span>, dirname)    <span class="hljs-comment"># 遍历文件</span>    <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> files:      <span class="hljs-keyword">if</span> (file <span class="hljs-keyword">in</span> ignore_list):        <span class="hljs-keyword">continue</span>      <span class="hljs-keyword">try</span> :        file_path = os.path.join(root, file)        <span class="hljs-comment"># 暂时只能支持mp3格式</span>        <span class="hljs-keyword">if</span> re.search(<span class="hljs-string">r&#x27;\.(mp|MP)3$&#x27;</span>, file):          <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> loadMusic(file_path):            except_list.append(<span class="hljs-string">&quot;eyed3.load 加载失败:&quot;</span> + file_path)      <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:        except_list.append(<span class="hljs-string">&quot;未知错误:&quot;</span>+ file + <span class="hljs-string">&quot; 错误：&quot;</span> + <span class="hljs-built_in">str</span>(e))    print(<span class="hljs-string">&quot;-----end-----&quot;</span>, dirname)<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:  walkFile(<span class="hljs-string">&#x27;./&#x27;</span>)  print(<span class="hljs-string">&quot;可能重复的音乐：\n&quot;</span>, <span class="hljs-string">&quot;\n&quot;</span>.join(repeat_list_maybe))</code></pre><p>运行结果</p><pre><code class="hljs jboss-cli">可能重复的音乐： <span class="hljs-string">./</span>齊豫 - 欲水<span class="hljs-string">.mp3</span> <span class="hljs-string">./</span>齐豫 - 欲水<span class="hljs-string">.MP3</span> <span class="hljs-string">./</span>韩红,林俊杰 - 飞云之下<span class="hljs-string">.mp3</span> <span class="hljs-string">./music.ghpym.com</span>\飞云之下 - 韩红&amp;林俊杰<span class="hljs-string">.mp3</span> <span class="hljs-string">......</span></code></pre><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ol><li>部分音乐播放器来源的音乐是无法读取和修改文件信息的，这时 eyed3.load会返回空值，这种音乐在windows上都是无法编辑详细信息的，不知如何处理 没办法处理</li><li>暂时只能支持mp3格式</li></ol>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>python</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>将树莓派连接到公网</title>
     <link href="/2020/11/09/%E5%B0%86%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BF%9E%E6%8E%A5%E5%88%B0%E5%85%AC%E7%BD%91/"/>
     <url>/2020/11/09/%E5%B0%86%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BF%9E%E6%8E%A5%E5%88%B0%E5%85%AC%E7%BD%91/</url>
